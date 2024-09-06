@@ -14,7 +14,7 @@ return [
     | the connection which will be utilized unless another connection
     | is explicitly specified when you execute a query / statement.
     |
-    */
+     */
 
     'default' => env('DB_CONNECTION', 'sqlite'),
 
@@ -27,7 +27,7 @@ return [
     | An example configuration is provided for each database system which
     | is supported by Laravel. You're free to add / remove connections.
     |
-    */
+     */
 
     'connections' => [
 
@@ -53,6 +53,26 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'sandbox' => [
+            'driver' => 'mysql',
+            'url' => env('SANDBOX_DB_URL'),
+            'host' => env('SANDBOX_DB_HOST', '127.0.0.1'),
+            'port' => env('SANDBOX_DB_PORT', '3306'),
+            'database' => env('SANDBOX_DB_DATABASE', 'laravel'),
+            'username' => env('SANDBOX_DB_USERNAME', 'root'),
+            'password' => env('SANDBOX_DB_PASSWORD', ''),
+            'unix_socket' => env('SANDBOX_DB_SOCKET', ''),
+            'charset' => env('SANDBOX_DB_CHARSET', 'utf8mb4'),
+            'collation' => env('SANDBOX_DB_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
@@ -123,7 +143,7 @@ return [
     | your application. Using this information, we can determine which of
     | the migrations on disk haven't actually been run on the database.
     |
-    */
+     */
 
     'migrations' => [
         'table' => 'migrations',
@@ -139,7 +159,7 @@ return [
     | provides a richer body of commands than a typical key-value system
     | such as Memcached. You may define your connection settings here.
     |
-    */
+     */
 
     'redis' => [
 
@@ -147,7 +167,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

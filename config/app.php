@@ -56,6 +56,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Domain
+    |--------------------------------------------------------------------------
+    |
+    | The domain the application is hosted on. This value is derived from the
+    | APP_URL environment variable. You should not need to change this value.
+    |
+    */
+    'domain' => parse_url(env('APP_URL'), PHP_URL_HOST),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Sandbox Domain
+    |--------------------------------------------------------------------------
+    |
+    | The sandbox domain is used to provide a separate environment for testing
+    | and development.
+    |
+     */
+    'sandbox_subdomain' => env('APP_SANDBOX_DOMAIN', 'sandbox'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
