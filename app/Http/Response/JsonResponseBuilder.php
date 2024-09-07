@@ -42,7 +42,7 @@ class JsonResponseBuilder implements ResponseBuilder
     {
         $error = [
             'status' => (string) $code,
-            'code' => 'ERROR_CODE',
+            // 'code' => 'ERROR_CODE',
             'title' => $title,
             'detail' => $detail,
         ];
