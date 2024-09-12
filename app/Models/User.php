@@ -4,17 +4,21 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
+use Propaganistas\LaravelPhone\Rules\Phone;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
         'last_name',
-        'phone_number',
+        'phone',
         'date_of_birth',
         'email',
         'password',
@@ -32,7 +36,27 @@ class User extends Authenticatable
             'password' => 'hashed',
             'date_of_birth' => 'date',
             'status' => UserStatus::class,
-            // TODO: Phone number cast
+            'phone' => E164PhoneNumberCast::class,
         ];
+    }
+
+    public function customer(): HasOne
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    public function driver(): HasOne
+    {
+        return $this->hasOne(Driver::class);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

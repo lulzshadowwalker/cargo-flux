@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,47 +22,57 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (ValidationException $exception, Request $request) {
-            $builder = new JsonResponseBuilder();
-            foreach ($exception->errors() as $field => $messages) {
-                $builder->error(
-                    title: 'Invalid Attribute',
-                    detail: $messages[0],
-                    code: Response::HTTP_UNPROCESSABLE_ENTITY,
-                    meta: ['info' => 'Ensure that the attribute meets the required validation rules.'],
-                    pointer: "/data/attributes/{$field}"
-                );
-            }
-            return $builder->build();
-        });
+        // $exceptions->render(function (ValidationException $exception, Request $request) {
+        //     $builder = new JsonResponseBuilder();
+        //     foreach ($exception->errors() as $field => $messages) {
+        //         $builder->error(
+        //             title: 'Invalid Attribute',
+        //             detail: $messages[0],
+        //             code: Response::HTTP_UNPROCESSABLE_ENTITY,
+        //             meta: ['info' => 'Ensure that the attribute meets the required validation rules.'],
+        //             pointer: "/data/attributes/{$field}"
+        //         );
+        //     }
+        //     return $builder->build();
+        // });
 
-        $exceptions->render(function (ModelNotFoundException $exception, Request $request) {
-            $builder = new JsonResponseBuilder();
-            $builder->error(
-                title: 'Resource Not Found',
-                detail: 'The requested resource could not be found.',
-                code: Response::HTTP_NOT_FOUND,
-            );
-            return $builder->build();
-        });
+        // $exceptions->render(function (ModelNotFoundException $exception, Request $request) {
+        //     $builder = new JsonResponseBuilder();
+        //     $builder->error(
+        //         title: 'Resource Not Found',
+        //         detail: 'The requested resource could not be found.',
+        //         code: Response::HTTP_NOT_FOUND,
+        //     );
+        //     return $builder->build();
+        // });
 
-        $exceptions->render(function (HttpException $exception, Request $request) {
-            $builder = new JsonResponseBuilder();
-            $builder->error(
-                title: $exception->getMessage() ?: 'HTTP Error',
-                detail: $exception->getMessage(),
-                code: $exception->getStatusCode()
-            );
-            return $builder->build();
-        });
+        // $exceptions->render(function (HttpException $exception, Request $request) {
+        //     $builder = new JsonResponseBuilder();
+        //     $builder->error(
+        //         title: $exception->getMessage() ?: 'HTTP Error',
+        //         detail: $exception->getMessage(),
+        //         code: $exception->getStatusCode()
+        //     );
+        //     return $builder->build();
+        // });
 
-        $exceptions->render(function (Exception $exception, Request $request) {
-            $builder = new JsonResponseBuilder();
-            $builder->error(
-                title: 'Internal Server Error',
-                detail: 'An unexpected error occurred on the server.',
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-            return $builder->build();
-        });
+        // $exceptions->render(function (TokenInvalidException $exception, Request $request) {
+        //     $builder = new JsonResponseBuilder();
+        //     $builder->error(
+        //         title: 'Invalid Token',
+        //         detail: 'The provided token is invalid.',
+        //         code: Response::HTTP_UNAUTHORIZED
+        //     );
+        //     return $builder->build();
+
+        //     $exceptions->render(function (Exception $exception, Request $request) {
+        //         $builder = new JsonResponseBuilder();
+        //         $builder->error(
+        //             title: 'Internal Server Error',
+        //             detail: 'An unexpected error occurred on the server.',
+        //             code: Response::HTTP_INTERNAL_SERVER_ERROR
+        //         );
+        //         return $builder->build();
+        //     });
+        // });
     })->create();

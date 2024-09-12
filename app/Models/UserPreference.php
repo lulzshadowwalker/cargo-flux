@@ -10,11 +10,8 @@ class UserPreference extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'language',
-        'email_notifications',
-        'sms_notifications',
         'user_id',
     ];
 
@@ -22,8 +19,6 @@ class UserPreference extends Model
     {
         return [
             'id' => 'integer',
-            'email_notifications' => 'boolean',
-            'sms_notifications' => 'boolean',
             'user_id' => 'integer',
         ];
     }

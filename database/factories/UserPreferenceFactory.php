@@ -15,8 +15,6 @@ class UserPreferenceFactory extends Factory
     {
         return [
             'language' => $this->faker->randomElement(["en", "ar"]),
-            'email_notifications' => $this->faker->boolean(),
-            'sms_notifications' => $this->faker->boolean(),
             'user_id' => User::factory(),
         ];
     }

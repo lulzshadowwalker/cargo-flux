@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Driver extends Model
 {
@@ -43,7 +44,7 @@ class Driver extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function reviews()
+    public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewer');
     }

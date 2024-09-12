@@ -25,7 +25,7 @@ class JsonResponseBuilder implements ResponseBuilder
 
     public function meta(array $meta): self
     {
-        $this->data['meta'] = $meta;
+        $this->data['meta'] = array_merge($this->data['meta'], $meta);
         return $this;
     }
 
@@ -34,6 +34,7 @@ class JsonResponseBuilder implements ResponseBuilder
         if (!isset($this->data['meta'])) {
             $this->data['meta'] = [];
         }
+
         $this->data['meta']['message'] = $message;
         return $this;
     }
@@ -60,7 +61,7 @@ class JsonResponseBuilder implements ResponseBuilder
         return $this;
     }
 
-    public function build(): \Illuminate\Http\JsonResponse
+    public function build(int $code = Response::HTTP_OK): \Illuminate\Http\JsonResponse
     {
         $response = $this->errors ? ['errors' => $this->errors] : $this->data;
         return response()->json($response, $this->statusCode);
