@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderTrackingEntry;
 use App\Models\Page;
 use App\Models\Review;
+use App\Models\User;
 use App\Support\SystemActor;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +17,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::factory()->create([
+            'email' => 'admin@email.com',
+            'password' => bcrypt('password'),
+        ]);
+
         Customer::factory(1)->create();
         Driver::factory(1)->create();
         // Otp::factory(3)->create();
