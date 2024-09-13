@@ -10,6 +10,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "propaganistas/laravel-phone": "^5.3",
+        "spatie/laravel-translatable": "^6.8",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {

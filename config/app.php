@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\Language;
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -101,6 +104,8 @@ return [
     */
 
     'locale' => env('APP_LOCALE', 'en'),
+
+    'supported_locales' => array_map(fn($language) => Str::lower($language->value), Language::cases()),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 

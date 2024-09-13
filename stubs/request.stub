@@ -4,13 +4,8 @@ namespace {{ namespace }};
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class {{ class }} extends FormRequest
+class {{ class }} extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return false;
-    }
-
     /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
