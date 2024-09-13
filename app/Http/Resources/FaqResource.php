@@ -5,20 +5,20 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageResource extends JsonResource
+class FaqResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'page',
+            'type' => 'faq',
             'id' => $this->id,
             'attributes' => [
-                'title' => $this->title,
-                'slug' => $this->slug,
-                'content' => $this->content,
+                'question' => $this->question,
+                'answer' => $this->answer,
             ],
+
             'links' => [
-                'self' => route('page.show', ['lang' => app()->getLocale(), 'page' => $this]),
+                'self' => route('faq.show', ['lang' => app()->getLocale(), 'faq' => $this]),
             ],
             'relationships' => (object) [],
             'includes' => (object) [],

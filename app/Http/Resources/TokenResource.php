@@ -16,6 +16,9 @@ class TokenResource extends JsonResource
                 'token' => $this->token,
                 'tokenType' => $this->type,
             ],
+            'links' => (object) [],
+            'relationships' => (object) [],
+            'includes' => (object) [],
         ];
     }
 }
