@@ -8,8 +8,6 @@ use App\Http\Resources\TokenResource;
 use App\Models\User;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Throwable;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
@@ -35,7 +33,9 @@ class AuthController extends ApiController
             'password' => bcrypt($request->input('password')),
         ]);
 
-        $token = JWTAuth::fromUser($user);
+        $user->customer()->create();
+
+        $token = $user->createToken(config('app.name'))->plainTextToken;
         return TokenResource::make(new AuthToken($token, TokenType::PERMANENT));
     }
 }

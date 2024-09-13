@@ -94,7 +94,7 @@ class OtpController extends ApiController
 
         $user = User::firstWhere('phone', $request->phone);
         if ($user) {
-            $token = JWTAuth::fromUser($user);
+            $token = $user->createToken(config('app.name'))->plainTextToken;
             return TokenResource::make(new AuthToken($token, TokenType::PERMANENT));
         }
 

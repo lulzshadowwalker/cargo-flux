@@ -4,16 +4,18 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use Filament\Models\Contracts\HasName;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, HasName
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -50,6 +52,16 @@ class User extends Authenticatable implements JWTSubject, HasName
         return $this->hasOne(Driver::class);
     }
 
+    public function isCustomer(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->customer !== null);
+    }
+
+    public function isDriver(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->driver !== null);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -60,8 +72,13 @@ class User extends Authenticatable implements JWTSubject, HasName
         return [];
     }
 
+    public function fullName(): Attribute
+    {
+        return Attribute::get(fn(): string => "{$this->first_name} {$this->last_name}");
+    }
+
     public function getFilamentName(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        return $this->fullName;
     }
 }

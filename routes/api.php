@@ -1,5 +1,6 @@
 <?php
 
+use App\Contract\ProfileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\OtpController;
@@ -16,3 +17,5 @@ Route::get('/pages/{page}', [PageController::class, 'show'])->name('page.show');
 
 Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faq.show');
+
+Route::get('/me', [ProfileController::class, 'me'])->middleware('auth:sanctum')->name('me');
