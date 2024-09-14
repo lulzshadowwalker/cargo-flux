@@ -8,6 +8,7 @@ use App\Http\Resources\TokenResource;
 use App\Models\User;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
@@ -37,5 +38,11 @@ class AuthController extends ApiController
 
         $token = $user->createToken(config('app.name'))->plainTextToken;
         return TokenResource::make(new AuthToken($token, TokenType::PERMANENT));
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return $this->response->message('Logged out successfully')->build(Response::HTTP_OK);
     }
 }
