@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -47,5 +48,13 @@ class Driver extends Model
     public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewer');
+    }
+
+    /**
+     * Get the support tickets for the driver.
+     */
+    public function tickets(): HasManyThrough
+    {
+        return $this->hasManyThrough(SupportTicket::class, User::class);
     }
 }

@@ -10,6 +10,7 @@ use App\Models\OrderTrackingEntry;
 use App\Models\Page;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\SupportTicket;
 use App\Support\SystemActor;
 use Illuminate\Database\Seeder;
 
@@ -48,5 +49,6 @@ class DatabaseSeeder extends Seeder
         }
 
         Faq::factory()->count(100)->create();
+        SupportTicket::factory()->count(10)->create();
     }
 }

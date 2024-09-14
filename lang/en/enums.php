@@ -36,4 +36,9 @@ return [
         'temporary' => 'Temporary',
         'permanent' => 'Permanent',
     ],
+    'support-ticket-status' => [
+        'open' => 'Open',
+        'in-progress' => 'In Progress',
+        'resolved' => 'Resolved',
+    ],
 ];

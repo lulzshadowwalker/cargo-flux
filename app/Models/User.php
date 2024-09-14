@@ -8,6 +8,7 @@ use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -121,5 +122,13 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
     {
         // TODO: Only admins should be able to access the panel. 
         return true;
+    }
+
+    /**
+     * Get the user's support tickets.
+     */
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(SupportTicket::class);
     }
 }

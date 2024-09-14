@@ -36,4 +36,9 @@ return [
         'temporary' => 'مؤقت',
         'permanent' => 'دائم',
     ],
+    'support-ticket-status' => [
+        'open' => 'مفتوح',
+        'in-progress' => 'قيد التنفيذ',
+        'resolved' => 'محلول',
+    ],
 ];
