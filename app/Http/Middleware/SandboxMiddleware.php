@@ -25,6 +25,7 @@ class SandboxMiddleware
             Config::set('session.driver', 'file');
             Config::set('mail.driver', 'log');
             Config::set('database.default', 'sandbox');
+            Config::set('telescope.storage.database.connection', 'sandbox');
 
             if (Cache::get('sandbox-seeded') !== true) {
                 $result = Artisan::call('migrate:fresh', ['--seed' => true]);

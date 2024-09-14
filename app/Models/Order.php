@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -87,5 +88,35 @@ class Order extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function scopeScheduled(Builder $query)
+    {
+        return $query->where('status', OrderStatus::SCHEDULED);
+    }
+
+    public function scopeInProgress(Builder $query)
+    {
+        return $query->where('status', OrderStatus::IN_PROGRESS);
+    }
+
+    public function scopeCompleted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::COMPLETED);
+    }
+
+    public function scopeCanceled(Builder $query)
+    {
+        return $query->where('status', OrderStatus::CANCELED);
+    }
+
+    public function scopePendingApproval(Builder $query)
+    {
+        return $query->where('status', OrderStatus::PENDING_APPROVAL);
+    }
+
+    public function scopePendingDriverAssignment(Builder $query)
+    {
+        return $query->where('status', OrderStatus::PENDING_DRIVER_ASSIGNMENT);
     }
 }

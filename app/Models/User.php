@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, HasName
+class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -80,5 +82,44 @@ class User extends Authenticatable implements JWTSubject, HasName
     public function getFilamentName(): string
     {
         return $this->fullName;
+    }
+
+    public function activate(): void
+    {
+        $this->status = UserStatus::ACTIVE;
+        $this->save();
+    }
+
+    public function suspend(): void
+    {
+        $this->status = UserStatus::SUSPENDED;
+        $this->save();
+    }
+
+    public function ban(): void
+    {
+        $this->status = UserStatus::BANNED;
+        $this->save();
+    }
+
+    public function isActive(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->status === UserStatus::ACTIVE);
+    }
+
+    public function isSuspended(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->status === UserStatus::SUSPENDED);
+    }
+
+    public function isBanned(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->status === UserStatus::BANNED);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // TODO: Only admins should be able to access the panel. 
+        return true;
     }
 }

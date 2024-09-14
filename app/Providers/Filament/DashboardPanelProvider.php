@@ -39,24 +39,30 @@ class DashboardPanelProvider extends PanelProvider
                     ->url(fn(): string => route('telescope'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-chart-bar-square')
                     ->group(fn(): string => __('navigation.monitor'))
-                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
-                ,
+                    ->visible(
+                        fn(): bool => !app()->environment('testing')
+                        /** TODO: && Auth::user()->isAdmin**/
+                    ),
 
                 NavigationItem::make('pulse')
                     ->label(fn(): string => __('navigation.pulse'))
                     ->url(fn(): string => route('pulse'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-heart')
                     ->group(fn(): string => __('navigation.monitor'))
-                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
-                ,
+                    ->visible(
+                        fn(): bool => !app()->environment('testing')
+                        /** TODO: && Auth::user()->isAdmin**/
+                    ),
 
                 NavigationItem::make('horizon')
                     ->label(fn(): string => __('navigation.horizon'))
                     ->url(fn(): string => route('horizon.index'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-lifebuoy')
                     ->group(fn(): string => __('navigation.monitor'))
-                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
-                ,
+                    ->visible(
+                        fn(): bool => !app()->environment('testing')
+                        /** TODO: && Auth::user()->isAdmin**/
+                    ),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
