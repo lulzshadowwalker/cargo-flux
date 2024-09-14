@@ -15,6 +15,13 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::creating(function ($order) {
+            $order->order_number = strtoupper(uniqid('ORDER_'));
+        });
+    }
+
     protected $fillable = [
         'amount',
         'status',
