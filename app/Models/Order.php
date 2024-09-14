@@ -18,7 +18,7 @@ class Order extends Model
     protected static function booted(): void
     {
         static::creating(function ($order) {
-            $order->order_number = strtoupper(uniqid('ORDER_'));
+            $order->number = strtoupper(uniqid('ORDER_'));
         });
     }
 

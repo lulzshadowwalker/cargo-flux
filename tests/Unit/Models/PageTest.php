@@ -3,10 +3,13 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Page;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PageTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_it_infers_the_slug_automatically_if_not_provided()
     {
         $page = Page::factory()->create([

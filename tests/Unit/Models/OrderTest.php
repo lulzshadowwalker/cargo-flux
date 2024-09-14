@@ -14,6 +14,6 @@ class OrderTest extends TestCase
     {
         $order = Order::factory()->create();
 
-        $this->assertStringStartsWith('ORDER_', $order->order_number);
+        $this->assertStringStartsWith('ORDER_', $order->number);
     }
 }
