@@ -8,8 +8,6 @@ use App\Http\Response\JsonResponseBuilder;
 use App\Contracts\ResponseBuilder;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Exception;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {

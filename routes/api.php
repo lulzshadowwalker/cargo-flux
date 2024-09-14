@@ -18,4 +18,4 @@ Route::get('/pages/{page}', [PageController::class, 'show'])->name('page.show');
 Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faq.show');
 
-Route::get('/me', [ProfileController::class, 'me'])->middleware('auth:sanctum')->name('me');
+// Route::get('/me', [ProfileController::class, 'me'])->middleware('auth:sanctum')->name('me');

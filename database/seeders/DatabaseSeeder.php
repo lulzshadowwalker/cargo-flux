@@ -47,6 +47,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Faq::factory()->count(5)->create();
+        Faq::factory()->count(100)->create();
     }
 }

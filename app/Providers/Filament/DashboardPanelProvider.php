@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -16,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Outerweb\FilamentTranslatableFields\Filament\Plugins\FilamentTranslatableFieldsPlugin;
 
@@ -30,6 +32,31 @@ class DashboardPanelProvider extends PanelProvider
             ->login()
             ->colors([
                 'primary' => Color::Amber,
+            ])
+            ->navigationItems([
+                NavigationItem::make('telescope')
+                    ->label(fn(): string => __('navigation.telescope'))
+                    ->url(fn(): string => route('telescope'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-chart-bar-square')
+                    ->group(fn(): string => __('navigation.monitor'))
+                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
+                ,
+
+                NavigationItem::make('pulse')
+                    ->label(fn(): string => __('navigation.pulse'))
+                    ->url(fn(): string => route('pulse'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-heart')
+                    ->group(fn(): string => __('navigation.monitor'))
+                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
+                ,
+
+                NavigationItem::make('horizon')
+                    ->label(fn(): string => __('navigation.horizon'))
+                    ->url(fn(): string => route('horizon.index'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-lifebuoy')
+                    ->group(fn(): string => __('navigation.monitor'))
+                // ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin)
+                ,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
