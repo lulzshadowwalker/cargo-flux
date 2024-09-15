@@ -18,6 +18,7 @@
         "outerweb/filament-translatable-fields": "^2.0",
         "owenvoke/blade-fontawesome": "^2.6",
         "propaganistas/laravel-phone": "^5.3",
+        "rmsramos/activitylog": "^1.0",
         "spatie/laravel-translatable": "^6.8",
         "tymon/jwt-auth": "^2.1"
     },

@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Outerweb\FilamentTranslatableFields\Filament\Plugins\FilamentTranslatableFieldsPlugin;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -91,6 +92,7 @@ class DashboardPanelProvider extends PanelProvider
             ->plugins([
                 FilamentTranslatableFieldsPlugin::make()
                     ->supportedLocales(config('app.supported_locales')),
+                ActivitylogPlugin::make(),
             ]);
     }
 }

@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        // if (config('app.debug')) return;
+        if (config('app.debug')) return;
 
         $exceptions->render(function (AuthenticationException $exception, Request $request) {
             $builder = new JsonResponseBuilder();
