@@ -35,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        if (!request()->is('api/*')) return;
         if (config('app.debug')) return;
 
         $exceptions->render(function (AuthenticationException $exception, Request $request) {

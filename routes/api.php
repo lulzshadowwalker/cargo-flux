@@ -20,7 +20,8 @@ Route::get('/pages/{page}', [PageController::class, 'show'])->name('page.show');
 Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faq.show');
 
-Route::get('/me', [ProfileController::class, 'me'])->middleware('auth:sanctum')->name('me');
+Route::get('/me', [ProfileController::class, 'index'])->middleware('auth:sanctum')->name('profile.index');
+Route::patch('/me', [ProfileController::class, 'update'])->middleware('auth:sanctum')->name('profile.update');
 
 Route::get('/support-tickets', [SupportTicketController::class, 'index'])
     ->middleware('auth:sanctum')

@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\ProfileController;
+use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerProfileController extends ApiController
+class CustomerProfileController extends ApiController //  implements ProfileController
 {
-    public function me()
+    public function index()
     {
         return CustomerResource::make(Auth::user()->customer);
     }
 
-    public function update()
+    public function update(UpdateCustomerProfileRequest $request)
     {
-        throw new Exception('Not implemented');
+        Auth::user()->update($request->mappedAttributes());
+        return CustomerResource::make(Auth::user()->customer);
     }
 }

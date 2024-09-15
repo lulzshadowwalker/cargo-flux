@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Contract;
+namespace App\Contracts;
 
-use Illuminate\Support\Facades\Response;
+use App\Http\Requests\UpdateCustomerProfileRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 interface ProfileController
 {
-    public function me(): Response;
-    public function update(): Response;
+    public function index();
+    public function update(FormRequest|UpdateCustomerProfileRequest $request);
 }
