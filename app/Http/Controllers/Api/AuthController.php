@@ -13,6 +13,7 @@ use App\Services\DriverRegisterationService;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
 {
@@ -23,7 +24,7 @@ class AuthController extends ApiController
 
     public function register(BaseRegisterationRequest $request)
     {
-        $user = $this->serviceFactory->make($request->mappedAttributes()->type)->register($request);
+        $user = $this->serviceFactory->make($request->mappedAttributes()['type'])->register($request);
 
         $token = $user->createToken(config('app.name'))->plainTextToken;
 

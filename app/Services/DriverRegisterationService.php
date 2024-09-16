@@ -16,7 +16,7 @@ class DriverRegisterationService implements RegisterationService
      */
     public function register($request): User
     {
-        $user = User::create($request->mappedAttributes(['type' => UserType::DRIVER]));
+        $user = User::create($request->mappedAttributes(['type' => UserType::DRIVER])->toArray());
 
         $user->driver()->create();
 

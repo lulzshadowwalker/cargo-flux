@@ -20,7 +20,7 @@ class SupportTicketController extends ApiController
     {
         $ticket = SupportTicket::create($request->mappedAttributes([
             'user_id' => auth('sanctum')->user()?->id,
-        ]));
+        ])->toArray());
 
         return SupportTicketResource::make($ticket);
     }

@@ -17,9 +17,9 @@ class CustomerRegisterationService implements RegisterationService
      */
     public function register($request): User
     {
-        $user = User::create($request->mappedAttributes(['type' => UserType::CUSTOMER]));
+        $user = User::create($request->mappedAttributes(['type' => UserType::CUSTOMER])->toArray());
 
-        $user->customer()->create(['company_name' => $request->mappedAttributes->company_name]);
+        $user->customer()->create($request->mappedAttributes()->toArray()); // TODO: 
 
         return $user;
     }
