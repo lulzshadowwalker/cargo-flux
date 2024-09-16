@@ -46,6 +46,9 @@ class DatabaseSeeder extends Seeder
         }
 
         Faq::factory()->count(19)->create();
-        SupportTicket::factory()->count(50)->create();
+        // SupportTicket::factory()->count(50)->create();
+        SupportTicket::factory()->count(1)->create([
+            'created_at' => now()->subDays(20),
+        ]);
     }
 }

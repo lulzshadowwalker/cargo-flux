@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class SupportTicketsStatsWidget extends BaseWidget
 {
+    protected static ?string $pollingInterval = '3s';
+
     protected function getStats(): array
     {
         // Fetch the number of tickets for the last 30 days and the previous 30 days for comparison

@@ -19,7 +19,7 @@ class SupportTicketController extends ApiController
     public function store(StoreSupportTicketRequest $request)
     {
         $ticket = SupportTicket::create($request->mappedAttributes([
-            'user_id' => Auth::id(),
+            'user_id' => auth('sanctum')->user()?->id,
         ]));
 
         return SupportTicketResource::make($ticket);

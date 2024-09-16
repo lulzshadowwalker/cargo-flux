@@ -32,5 +32,4 @@ Route::get('/support-tickets/{supportTicket}', [SupportTicketController::class, 
     ->name('support-tickets.show');
 
 Route::post('/support-tickets', [SupportTicketController::class, 'store'])
-    ->middleware('auth:sanctum')
     ->name('support-tickets.store');
