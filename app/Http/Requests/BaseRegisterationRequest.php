@@ -15,6 +15,8 @@ class BaseRegisterationRequest extends BaseFormRequest
             'data.attributes.lastName' => 'last_name',
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
+            'data.attributes.phone' => 'phone',
+            'data.attributes.type' => 'type',
         ], $extraAttributes);
     }
 
