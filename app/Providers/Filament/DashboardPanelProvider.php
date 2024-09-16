@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -37,33 +38,30 @@ class DashboardPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('telescope')
                     ->label(fn(): string => __('navigation.telescope'))
+                    ->badge(fn(): string => '●')
+                    ->badgeTooltip(fn(): string => __('navigation.telescope-tooltip'))
                     ->url(fn(): string => route('telescope'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-chart-bar-square')
                     ->group(fn(): string => __('navigation.monitor'))
-                    ->visible(
-                        fn(): bool => !app()->environment('testing')
-                        /** TODO: && Auth::user()->isAdmin**/
-                    ),
+                    ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
 
                 NavigationItem::make('pulse')
                     ->label(fn(): string => __('navigation.pulse'))
+                    ->badge(fn(): string => '●')
+                    ->badgeTooltip(fn(): string => __('navigation.pulse-tooltip'))
                     ->url(fn(): string => route('pulse'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-heart')
                     ->group(fn(): string => __('navigation.monitor'))
-                    ->visible(
-                        fn(): bool => !app()->environment('testing')
-                        /** TODO: && Auth::user()->isAdmin**/
-                    ),
+                    ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
 
                 NavigationItem::make('horizon')
                     ->label(fn(): string => __('navigation.horizon'))
+                    ->badge(fn(): string => '●')
+                    ->badgeTooltip(fn(): string => __('navigation.horizon-tooltip'))
                     ->url(fn(): string => route('horizon.index'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-lifebuoy')
                     ->group(fn(): string => __('navigation.monitor'))
-                    ->visible(
-                        fn(): bool => !app()->environment('testing')
-                        /** TODO: && Auth::user()->isAdmin**/
-                    ),
+                    ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -93,6 +91,7 @@ class DashboardPanelProvider extends PanelProvider
                 FilamentTranslatableFieldsPlugin::make()
                     ->supportedLocales(config('app.supported_locales')),
                 ActivitylogPlugin::make(),
+                FilamentShieldPlugin::make(),
             ]);
     }
 }

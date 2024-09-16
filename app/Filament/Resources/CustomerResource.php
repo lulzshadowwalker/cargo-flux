@@ -7,6 +7,7 @@ use App\Enums\UserStatus;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,9 +15,8 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CustomerResource extends Resource
+class CustomerResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Customer::class;
 
@@ -147,6 +147,17 @@ class CustomerResource extends Resource
         return [
             'index' => Pages\ListCustomers::route('/'),
             // 'view' => Pages\ViewCustomer::route('/{record}'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'update',
+            // 'delete',
+            // 'delete_any',
         ];
     }
 }

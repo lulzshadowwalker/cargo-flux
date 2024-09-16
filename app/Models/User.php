@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use App\Enums\UserType;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
-use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,11 +15,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield;
 
     protected $fillable = [
         'first_name',
@@ -28,6 +30,7 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
         'email',
         'password',
         'status',
+        'type',
     ];
 
     protected $hidden = [
@@ -42,6 +45,7 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
             'date_of_birth' => 'date',
             'status' => UserStatus::class,
             'phone' => E164PhoneNumberCast::class,
+            'type' => UserType::class,
         ];
     }
 
@@ -57,12 +61,22 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
 
     public function isCustomer(): Attribute
     {
-        return Attribute::get(fn(): bool => $this->customer !== null);
+        return Attribute::get(fn(): bool => $this->type === UserType::CUSTOMER);
     }
 
     public function isDriver(): Attribute
     {
-        return Attribute::get(fn(): bool => $this->driver !== null);
+        return Attribute::get(fn(): bool => $this->type === UserType::DRIVER);
+    }
+
+    /**
+     * Checks if the user's base type is admin.
+     * 
+     * Further roles and permissions may be assigned in the admin dashboard using Filament Shield.
+     */
+    public function isAdmin(): Attribute
+    {
+        return Attribute::get(fn(): bool => $this->type === UserType::ADMIN);
     }
 
     public function getJWTIdentifier()
@@ -116,12 +130,6 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
     public function isBanned(): Attribute
     {
         return Attribute::get(fn(): bool => $this->status === UserStatus::BANNED);
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        // TODO: Only admins should be able to access the panel. 
-        return true;
     }
 
     /**

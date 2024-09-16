@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\TokenType;
+use App\Enums\UserType;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\TokenResource;
 use App\Models\User;
@@ -32,6 +33,7 @@ class AuthController extends ApiController
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
+            'type' => UserType::CUSTOMER,
         ]);
 
         $user->customer()->create();

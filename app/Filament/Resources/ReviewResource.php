@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReviewResource\Pages;
 use App\Models\Review;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,7 +13,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use IbrahimBougaoua\FilamentRatingStar\Columns\RatingStarColumn;
 
-class ReviewResource extends Resource
+class ReviewResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Review::class;
 
@@ -108,6 +109,16 @@ class ReviewResource extends Resource
     {
         return [
             'index' => Pages\ListReviews::route('/'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'delete',
+            'delete_any',
         ];
     }
 }

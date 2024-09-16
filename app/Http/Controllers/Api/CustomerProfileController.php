@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contracts\ProfileController;
 use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Auth;

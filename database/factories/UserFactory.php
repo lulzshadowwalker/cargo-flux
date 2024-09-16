@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\UserStatus;
+use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -25,6 +26,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'status' => $this->faker->randomElement(UserStatus::cases())->value,
+            'type' => $this->faker->randomElement(UserType::cases())->value,
         ];
     }
 }

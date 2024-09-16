@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Enums\UserStatus;
+use App\Enums\UserType;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+
+class UserSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $admin = User::factory()->create([
+            'email' => 'admin@email.com',
+            'password' => bcrypt('password'),
+            'status' => UserStatus::ACTIVE,
+            'type' => UserType::ADMIN,
+        ]);
+
+        if (Artisan::call('shield:super-admin --user=' . $admin->id)) {
+            $this->command->error('Failed to make user super admin');
+            return;
+        }
+    }
+}

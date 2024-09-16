@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserStatus;
+use App\Enums\UserType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->string('phone', 20)->unique();
             $table->string('email')->nullable();
             $table->enum('status', array_map(fn(UserStatus $status) => $status->value, UserStatus::cases()));
+            $table->enum('type', array_map(fn(UserType $type) => $type->value, UserType::cases()));
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
