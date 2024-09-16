@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->enum('status', array_map(fn($status) => $status->value, DriverStatus::cases()));
-            $table->string('iban');
+            $table->string('iban')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
         });

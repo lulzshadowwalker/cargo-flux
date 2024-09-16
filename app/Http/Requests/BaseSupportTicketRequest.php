@@ -2,26 +2,17 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Collection;
+
 abstract class BaseSupportTicketRequest extends BaseFormRequest
 {
-    public function mappedAttributes(array $extraAttributes = []): array
+    public function mappedAttributes(array $extraAttributes = []): Collection
     {
-        $allowedAttributes = [
+        return $this->mapped([
             'data.attributes.subject' => 'subject',
             'data.attributes.message' => 'message',
             'data.attributes.phone' => 'phone',
             'data.attributes.name' => 'name',
-        ];
-
-        $availabledAttributes = [];
-        foreach ($allowedAttributes as $key => $value) {
-            if ($this->has($key)) {
-                $availabledAttributes[$value] = $this->input($key);
-            }
-        }
-
-        $availabledAttributes = array_merge($availabledAttributes, $extraAttributes);
-
-        return $availabledAttributes;
+        ], $extraAttributes);
     }
 }

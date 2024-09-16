@@ -18,7 +18,7 @@ use Tymon\JWTAuth\Facades\JWTFactory;
 
 class OtpController extends ApiController
 {
-    protected const OTP_EXPIRY = 5;
+    protected const OTP_EXPIRY = 15;
 
     public function send(SendOtpRequest $request)
     {

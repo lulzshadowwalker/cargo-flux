@@ -3,42 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\TokenType;
-use App\Enums\UserType;
-use App\Http\Requests\RegisterRequest;
+use App\Factories\RegisterationServiceFactory;
+use App\Http\Requests\BaseRegisterationRequest;
+use App\Http\Requests\CustomerRegisterationRequest;
+use App\Http\Requests\DriverRegisterationRequest;
 use App\Http\Resources\TokenResource;
-use App\Models\User;
+use App\Services\CustomerRegisterationService;
+use App\Services\DriverRegisterationService;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
 {
-    public function register(RegisterRequest $request)
+    public function __construct(protected RegisterationServiceFactory $serviceFactory)
     {
-        $token = $request->bearerToken();
-        if (!$token) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Token from otp verification is required');
-        }
+        //
+    }
 
-        $phone = JWTAuth::parseToken()->getPayload()['sub'];
-        if ($phone !== $request->input('phone')) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Invalid phone number');
-        }
-
-        $user = User::create([
-            'first_name' => $request->input('firstName'),
-            'last_name' => $request->input('lastName'),
-            'date_of_birth' => $request->input('dateOfBirth'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'type' => UserType::CUSTOMER,
-        ]);
-
-        $user->customer()->create();
+    public function register(BaseRegisterationRequest $request)
+    {
+        $user = $this->serviceFactory->make($request->mappedAttributes()->type)->register($request);
 
         $token = $user->createToken(config('app.name'))->plainTextToken;
+
         return TokenResource::make(new AuthToken($token, TokenType::PERMANENT));
     }
 

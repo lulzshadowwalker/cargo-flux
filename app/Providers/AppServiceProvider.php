@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
-use App\Contract\ProfileController;
+use App\Contracts\ProfileController;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Response\JsonResponseBuilder;
 use App\Contracts\ResponseBuilder;
+use App\Http\Controllers\Api\CustomerProfileController;
+use App\Http\Controllers\Api\DriverProfileController;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,9 +19,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ResponseBuilder::class, JsonResponseBuilder::class);
 
         $this->app->bind(ProfileController::class, function ($app) {
-            // if (Auth::user()->isCustomer) {
-            return $app->make('App\Http\Controllers\Api\CustomerProfileController');
-            // }
+            if (Auth::user()->isCustomer) {
+                return $app->make(CustomerProfileController::class);
+            } else if (Auth::user()->isDriver) {
+                return $app->make(DriverProfileController::class);
+            }
 
             throw new Exception('User role is not recognized');
         });

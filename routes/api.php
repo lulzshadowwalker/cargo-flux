@@ -1,6 +1,6 @@
 <?php
 
-use App\Contract\ProfileController;
+use App\Contracts\ProfileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\OtpController;

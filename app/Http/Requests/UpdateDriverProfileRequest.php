@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Collection;
 
-class UpdateCustomerProfileRequest extends BaseFormRequest
+class UpdateDriverProfileRequest extends BaseFormRequest
 {
     public function mappedAttributes(array $extraAttributes = []): Collection
     {

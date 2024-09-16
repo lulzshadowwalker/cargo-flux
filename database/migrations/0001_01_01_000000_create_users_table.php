@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->enum('status', array_map(fn(UserStatus $status) => $status->value, UserStatus::cases()));
             $table->enum('type', array_map(fn(UserType $type) => $type->value, UserType::cases()));
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
