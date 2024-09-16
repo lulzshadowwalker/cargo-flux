@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\SupportTicketResource\Widgets;
 
 use App\Models\SupportTicket;
+use Filament\Notifications\Notification;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Carbon;

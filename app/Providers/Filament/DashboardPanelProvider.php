@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Outerweb\FilamentTranslatableFields\Filament\Plugins\FilamentTranslatableFieldsPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -63,6 +64,8 @@ class DashboardPanelProvider extends PanelProvider
                     ->group(fn(): string => __('navigation.monitor'))
                     ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
             ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('1s')
             ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
