@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace App\Filament\Resources\ReviewResource\Pages;
 
 use App\Filament\Resources\ReviewResource;
 use App\Filament\Resources\ReviewResource\Pages\ListReviews;
@@ -10,7 +10,7 @@ use Livewire\Livewire;
 use Tests\TestCase;
 use Tests\Traits\WithAdmin;
 
-class ReviewResourceTest extends TestCase
+class ListReviewsTest extends TestCase
 {
     use RefreshDatabase, WithAdmin;
 

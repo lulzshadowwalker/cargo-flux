@@ -41,4 +41,9 @@ return [
         'in-progress' => 'In Progress',
         'resolved' => 'Resolved',
     ],
+    'user-type' => [
+        'customer' => 'Customer',
+        'driver' => 'Driver',
+        'admin' => 'Admin',
+    ]
 ];

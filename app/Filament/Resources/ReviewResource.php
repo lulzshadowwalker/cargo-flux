@@ -61,7 +61,7 @@ class ReviewResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('order.number')
                     ->label(__('filament/resources/review-resource.order-number'))
                     ->badge()
-                    ->formatStateUsing(fn($state) => str_replace('ORDER_', '', $state))
+                    ->formatStateUsing(fn($state) => str_replace('ORDER-', '', $state))
                     ->alignCenter()
                     ->sortable(),
 

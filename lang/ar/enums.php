@@ -41,4 +41,9 @@ return [
         'in-progress' => 'قيد التنفيذ',
         'resolved' => 'محلول',
     ],
+    'user-type' => [
+        'customer' => 'العميل',
+        'driver' => 'السائق',
+        'admin' => 'المشرف',
+    ]
 ];

@@ -29,9 +29,9 @@ enum SupportTicketStatus: string
     public function icon(): string
     {
         return match ($this) {
-            self::OPEN => 'heroicon-o-information-circle',
-            self::IN_PROGRESS => 'heroicon-o-refresh',
-            self::RESOLVED => 'heroicon-o-check-circle',
+            self::OPEN => 'far-folder-open',
+            self::IN_PROGRESS => 'fas-arrows-rotate',
+            self::RESOLVED => 'far-folder',
         };
     }
 }

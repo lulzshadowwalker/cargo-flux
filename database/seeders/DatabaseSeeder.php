@@ -46,6 +46,6 @@ class DatabaseSeeder extends Seeder
         }
 
         Faq::factory()->count(100)->create();
-        SupportTicket::factory()->count(10)->create();
+        SupportTicket::factory()->count(100)->create();
     }
 }

@@ -1,0 +1,22 @@
+<?php
+
+return [
+    'subject' => 'Subject',
+    'attached-name' => 'Attached Name',
+    'attached-information' => 'Attached Information',
+    'number' => 'Number',
+    'attached-phone' => 'Attached Phone',
+    'registered-author' => 'Registered Author',
+    'guest-author' => 'Guest Author',
+    'sent-at' => 'Sent At',
+    'status' => 'Status',
+    'author-type' => 'Author Type',
+    'open' => 'Open',
+    'in-progress' => 'In Progress',
+    'resolve' => 'Resolve',
+    'all-tickets' => 'All Tickets',
+    'open-tickets' => 'Open',
+    'in-progress-tickets' => 'In Progress',
+    'resolved-tickets' => 'Resolved',
+    'message' => 'Message',
+];
