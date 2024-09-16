@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReviewResource\Pages;
+use App\Filament\Resources\ReviewResource\Widgets\ReviewsStatsWidget;
 use App\Models\Review;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
@@ -119,6 +120,13 @@ class ReviewResource extends Resource implements HasShieldPermissions
             'view_any',
             'delete',
             'delete_any',
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            ReviewsStatsWidget::class,
         ];
     }
 }

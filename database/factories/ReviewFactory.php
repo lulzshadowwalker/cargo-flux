@@ -22,6 +22,7 @@ class ReviewFactory extends Factory
             'reviewer_id' => $reviewerType::factory(),
             'reviewer_type' => $reviewerType,
             'order_id' => Order::factory(),
+            'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
         ];
     }
 }

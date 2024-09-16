@@ -19,4 +19,7 @@ return [
     'in-progress-tickets' => 'In Progress',
     'resolved-tickets' => 'Resolved',
     'message' => 'Message',
+    'tickets' => 'Tickets',
+    'increase' => 'increase',
+    'decrease' => 'decrease',
 ];

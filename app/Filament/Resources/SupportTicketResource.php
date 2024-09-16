@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\SupportTicketStatus;
 use App\Filament\Resources\SupportTicketResource\Pages;
+use App\Filament\Resources\SupportTicketResource\Widgets\SupportTicketsStatsWidget;
 use App\Models\SupportTicket;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -185,6 +186,13 @@ class SupportTicketResource extends Resource
         return [
             'index' => Pages\ListSupportTickets::route('/'),
             // 'edit' => Pages\EditSupportTicket::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            SupportTicketsStatsWidget::class,
         ];
     }
 }

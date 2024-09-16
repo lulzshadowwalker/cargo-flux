@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         Driver::factory(1)->create();
         // Otp::factory(3)->create();
 
-        Order::factory()->count(4)->create()->each(function (Order $order) {
+        Order::factory()->count(20)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
             $actorId = $actorType === Driver::class ? $order->driver->id : 1;
 
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Faq::factory()->count(100)->create();
-        SupportTicket::factory()->count(100)->create();
+        Faq::factory()->count(19)->create();
+        SupportTicket::factory()->count(50)->create();
     }
 }

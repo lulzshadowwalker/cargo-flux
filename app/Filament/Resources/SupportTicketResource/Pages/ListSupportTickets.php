@@ -4,12 +4,20 @@ namespace App\Filament\Resources\SupportTicketResource\Pages;
 
 use App\Enums\SupportTicketStatus;
 use App\Filament\Resources\SupportTicketResource;
+use App\Filament\Resources\SupportTicketResource\Widgets\SupportTicketsStatsWidget;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 
 class ListSupportTickets extends ListRecords
 {
     protected static string $resource = SupportTicketResource::class;
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            SupportTicketsStatsWidget::class,
+        ];
+    }
 
     public function getTabs(): array
     {

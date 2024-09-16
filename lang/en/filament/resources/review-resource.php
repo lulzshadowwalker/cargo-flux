@@ -11,4 +11,9 @@ return [
     'posted-at' => 'Posted At',
     'updated-at' => 'Updated At',
     'reviewer-type' => 'Reviewer Type',
+    'no-change' => 'no change',
+    'increase' => 'increase',
+    'decrease' => 'decrease',
+    'reviews-count' => 'Reviews Count',
+    'average-rating' => 'Average Rating',
 ];

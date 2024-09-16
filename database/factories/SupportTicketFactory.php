@@ -20,6 +20,7 @@ class SupportTicketFactory extends BaseFactory
             'phone' => $this->faker->phoneNumber,
             'name' => $this->faker->name,
             'user_id' => rand(0, 1) ? null : User::factory(),
+            'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
         ];
     }
 }
