@@ -8,17 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('trucks', function (Blueprint $table) {
+        Schema::create('truck_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('license_plate');
-            $table->foreignId('driver_id');
-            $table->foreignId('truck_category_id');
+            $table->json('name');
+            $table->integer('tonnage');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('trucks');
+        Schema::dropIfExists('truck_categories');
     }
 };

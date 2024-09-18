@@ -11,7 +11,6 @@ class Truck extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'license_plate',
         'driver_id',
@@ -33,5 +32,10 @@ class Truck extends Model
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(TruckCategory::class, 'truck_category_id');
     }
 }

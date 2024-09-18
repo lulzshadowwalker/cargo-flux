@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Driver;
 use App\Models\Truck;
+use App\Models\TruckCategory;
 
 class TruckFactory extends Factory
 {
@@ -16,6 +16,7 @@ class TruckFactory extends Factory
         return [
             'license_plate' => $this->faker->word(),
             'driver_id' => Driver::factory(),
+            'truck_category_id' => TruckCategory::factory(),
         ];
     }
 }
