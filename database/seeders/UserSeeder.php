@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'type' => UserType::ADMIN,
         ]);
 
+        // FIXME: This probably seeds the production database, not the sandbox database!
         if (Artisan::call('shield:super-admin --user=' . $admin->id)) {
             $this->command->error('Failed to make user super admin');
             return;

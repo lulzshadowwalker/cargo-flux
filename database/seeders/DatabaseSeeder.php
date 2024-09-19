@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Models\Customer;
 use App\Models\Driver;
 use App\Models\Faq;
@@ -10,6 +12,7 @@ use App\Models\OrderTrackingEntry;
 use App\Models\Page;
 use App\Models\Review;
 use App\Models\SupportTicket;
+use App\Models\User;
 use App\Support\SystemActor;
 use Illuminate\Database\Seeder;
 
@@ -20,7 +23,31 @@ class DatabaseSeeder extends Seeder
         $this->call(ShieldSeeder::class);
         $this->call(UserSeeder::class);
 
+        Customer::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777777',
+                'status' => UserStatus::ACTIVE,
+                'type' => UserType::CUSTOMER,
+            ])
+        )->create();
+
+        Customer::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777771',
+                'status' => UserStatus::BANNED,
+                'type' => UserType::CUSTOMER,
+            ])
+        )->create();
+
+        Customer::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777772',
+                'status' => UserStatus::SUSPENDED,
+                'type' => UserType::CUSTOMER,
+            ])
+        )->create();
         Customer::factory(1)->create();
+
         Driver::factory(1)->create();
         // Otp::factory(3)->create();
 
