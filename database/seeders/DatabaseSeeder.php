@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ShieldSeeder::class);
         $this->call(UserSeeder::class);
 
-        Customer::factory()->for(
+        $customer = Customer::factory()->for(
             User::factory()->create([
                 'phone' => '+962777777777',
                 'status' => UserStatus::ACTIVE,
@@ -46,12 +46,11 @@ class DatabaseSeeder extends Seeder
                 'type' => UserType::CUSTOMER,
             ])
         )->create();
-        Customer::factory(1)->create();
 
         Driver::factory(1)->create();
         // Otp::factory(3)->create();
 
-        Order::factory()->count(20)->create()->each(function (Order $order) {
+        Order::factory()->count(20)->for($customer)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
             $actorId = $actorType === Driver::class ? $order->driver->id : 1;
 

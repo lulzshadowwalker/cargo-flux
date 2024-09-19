@@ -3,6 +3,7 @@
 use App\Contracts\ProfileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SupportTicketController;
@@ -39,3 +40,9 @@ Route::post('/support-tickets', [SupportTicketController::class, 'store'])
 
 Route::get('/trucks/categories', [TruckCategoryController::class, 'index'])->name('trucks.categories.index');
 Route::get('/trucks/categories/{truckCategory}', [TruckCategoryController::class, 'show'])->name('trucks.categories.show');
+
+Route::middleware('auth:sanctum')
+    ->group(function () {
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    });

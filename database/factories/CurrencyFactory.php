@@ -13,7 +13,7 @@ class CurrencyFactory extends Factory
     {
         return [
             'symbol' => $this->faker->word(),
-            'code' => $this->faker->word(),
+            'code' => $this->faker->currencyCode(),
         ];
     }
 }

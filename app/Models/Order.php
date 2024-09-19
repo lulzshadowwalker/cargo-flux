@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Casts\GeoPointCast;
+use App\Casts\MoneyCast;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
+use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Order extends Model
 {
@@ -23,7 +27,7 @@ class Order extends Model
     }
 
     protected $fillable = [
-        'amount',
+        // 'amount',
         'status',
         'payment_method',
         'payment_status',
@@ -39,9 +43,6 @@ class Order extends Model
         'driver_id',
         'currency_id',
         'truck_id',
-        'status',
-        'payment_method',
-        'payment_status',
     ];
 
     protected function casts(): array
@@ -64,6 +65,10 @@ class Order extends Model
             'status' => OrderStatus::class,
             'payment_method' => OrderPaymentMethod::class,
             'payment_status' => OrderPaymentStatus::class,
+            'currentLocation' => GeoPointCast::class . ':current_location_latitude,current_location_longitude',
+            'pickupLocation' => GeoPointCast::class . ':pickup_location_latitude,pickup_location_longitude',
+            'deliveryLocation' => GeoPointCast::class . ':delivery_location_latitude,delivery_location_longitude',
+            'price' => MoneyCast::class,
         ];
     }
 
@@ -125,5 +130,10 @@ class Order extends Model
     public function scopePendingDriverAssignment(Builder $query)
     {
         return $query->where('status', OrderStatus::PENDING_DRIVER_ASSIGNMENT);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
+    {
+        return $filters->apply($builder);
     }
 }

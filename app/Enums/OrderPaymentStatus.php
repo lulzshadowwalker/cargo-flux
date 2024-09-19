@@ -7,6 +7,7 @@ use Closure;
 enum OrderPaymentStatus: string
 {
     case PENDING = 'PENDING';
+        // case PENDING_APPROVAL = 'PENDING_APPROVAL';
     case APPROVED = 'APPROVED';
     case REJECTED = 'REJECTED';
 

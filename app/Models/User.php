@@ -10,6 +10,7 @@ use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -138,5 +139,16 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
     public function tickets(): HasMany
     {
         return $this->hasMany(SupportTicket::class);
+    }
+
+    public function orders(): HasManyThrough
+    {
+        if ($this->isCustomer) {
+            return $this->hasManyThrough(Order::class, Customer::class);
+        } else if ($this->isDriver) {
+            return $this->hasManyThrough(Order::class, Driver::class);
+        }
+
+        throw new \Exception('User is neither a customer nor a driver');
     }
 }

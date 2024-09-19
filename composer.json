@@ -8,6 +8,7 @@
         "php": "^8.2",
         "bezhansalleh/filament-language-switch": "^3.1",
         "bezhansalleh/filament-shield": "^3.2",
+        "brick/money": "^0.9.0",
         "filament/filament": "^3.2",
         "ibrahimbougaoua/filament-rating-star": "^1.0",
         "laravel/framework": "^11.9",

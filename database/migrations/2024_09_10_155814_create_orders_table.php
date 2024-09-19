@@ -27,9 +27,9 @@ return new class extends Migration
             $table->decimal('current_location_longitude', 10, 7)->nullable();
             $table->dateTime('current_location_recorded_at')->nullable();
             $table->foreignId('customer_id');
-            $table->foreignId('driver_id');
+            $table->foreignId('driver_id')->nullable();
             $table->foreignId('currency_id');
-            $table->foreignId('truck_id');
+            $table->foreignId('truck_id')->nullable();
             $table->timestamps();
         });
     }
