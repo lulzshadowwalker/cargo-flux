@@ -19,8 +19,11 @@ class SupportTicketObserver
             ->title(__('notifications.support-ticket-created.title'))
             ->actions([
                 Action::make('go-to-ticket')
+                    ->button()
+                    ->label('View Ticket')
                     ->url(SupportTicketResource::getUrl('index'))
             ])
+            ->icon('heroicon-o-ticket')
             ->sendToDatabase($admins);
     }
 

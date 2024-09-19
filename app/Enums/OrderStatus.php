@@ -49,4 +49,9 @@ enum OrderStatus: string
             self::CANCELED => 'heroicon-o-x-circle',
         };
     }
+
+    public static function labels(): array
+    {
+        return array_map(fn($e) => $e->label(), self::cases());
+    }
 }

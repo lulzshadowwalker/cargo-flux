@@ -23,7 +23,7 @@ class OrderFactory extends Factory
             'status' => $this->faker->randomElement(OrderStatus::cases())->value,
             'payment_method' => $this->faker->randomElement(OrderPaymentMethod::cases())->value,
             'payment_status' => $this->faker->randomElement(OrderPaymentStatus::cases())->value,
-            'scheduled_at' => $this->faker->dateTime(),
+            'scheduled_at' => rand(0, 1) ? null : now()->addDays($this->faker->numberBetween(1, 30)),
             'pickup_location_latitude' => $this->faker->randomFloat(7, 0, 999.9999999),
             'pickup_location_longitude' => $this->faker->randomFloat(7, 0, 999.9999999),
             'delivery_location_latitude' => $this->faker->randomFloat(7, 0, 999.9999999),
