@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SupportTicketController;
+use App\Http\Controllers\Api\TruckCategoryController;
+use App\Models\TruckCategory;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,3 +35,7 @@ Route::get('/support-tickets/{supportTicket}', [SupportTicketController::class, 
 
 Route::post('/support-tickets', [SupportTicketController::class, 'store'])
     ->name('support-tickets.store');
+
+
+Route::get('/trucks/categories', [TruckCategoryController::class, 'index'])->name('trucks.categories.index');
+Route::get('/trucks/categories/{truckCategory}', [TruckCategoryController::class, 'show'])->name('trucks.categories.show');

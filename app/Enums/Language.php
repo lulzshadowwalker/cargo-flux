@@ -8,6 +8,6 @@ namespace App\Enums;
  */
 enum Language: string
 {
-    case EN = 'EN';
-    case AR = 'AR';
+    case EN = 'en';
+    case AR = 'ar';
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,8 +28,8 @@ class TruckCategory extends Model
         return $this->hasMany(Truck::class);
     }
 
-    //     public function image(): string
-    //     {
-    //         return "image";
-    //     }
+    public function image(): Attribute
+    {
+        return Attribute::get(fn(): string => "https://via.placeholder.com/150");
+    }
 }

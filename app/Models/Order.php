@@ -48,7 +48,6 @@ class Order extends Model
     {
         return [
             'id' => 'integer',
-            'amount' => 'decimal:2',
             'scheduled_at' => 'datetime',
             'pickup_location_latitude' => 'decimal:7',
             'pickup_location_longitude' => 'decimal:7',
@@ -59,6 +58,7 @@ class Order extends Model
             'current_location_recorded_at' => 'datetime',
             'customer_id' => 'integer',
             'driver_id' => 'integer',
+            'amount' => 'decimal:2', // TODO: Money cast 
             'currency_id' => 'integer',
             'truck_id' => 'integer',
             'status' => OrderStatus::class,
