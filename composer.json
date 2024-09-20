@@ -10,6 +10,7 @@
         "bezhansalleh/filament-shield": "^3.2",
         "brick/money": "^0.9.0",
         "filament/filament": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
         "ibrahimbougaoua/filament-rating-star": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/horizon": "^5.28",

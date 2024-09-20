@@ -12,7 +12,7 @@ class TruckCategory extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ['name', 'tonage'];
+    protected $fillable = ['name', 'tonnage'];
 
     protected function casts(): array
     {
