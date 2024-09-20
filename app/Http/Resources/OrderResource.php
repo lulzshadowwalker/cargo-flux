@@ -52,6 +52,7 @@ class OrderResource extends JsonResource
                 'driver' => new DriverResource($this->whenLoaded('driver')),
                 'truck' => new TruckResource($this->whenLoaded('truck')),
                 'reviews' => ReviewResource::collection($this->whenLoaded('reviews')),
+                'truckCategory' => new TruckCategoryResource($this->whenLoaded('truckCategory')),
             ],
         ];
     }

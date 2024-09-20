@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Driver;
 use App\Models\Order;
 use App\Models\Truck;
+use App\Models\TruckCategory;
 
 class OrderFactory extends Factory
 {
@@ -36,6 +37,7 @@ class OrderFactory extends Factory
             'currency_id' => Currency::factory(),
             'truck_id' => Truck::factory(),
             'cargo' => $this->faker->sentence(rand(7, 22)),
+            'truck_category_id' => TruckCategory::factory(),
         ];
     }
 }

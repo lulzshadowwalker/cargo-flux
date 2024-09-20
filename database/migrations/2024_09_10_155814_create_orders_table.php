@@ -30,6 +30,7 @@ return new class extends Migration
             $table->foreignId('customer_id');
             $table->foreignId('driver_id')->nullable();
             $table->foreignId('currency_id');
+            $table->foreignId('truck_category_id');
             $table->foreignId('truck_id')->nullable();
             $table->timestamps();
         });

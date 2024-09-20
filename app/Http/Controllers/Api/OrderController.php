@@ -29,12 +29,14 @@ class OrderController extends ApiController
         $this->authorize('create', Order::class);
 
         $details = $request->mappedAttributes();
+        $details['status'] = OrderStatus::PENDING_APPROVAL;
+        $details['payment_status'] = OrderPaymentStatus::PENDING_APPROVAL;
         if (OrderPaymentMethod::tryFrom($details['payment_method']) === OrderPaymentMethod::ONLINE) {
             $details['payment_status'] = OrderPaymentStatus::APPROVED;
             $details['status'] = OrderStatus::PENDING_DRIVER_ASSIGNMENT;
         }
 
-        $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews');
+        $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews', 'truckCategory');
 
         return OrderResource::make($order);
     }
@@ -43,7 +45,7 @@ class OrderController extends ApiController
     {
         $this->authorize('view', $order);
 
-        $includes = ['customer', 'driver', 'truck', 'reviews'];
+        $includes = ['customer', 'driver', 'truck', 'reviews', 'truckCategory'];
         foreach ($includes as $include) {
             if ($this->include($include)) {
                 $order->load($include);

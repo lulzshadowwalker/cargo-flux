@@ -11,6 +11,7 @@ use App\Filters\QueryFilter;
 use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +40,7 @@ class Order extends Model
         'currency_id',
         'truck_id',
         'cargo',
+        'truck_category_id',
     ];
 
     protected function casts(): array
@@ -130,5 +132,15 @@ class Order extends Model
     public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
     {
         return $filters->apply($builder);
+    }
+
+    public function isScheduled(): Attribute
+    {
+        return Attribute::get(fn() => isset($this->scheduled_at));
+    }
+
+    public function truckCategory(): BelongsTo
+    {
+        return $this->belongsTo(TruckCategory::class);
     }
 }
