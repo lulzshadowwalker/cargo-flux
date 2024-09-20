@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unqiue();
+            $table->string('cargo');
             $table->decimal('amount', 15, 2);
             $table->enum('status', array_map(fn($status) => $status->value, OrderStatus::cases()));
             $table->enum('payment_method', array_map(fn($method) => $method->value, OrderPaymentMethod::cases()));

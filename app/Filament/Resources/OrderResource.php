@@ -119,6 +119,11 @@ class OrderResource extends Resource
                     )
                     ->sortable(),
 
+                Tables\Columns\TextColumn::make('cargo')
+                    ->label(__('filament/resources/order-resource.cargo'))
+                    ->limit(50)
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('amount')
                     ->label(__('filament/resources/order-resource.amount'))
                     ->searchable()

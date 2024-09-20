@@ -15,4 +15,5 @@ return [
     'current-location' => 'Current Location',
     'current-location-recorded-at' => 'Current Location Recorded At',
     'unscheduled' => 'Unscheduled',
+    'cargo' => 'Cargo',
 ];

@@ -19,6 +19,7 @@ class OrderResource extends JsonResource
                 'paymentStatus' => $this->payment_status,
                 'isScheduled' => isset($this->scheduled_at),
                 'scheduledAt' => $this->scheduled_at,
+                'cargo' => $this->cargo,
                 'currentLocation' => [
                     'latitude' => $this->currentLocation->latitude,
                     'longitude' => $this->currentLocation->longitude,
