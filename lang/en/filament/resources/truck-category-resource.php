@@ -8,4 +8,5 @@ return [
     'tonnage-helper-text' => 'The tonnage of the truck category',
     'tonnage-placeholder' => '5',
     'ton' => 'ton|tons',
+    'tonnage-disabled-helper-text' => 'There are already trucks associated with this category',
 ];

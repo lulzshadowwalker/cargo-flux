@@ -8,6 +8,7 @@ use App\Models\TruckCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,6 +22,8 @@ class TruckCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $disabled = $form->getRecord()?->trucks()->exists() ?? false;
+
         return $form
             ->schema([
                 Forms\Components\Section::make(__('filament/resources/truck-category-resource.details'))
@@ -37,11 +40,12 @@ class TruckCategoryResource extends Resource
                             ->translatable(),
 
                         Forms\Components\TextInput::make('tonnage')
-                            ->helperText(__('filament/resources/truck-category-resource.tonnage-helper-text'))
+                            ->helperText($disabled ? __('filament/resources/truck-category-resource.tonnage-disabled-helper-text'): __('filament/resources/truck-category-resource.tonnage-helper-text'))
                             ->placeholder(__('filament/resources/truck-category-resource.tonnage-placeholder'))
                             ->required()
                             ->numeric()
                             ->suffix(trans_choice('filament/resources/truck-category-resource.ton', 10))
+                            ->disabled($disabled)
                             ->minValue(0),
                     ]),
             ]);
@@ -59,6 +63,12 @@ class TruckCategoryResource extends Resource
                     ->formatStateUsing(fn($state) => $state . ' ' . trans_choice('filament/resources/truck-category-resource.ton', $state))
                     ->searchable()
                     ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('trucks')
+                    ->getStateUsing(fn($record) => $record->trucks()->count())
+                    ->badge()
+                    ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')

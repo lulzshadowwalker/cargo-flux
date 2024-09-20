@@ -53,6 +53,8 @@ class EditTruckCategoryTest extends TestCase
 
         $this->category->refresh();
         $this->assertEquals($new->name, $this->category->name);
+
+        // Tonnage is disabled if there are trucks associated with the category
         $this->assertEquals($new->tonnage, $this->category->tonnage);
     }
 }
