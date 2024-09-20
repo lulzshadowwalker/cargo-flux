@@ -20,7 +20,7 @@ return [
         'online' => 'Online',
     ],
     'order-payment-status' => [
-        'pending' => 'Pending',
+        'pending-approval' => 'Pending Approval',
         'approved' => 'Approved',
         'rejected' => 'Rejected',
     ],

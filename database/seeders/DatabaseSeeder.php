@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\DriverStatus;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Customer;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ShieldSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(CurrencySeeder::class);
 
         $customer = Customer::factory()->for(
             User::factory()->create([
@@ -47,10 +49,32 @@ class DatabaseSeeder extends Seeder
             ])
         )->create();
 
-        Driver::factory(1)->create();
+        Driver::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777773',
+                'status' => UserStatus::ACTIVE,
+                'type' => UserType::DRIVER,
+            ])
+        )->create(['status' => DriverStatus::UNDER_REVIEW]);
+
+        Driver::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777774',
+                'status' => UserStatus::ACTIVE,
+                'type' => UserType::DRIVER,
+            ])
+        )->create(['status' => DriverStatus::REJECTED]);
+
+        $driver = Driver::factory()->for(
+            User::factory()->create([
+                'phone' => '+962777777778',
+                'status' => UserStatus::ACTIVE,
+                'type' => UserType::DRIVER,
+            ])
+        )->create(['status' => DriverStatus::APPROVED]);
         // Otp::factory(3)->create();
 
-        Order::factory()->count(20)->for($customer)->create()->each(function (Order $order) {
+        Order::factory()->count(20)->for($customer)->for($driver)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
             $actorId = $actorType === Driver::class ? $order->driver->id : 1;
 

@@ -9,15 +9,17 @@ class OrderPolicy
 {
     public function view(User $user, Order $order): bool
     {
-        // TODO: Cleanup
-        if ($user->isCustomer) {
-            return $user->customer->id === $order->customer_id;
-        }
+        $relation = $user->isCustomer ? 'customer' : 'driver';
+        return $user->$relation->id === $order->{$relation . '_id'};
+    }
 
-        if ($user->isDriver) {
-            return $user->driver->id === $order->driver_id;
-        }
+    public function create(User $user): bool
+    {
+        return $user->isCustomer;
+    }
 
-        return false;
+    public function update(User $user, Order $order): bool
+    {
+        return $user->isDriver && $user->driver->id === $order->driver_id;
     }
 }

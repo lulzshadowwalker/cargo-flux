@@ -8,9 +8,7 @@ use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SupportTicketController;
 use App\Http\Controllers\Api\TruckCategoryController;
-use App\Models\TruckCategory;
 use Illuminate\Support\Facades\Route;
-
 
 Route::post('/auth/otp/send', [OtpController::class, 'send'])->name('otp.send');
 Route::post('/auth/otp/verify', [OtpController::class, 'verify'])->name('otp.verify');
@@ -29,20 +27,18 @@ Route::patch('/me', [ProfileController::class, 'update'])->middleware('auth:sanc
 Route::get('/support-tickets', [SupportTicketController::class, 'index'])
     ->middleware('auth:sanctum')
     ->name('support-tickets.index');
-
 Route::get('/support-tickets/{supportTicket}', [SupportTicketController::class, 'show'])
     ->middleware('auth:sanctum')
     ->name('support-tickets.show');
-
 Route::post('/support-tickets', [SupportTicketController::class, 'store'])
     ->name('support-tickets.store');
-
 
 Route::get('/trucks/categories', [TruckCategoryController::class, 'index'])->name('trucks.categories.index');
 Route::get('/trucks/categories/{truckCategory}', [TruckCategoryController::class, 'show'])->name('trucks.categories.show');
 
-Route::middleware('auth:sanctum')
-    ->group(function () {
-        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+});

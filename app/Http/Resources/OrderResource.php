@@ -21,8 +21,8 @@ class OrderResource extends JsonResource
                 'scheduledAt' => $this->scheduled_at,
                 'cargo' => $this->cargo,
                 'currentLocation' => [
-                    'latitude' => $this->currentLocation->latitude,
-                    'longitude' => $this->currentLocation->longitude,
+                    'latitude' => $this->currentLocation?->latitude,
+                    'longitude' => $this->currentLocation?->longitude,
                     'recordedAt' => $this->current_location_recorded_at,
                 ],
                 'pickupLocation' => [

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\OrderPaymentMethod;
+use App\Enums\OrderPaymentStatus;
+use App\Enums\OrderStatus;
 use App\Filters\OrderFilter;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -13,18 +16,27 @@ class OrderController extends ApiController
 {
     public function index(OrderFilter $filters)
     {
-        if (Auth::user()->isCustomer) {
-            $orders = Auth::user()->customer->orders()->filter($filters)->get();
-        } else {
-            $orders = Auth::user()->driver->orders()->filter($filters)->get();
-        }
+        $user = Auth::user();
+        $relation = $user->isCustomer ? 'customer' : 'driver';
+
+        $orders = $user->$relation->orders()->filter($filters)->get();
 
         return OrderResource::collection($orders);
     }
 
     public function store(StoreOrderRequest $request)
     {
-        //
+        $this->authorize('create', Order::class);
+
+        $details = $request->mappedAttributes();
+        if (OrderPaymentMethod::tryFrom($details['payment_method']) === OrderPaymentMethod::ONLINE) {
+            $details['payment_status'] = OrderPaymentStatus::APPROVED;
+            $details['status'] = OrderStatus::PENDING_DRIVER_ASSIGNMENT;
+        }
+
+        $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews');
+
+        return OrderResource::make($order);
     }
 
     public function show(string $language, Order $order)
@@ -41,13 +53,12 @@ class OrderController extends ApiController
         return OrderResource::make($order);
     }
 
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(string $language, UpdateOrderRequest $request, Order $order)
     {
-        //
-    }
+        $this->authorize('update', $order);
 
-    public function destroy(Order $order)
-    {
-        //
+        $order->update($request->mappedAttributes()->toArray());
+
+        return OrderResource::make($order);
     }
 }

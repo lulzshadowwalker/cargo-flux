@@ -20,7 +20,7 @@ return [
         'online' => 'عبر الإنترنت',
     ],
     'order-payment-status' => [
-        'pending' => 'قيد الانتظار',
+        'pending-approval' => 'بانتظار الموافقة',
         'approved' => 'موافق عليه',
         'rejected' => 'مرفوض',
     ],

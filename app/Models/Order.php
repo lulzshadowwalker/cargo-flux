@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 #[ObservedBy(OrderObserver::class)]
 class Order extends Model
@@ -23,7 +22,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        // 'amount',
+        'amount',
         'status',
         'payment_method',
         'payment_status',
@@ -39,6 +38,7 @@ class Order extends Model
         'driver_id',
         'currency_id',
         'truck_id',
+        'cargo',
     ];
 
     protected function casts(): array
@@ -55,7 +55,6 @@ class Order extends Model
             'current_location_recorded_at' => 'datetime',
             'customer_id' => 'integer',
             'driver_id' => 'integer',
-            'amount' => 'decimal:2', // TODO: Money cast
             'currency_id' => 'integer',
             'truck_id' => 'integer',
             'status' => OrderStatus::class,

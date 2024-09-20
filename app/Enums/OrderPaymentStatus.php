@@ -6,15 +6,14 @@ use Closure;
 
 enum OrderPaymentStatus: string
 {
-    case PENDING = 'PENDING';
-        // case PENDING_APPROVAL = 'PENDING_APPROVAL';
+    case PENDING_APPROVAL = 'PENDING_APPROVAL';
     case APPROVED = 'APPROVED';
     case REJECTED = 'REJECTED';
 
     public function color(): string|array|bool|Closure|null
     {
         return match ($this) {
-            self::PENDING => 'warning',
+            self::PENDING_APPROVAL => 'warning',
             self::APPROVED => 'success',
             self::REJECTED => 'danger',
         };
@@ -23,7 +22,7 @@ enum OrderPaymentStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::PENDING => __('enums.order-payment-status.pending'),
+            self::PENDING_APPROVAL => __('enums.order-payment-status.pendinga-approval'),
             self::APPROVED => __('enums.order-payment-status.approved'),
             self::REJECTED => __('enums.order-payment-status.rejected'),
         };
@@ -32,7 +31,7 @@ enum OrderPaymentStatus: string
     public function icon(): string
     {
         return match ($this) {
-            self::PENDING => 'heroicon-o-clock',
+            self::PENDING_APPROVAL => 'heroicon-o-clock',
             self::APPROVED => 'heroicon-o-check-circle',
             self::REJECTED => 'heroicon-o-x-circle',
         };
