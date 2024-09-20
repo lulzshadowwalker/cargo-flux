@@ -2,25 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\PageObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use Illuminate\Support\Str;
 
+#[ObservedBy(PageObserver::class)]
 class Page extends Model
 {
     use HasFactory, HasTranslations;
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($page) {
-            if (empty($page->slug)) {
-                $page->slug = Str::slug($page->getTranslation('title', 'en'));
-            }
-        });
-    }
 
     protected $fillable = ['title', 'slug', 'content'];
 

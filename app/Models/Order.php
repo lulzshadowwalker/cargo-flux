@@ -8,6 +8,8 @@ use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
 use App\Filters\QueryFilter;
+use App\Observers\OrderObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,16 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+#[ObservedBy(OrderObserver::class)]
 class Order extends Model
 {
     use HasFactory;
-
-    protected static function booted(): void
-    {
-        static::creating(function ($order) {
-            $order->number = strtoupper(uniqid('ORDER-'));
-        });
-    }
 
     protected $fillable = [
         // 'amount',
@@ -59,7 +55,7 @@ class Order extends Model
             'current_location_recorded_at' => 'datetime',
             'customer_id' => 'integer',
             'driver_id' => 'integer',
-            'amount' => 'decimal:2', // TODO: Money cast 
+            'amount' => 'decimal:2', // TODO: Money cast
             'currency_id' => 'integer',
             'truck_id' => 'integer',
             'status' => OrderStatus::class,

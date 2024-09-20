@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enums\SupportTicketStatus;
 use App\Enums\UserType;
 use App\Filament\Resources\SupportTicketResource;
 use App\Models\SupportTicket;
@@ -11,6 +12,15 @@ use Filament\Notifications\Notification;
 
 class SupportTicketObserver
 {
+    public function creating(SupportTicket $supportTicket): void
+    {
+        $supportTicket->number = strtoupper(uniqid('TICKET-'));
+
+        if (! $supportTicket->status) {
+            $supportTicket->status = SupportTicketStatus::OPEN;
+        }
+    }
+
     public function created(SupportTicket $supportTicket): void
     {
         $admins = User::whereType(UserType::ADMIN)->get();
@@ -25,25 +35,5 @@ class SupportTicketObserver
             ])
             ->icon('heroicon-o-ticket')
             ->sendToDatabase($admins);
-    }
-
-    public function updated(SupportTicket $supportTicket): void
-    {
-        //
-    }
-
-    public function deleted(SupportTicket $supportTicket): void
-    {
-        //
-    }
-
-    public function restored(SupportTicket $supportTicket): void
-    {
-        //
-    }
-
-    public function forceDeleted(SupportTicket $supportTicket): void
-    {
-        //
     }
 }

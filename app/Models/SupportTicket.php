@@ -15,19 +15,6 @@ class SupportTicket extends Model
 {
     use HasFactory;
 
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function (SupportTicket $ticket): void {
-            $ticket->number = strtoupper(uniqid('TICKET-'));
-
-            if (! $ticket->status) {
-                $ticket->status = SupportTicketStatus::OPEN;
-            }
-        });
-    }
-
     protected $fillable = [
         'subject',
         'message',
