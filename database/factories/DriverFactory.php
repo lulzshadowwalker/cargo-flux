@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\DriverStatus;
+use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Driver;
@@ -17,7 +18,7 @@ class DriverFactory extends Factory
         return [
             'status' => $this->faker->randomElement(DriverStatus::cases())->value,
             'iban' => $this->faker->word(),
-            'user_id' => User::factory(),
+            'user_id' => User::factory()->create(['type' => UserType::DRIVER]),
         ];
     }
 }
