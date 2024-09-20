@@ -7,6 +7,7 @@ use App\Enums\UserType;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -72,12 +73,17 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
 
     /**
      * Checks if the user's base type is admin.
-     * 
+     *
      * Further roles and permissions may be assigned in the admin dashboard using Filament Shield.
      */
     public function isAdmin(): Attribute
     {
         return Attribute::get(fn(): bool => $this->type === UserType::ADMIN);
+    }
+
+    public function scopeAdmins(Builder $query): Builder
+    {
+        return $query->where('type', UserType::ADMIN);
     }
 
     public function getJWTIdentifier()

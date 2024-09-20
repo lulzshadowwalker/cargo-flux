@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Enums\SupportTicketStatus;
-use App\Enums\UserType;
 use App\Filament\Resources\SupportTicketResource;
 use App\Models\SupportTicket;
 use App\Models\User;
@@ -23,7 +22,7 @@ class SupportTicketObserver
 
     public function created(SupportTicket $supportTicket): void
     {
-        $admins = User::whereType(UserType::ADMIN)->get();
+        $admins = User::admins()->get();
 
         Notification::make()
             ->title(__('notifications.support-ticket-created.title'))
