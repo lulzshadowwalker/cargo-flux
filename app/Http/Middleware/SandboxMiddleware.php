@@ -28,7 +28,7 @@ class SandboxMiddleware
             Config::set('telescope.storage.database.connection', 'sandbox');
 
             if (Cache::get('sandbox-seeded') !== true) {
-                $result = Artisan::call('migrate:fresh', ['--seed' => true]);
+                $result = Artisan::call('migrate:fresh', ['--seed' => true], ['--database' => 'sandbox']);
                 if ($result !== 0) {
                     abort(Response::HTTP_INTERNAL_SERVER_ERROR, 'Failed to seed the sandbox database.');
                 }

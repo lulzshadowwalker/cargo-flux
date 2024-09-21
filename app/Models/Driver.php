@@ -72,4 +72,32 @@ class Driver extends Model
     {
         return Attribute::get(fn() => $this->user->phone);
     }
+
+    public function isApproved(): Attribute
+    {
+        return Attribute::get(fn() => $this->status === DriverStatus::APPROVED);
+    }
+
+    public function isRejected(): Attribute
+    {
+        return Attribute::get(fn() => $this->status === DriverStatus::REJECTED);
+    }
+
+    public function isUnderReview(): Attribute
+    {
+        return Attribute::get(fn() => $this->status === DriverStatus::UNDER_REVIEW);
+    }
+
+    public function approve(): void
+    {
+        // TODO: Dispatch event .. 
+        $this->status = DriverStatus::APPROVED;
+        $this->save();
+    }
+
+    public function reject(): void
+    {
+        $this->status = DriverStatus::REJECTED;
+        $this->save();
+    }
 }
