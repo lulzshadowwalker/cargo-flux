@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateDriverProfileRequest;
 use App\Http\Resources\DriverResource;
 use Illuminate\Support\Facades\Auth;
 
-class DriverProfileController extends ApiController implements ProfileController
+class DriverProfileController extends ApiController // implements ProfileController
 {
     public function index()
     {
@@ -20,9 +20,9 @@ class DriverProfileController extends ApiController implements ProfileController
      * @param  UpdateDriverProfileRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update($request)
+    public function update(UpdateDriverProfileRequest $request)
     {
-        Auth::user()->update($request->mappedAttributes());
+        Auth::user()->update($request->mappedAttributes()->toArray());
         return DriverResource::make(Auth::user()->driver);
     }
 }

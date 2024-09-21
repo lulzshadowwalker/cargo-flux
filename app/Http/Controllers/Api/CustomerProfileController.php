@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerProfileController extends ApiController implements ProfileController
+class CustomerProfileController extends ApiController // implements ProfileController
 {
     public function index()
     {
@@ -20,9 +20,9 @@ class CustomerProfileController extends ApiController implements ProfileControll
      * @param  UpdateCustomerProfileRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update($request)
+    public function update(UpdateCustomerProfileRequest $request)
     {
-        Auth::user()->update($request->mappedAttributes());
+        Auth::user()->update($request->mappedAttributes()->toArray());
         return CustomerResource::make(Auth::user()->customer);
     }
 }
