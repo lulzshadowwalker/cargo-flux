@@ -2,13 +2,17 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "bezhansalleh/filament-language-switch": "^3.1",
         "bezhansalleh/filament-shield": "^3.2",
         "brick/money": "^0.9.0",
+        "fakerphp/faker": "^1.23",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "ibrahimbougaoua/filament-rating-star": "^1.0",
@@ -26,7 +30,6 @@
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
         "laravel-shift/blueprint": "^2.10",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
