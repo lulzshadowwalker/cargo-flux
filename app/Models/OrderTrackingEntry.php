@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Support\SystemActor;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,5 +42,20 @@ class OrderTrackingEntry extends Model
     public function actor(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function isSystemActor(): Attribute
+    {
+        return Attribute::get(fn() => $this->actor_type === SystemActor::class);
+    }
+
+    public function isCustomer(): Attribute
+    {
+        return Attribute::get(fn() => $this->actor_type === Customer::class);
+    }
+
+    public function isDriver(): Attribute
+    {
+        return Attribute::get(fn() => $this->actor_type === Driver::class);
     }
 }

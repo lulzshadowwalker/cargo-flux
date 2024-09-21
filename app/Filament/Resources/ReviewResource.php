@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReviewResource\Pages;
+use App\Filament\Resources\ReviewResource\RelationManagers\OrderRelationManager;
+use App\Filament\Resources\ReviewResource\RelationManagers\ReviewerRelationManager;
 use App\Filament\Resources\ReviewResource\Widgets\ReviewsStatsWidget;
 use App\Models\Review;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -89,8 +91,7 @@ class ReviewResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 // TODO: Better format the layout of the view page and add relation managers
-                ViewAction::make()
-                    ->slideOver(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -102,7 +103,8 @@ class ReviewResource extends Resource implements HasShieldPermissions
     public static function getRelations(): array
     {
         return [
-            //
+            OrderRelationManager::class,
+            ReviewerRelationManager::class,
         ];
     }
 
@@ -110,6 +112,7 @@ class ReviewResource extends Resource implements HasShieldPermissions
     {
         return [
             'index' => Pages\ListReviews::route('/'),
+            'view' => Pages\ViewReview::route('/{record}'),
         ];
     }
 

@@ -22,7 +22,7 @@ enum OrderPaymentStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::PENDING_APPROVAL => __('enums.order-payment-status.pendinga-approval'),
+            self::PENDING_APPROVAL => __('enums.order-payment-status.pending-approval'),
             self::APPROVED => __('enums.order-payment-status.approved'),
             self::REJECTED => __('enums.order-payment-status.rejected'),
         };

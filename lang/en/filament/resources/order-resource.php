@@ -16,4 +16,8 @@ return [
     'current-location-recorded-at' => 'Current Location Recorded At',
     'unscheduled' => 'Unscheduled',
     'cargo' => 'Cargo',
+    'actor-type' => 'Actor Type',
+    'actor' => 'Actor',
+    'system' => 'System',
+    'unknown' => 'Unknown',
 ];

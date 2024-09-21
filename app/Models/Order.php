@@ -141,6 +141,6 @@ class Order extends Model
 
     public function truckCategory(): BelongsTo
     {
-        return $this->belongsTo(TruckCategory::class);
+        return $this->belongsTo(TruckCategory::class, 'truck_category_id');
     }
 }

@@ -20,6 +20,7 @@ class OrderPolicy
 
     public function update(User $user, Order $order): bool
     {
-        return $user->isDriver && $user->driver->id === $order->driver_id;
+        $isAssignedDriver =  $user->isDriver && $user->driver->id === $order->driver_id;
+        return $isAssignedDriver || $user->isAdmin;
     }
 }

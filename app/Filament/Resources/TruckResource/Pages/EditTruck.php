@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\TruckResource\Pages;
 
 use App\Filament\Resources\TruckResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditTruck extends EditRecord
@@ -13,7 +12,7 @@ class EditTruck extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            //
         ];
     }
 }

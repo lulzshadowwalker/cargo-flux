@@ -9,4 +9,10 @@ return [
     'tonnage-placeholder' => '5',
     'ton' => 'ton|tons',
     'tonnage-disabled-helper-text' => 'There are already trucks associated with this category',
+    'name' => 'Name',
+    'tonnage' => 'Tonnage',
+    'trucks' => 'Trucks',
+    'orders' => 'Orders',
+    'created-at' => 'Created At',
+    'updated-at' => 'Updated At',
 ];

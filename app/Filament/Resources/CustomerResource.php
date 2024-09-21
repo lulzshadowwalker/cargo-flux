@@ -6,6 +6,9 @@ use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
+use App\Filament\Resources\CustomerResource\RelationManagers\ReviewsRelationManager;
+use App\Filament\Resources\CustomerResource\RelationManagers\TicketsRelationManager;
 use App\Models\Customer;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
@@ -104,6 +107,8 @@ class CustomerResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('activate')
                         ->label(__('filament/resources/customer-resource.activate'))
@@ -125,7 +130,6 @@ class CustomerResource extends Resource implements HasShieldPermissions
                         ->icon(UserStatus::BANNED->icon())
                         ->visible(fn($record) => !$record->user->isBanned)
                         ->action(fn($record) => $record->user->ban()),
-
                 ])
             ])
             ->bulkActions([
@@ -138,7 +142,9 @@ class CustomerResource extends Resource implements HasShieldPermissions
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class,
+            ReviewsRelationManager::class,
+            // TicketsRelationManager::class,
         ];
     }
 
@@ -146,7 +152,7 @@ class CustomerResource extends Resource implements HasShieldPermissions
     {
         return [
             'index' => Pages\ListCustomers::route('/'),
-            // 'view' => Pages\ViewCustomer::route('/{record}'),
+            'edit' => Pages\EditCustomer::route('/{record}'),
         ];
     }
 

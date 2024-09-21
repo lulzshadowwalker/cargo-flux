@@ -27,11 +27,11 @@ class ListSupportTicketsTest extends TestCase
             ->assertCanSeeTableRecords($items);
     }
 
-    public function test_records_have_a_view_action()
+    public function test_records_have_an_edit_action()
     {
         SupportTicket::factory()->create();
 
         Livewire::test(ListSupportTickets::class)
-            ->assertSeeText('View');
+            ->assertSeeText('Edit');
     }
 }

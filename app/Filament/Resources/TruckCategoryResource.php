@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TruckCategoryResource\Pages;
 use App\Filament\Resources\TruckCategoryResource\RelationManagers;
+use App\Filament\Resources\TruckCategoryResource\RelationManagers\OrdersRelationManager;
+use App\Filament\Resources\TruckCategoryResource\RelationManagers\TrucksRelationManager;
 use App\Models\TruckCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -40,7 +42,7 @@ class TruckCategoryResource extends Resource
                             ->translatable(),
 
                         Forms\Components\TextInput::make('tonnage')
-                            ->helperText($disabled ? __('filament/resources/truck-category-resource.tonnage-disabled-helper-text'): __('filament/resources/truck-category-resource.tonnage-helper-text'))
+                            ->helperText($disabled ? __('filament/resources/truck-category-resource.tonnage-disabled-helper-text') : __('filament/resources/truck-category-resource.tonnage-helper-text'))
                             ->placeholder(__('filament/resources/truck-category-resource.tonnage-placeholder'))
                             ->required()
                             ->numeric()
@@ -56,27 +58,39 @@ class TruckCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('filament/resources/truck-category-resource.name'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('tonnage')
+                    ->label(__('filament/resources/truck-category-resource.tonnage'))
                     ->formatStateUsing(fn($state) => $state . ' ' . trans_choice('filament/resources/truck-category-resource.ton', $state))
                     ->searchable()
                     ->badge()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('trucks')
+                    ->label(__('filament/resources/truck-category-resource.trucks'))
                     ->getStateUsing(fn($record) => $record->trucks()->count())
                     ->badge()
                     ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af'))
                     ->sortable(),
 
+                Tables\Columns\TextColumn::make('orders')
+                    ->label(__('filament/resources/truck-category-resource.orders'))
+                    ->getStateUsing(fn($record) => $record->orders()->count())
+                    ->badge()
+                    ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af'))
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('filament/resources/truck-category-resource.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('filament/resources/truck-category-resource.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -88,16 +102,15 @@ class TruckCategoryResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            TrucksRelationManager::class,
+            OrdersRelationManager::class,
         ];
     }
 

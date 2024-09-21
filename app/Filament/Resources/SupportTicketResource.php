@@ -139,10 +139,7 @@ class SupportTicketResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
-
-                Tables\Actions\ViewAction::make()
-                    ->slideOver(),
+                Tables\Actions\EditAction::make(),
 
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('open')
@@ -186,7 +183,7 @@ class SupportTicketResource extends Resource
     {
         return [
             'index' => Pages\ListSupportTickets::route('/'),
-            // 'edit' => Pages\EditSupportTicket::route('/{record}/edit'),
+            'edit' => Pages\EditSupportTicket::route('/{record}/edit'),
         ];
     }
 

@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\DriverResource\RelationManagers\ReviewsRelationManager;
+use App\Filament\Resources\DriverResource\RelationManagers\TicketsRelationManager;
 use App\Filament\Resources\DriverResource\Pages;
-use App\Filament\Resources\DriverResource\RelationManagers;
+use App\Filament\Resources\DriverResource\RelationManagers\OrdersRelationManager;
+use App\Filament\Resources\DriverResource\RelationManagers\TruckRelationManager;
 use App\Models\Driver;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DriverResource extends Resource
 {
@@ -68,7 +69,10 @@ class DriverResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TruckRelationManager::class,
+            OrdersRelationManager::class,
+            // TicketsRelationManager::class,
+            ReviewsRelationManager::class,
         ];
     }
 

@@ -3,6 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TruckResource\Pages;
+use App\Filament\Resources\TruckResource\RelationManagers\CategoryRelationManager;
+use App\Filament\Resources\TruckResource\RelationManagers\DriverRelationManager;
+use App\Filament\Resources\TruckResource\RelationManagers\OrdersRelationManager;
 use App\Models\Truck;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -91,19 +94,19 @@ class TruckResource extends Resource
                 //
             ])
             ->actions([
-                //
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            DriverRelationManager::class,
+            OrdersRelationManager::class,
+            CategoryRelationManager::class,
         ];
     }
 
@@ -111,6 +114,7 @@ class TruckResource extends Resource
     {
         return [
             'index' => Pages\ListTrucks::route('/'),
+            'edit' => Pages\EditTruck::route('/{record}/edit'),
         ];
     }
 }

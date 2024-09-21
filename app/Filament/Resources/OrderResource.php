@@ -7,12 +7,19 @@ use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\CustomerRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\DriverRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\ReviewsRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\TrackingRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\TruckCategoryRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\TruckRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -126,6 +133,7 @@ class OrderResource extends Resource
 
                 Tables\Columns\TextColumn::make('amount')
                     ->label(__('filament/resources/order-resource.amount'))
+                    ->money(currency: fn($record) => $record->currency->code)
                     ->searchable()
                     ->sortable(),
 
@@ -134,7 +142,6 @@ class OrderResource extends Resource
                     ->badge()
                     ->color(fn($state) => $state->color())
                     ->formatStateUsing(fn($state) => $state->label())
-                    ->tooltip(fn($record) => implode(', ', OrderPaymentMethod::labels()))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('payment_status')
@@ -142,7 +149,6 @@ class OrderResource extends Resource
                     ->badge()
                     ->color(fn($state) => $state->color())
                     ->formatStateUsing(fn($state) => $state->label())
-                    ->tooltip(fn($record) => implode(', ', OrderPaymentStatus::labels()))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
@@ -151,7 +157,6 @@ class OrderResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn($state) => $state->label())
                     ->color(fn($state) => $state->color())
-                    ->tooltip(fn($record) => implode(', ', OrderStatus::labels()))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('scheduled_at')
@@ -177,7 +182,7 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -189,7 +194,12 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CustomerRelationManager::class,
+            DriverRelationManager::class,
+            TruckRelationManager::class,
+            TrackingRelationManager::class,
+            ReviewsRelationManager::class,
+            TruckCategoryRelationManager::class,
         ];
     }
 
@@ -197,8 +207,7 @@ class OrderResource extends Resource
     {
         return [
             'index' => Pages\ListOrders::route('/'),
-            // 'create' => Pages\CreateOrder::route('/create'),
-            // 'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
 }
