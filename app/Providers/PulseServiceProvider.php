@@ -16,11 +16,7 @@ class PulseServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Gate::define('viewPulse', function (User $user) {
-            return true;
-            // TODO: Add the email addresses of users who should be able to access Pulse.
-            // return $user->isAdmin();
-        });
+        Gate::define('viewPulse', fn(User $user) => $user->isAdmin);
 
         Pulse::user(fn($user) => [
             'name' => $user->fullName,
