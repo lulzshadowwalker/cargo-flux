@@ -20,22 +20,22 @@ class SandboxMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $subdomain = explode('.', $request->getHost())[0];
-        if ($subdomain === config('app.sandbox_subdomain')) {
-            Config::set('env', 'sandbox');
-            Config::set('session.driver', 'file');
-            Config::set('mail.driver', 'log');
-            Config::set('database.default', 'sandbox');
-            Config::set('telescope.storage.database.connection', 'sandbox');
+        // if ($subdomain === config('app.sandbox_subdomain')) {
+        //     Config::set('env', 'sandbox');
+        //     Config::set('session.driver', 'file');
+        //     Config::set('mail.driver', 'log');
+        //     Config::set('database.default', 'sandbox');
+        //     Config::set('telescope.storage.database.connection', 'sandbox');
 
-            if (Cache::get('sandbox-seeded') !== true) {
-                $result = Artisan::call('migrate:fresh', ['--seed' => true, '--database' => 'sandbox']);
-                if ($result !== 0) {
-                    abort(Response::HTTP_INTERNAL_SERVER_ERROR, 'Failed to seed the sandbox database.');
-                }
+        if (Cache::get('sandbox-seeded') !== true) {
+            $result = Artisan::call('migrate:fresh', ['--seed' => true, '--database' => 'sandbox']);
+            // if ($result !== 0) {
+            //     abort(Response::HTTP_INTERNAL_SERVER_ERROR, 'Failed to seed the sandbox database.');
+            // }
 
-                Cache::put('sandbox-seeded', true);
-            }
+            Cache::put('sandbox-seeded', true);
         }
+        // }
 
         return $next($request);
     }
