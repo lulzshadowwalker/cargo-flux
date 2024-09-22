@@ -52,7 +52,7 @@ class StoreOrderRequest extends BaseFormRequest
             'data.relationships.truckCategory.data.id' => 'truck_category_id',
         ], [
             ...$extraAttributes,
-            'customer_id' => Auth::user()->id,
+            'customer_id' => Auth::user()->customer->id,
             'currency_id' => Currency::whereCode($this->input('data.attributes.price.currency'))->first()->id,
         ]);
     }

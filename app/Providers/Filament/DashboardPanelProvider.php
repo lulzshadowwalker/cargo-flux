@@ -79,7 +79,6 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->middleware([
                 EncryptCookies::class,
-                SandboxMiddleware::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
@@ -88,7 +87,6 @@ class DashboardPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                SandboxMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
