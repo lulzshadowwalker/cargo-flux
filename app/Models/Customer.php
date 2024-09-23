@@ -16,6 +16,7 @@ class Customer extends Model
 
     protected $fillable = [
         'user_id',
+        'company_name',
     ];
 
     protected function casts(): array

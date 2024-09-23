@@ -8,6 +8,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
 {
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
+        dd('customer');
         return $this->mapped([
             'data.attributes.firstName' => 'first_name',
             'data.attributes.lastName' => 'last_name',
@@ -25,7 +26,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
         return [
             'data.attributes.firstName' => ['required', 'string', 'max:255'],
             'data.attributes.lastName' => ['required', 'string', 'max:255'],
-            'data.attributes.companyName' => ['sometimes', 'string', 'max:255'],
+            'data.attributes.companyName' => ['nullable', 'string', 'max:255'],
             'data.attributes.dateOfBirth' => ['nullable', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
         ];

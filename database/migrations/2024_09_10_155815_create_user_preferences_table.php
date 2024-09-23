@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('user_preferences', function (Blueprint $table) {
             $table->id();
-            $table->enum('language', array_map(fn($language) => $language->value, Language::cases()));
+            $table->enum('language', array_map(fn($language) => $language->value, Language::cases()))->default(Language::EN);
             $table->foreignId('user_id');
             $table->timestamps();
         });

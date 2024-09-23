@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Contracts\RegisterationService;
 use App\Enums\UserType;
+use App\Http\Requests\DriverRegisterationRequest;
 use App\Models\User;
 
 class DriverRegisterationService implements RegisterationService
 {
     /**
      * Register a user based on the provided form request data.
-     * 
+     *
      * @param DriverRegisterationRequest $request
      * @return User
      */

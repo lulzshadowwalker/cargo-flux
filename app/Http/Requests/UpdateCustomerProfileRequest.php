@@ -11,6 +11,7 @@ class UpdateCustomerProfileRequest extends BaseFormRequest
         return $this->mapped([
             'data.attributes.firstName' => 'first_name',
             'data.attributes.lastName' => 'last_name',
+            'data.attributes.companyName' => 'company_name',
             'data.attributes.email' => 'email',
         ], $extraAttributes);
     }
@@ -24,6 +25,7 @@ class UpdateCustomerProfileRequest extends BaseFormRequest
             'data.attributes.firstName' => 'sometimes|string',
             'data.attributes.lastName' => 'sometimes|string',
             'data.attributes.email' => 'sometimes|email',
+            'data.attributes.companyName' => 'nullable|string'
         ];
     }
 }
