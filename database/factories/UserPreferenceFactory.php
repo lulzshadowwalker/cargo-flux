@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Enums\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\UserPreference;
+use Illuminate\Support\Str;
 
 class UserPreferenceFactory extends Factory
 {
@@ -14,7 +15,7 @@ class UserPreferenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'language' => $this->faker->randomElement(["en", "ar"]),
+            'language' => $this->faker->randomElement(array_map(fn ($language) => Str::lower($language->value), Language::cases())),
             'user_id' => User::factory(),
         ];
     }

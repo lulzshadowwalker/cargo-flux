@@ -61,6 +61,11 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
         return $this->hasOne(Driver::class);
     }
 
+    public function preferences(): HasOne
+    {
+        return $this->hasOne(UserPreference::class);
+    }
+
     public function isCustomer(): Attribute
     {
         return Attribute::get(fn(): bool => $this->type === UserType::CUSTOMER);

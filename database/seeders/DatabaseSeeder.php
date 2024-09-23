@@ -14,6 +14,7 @@ use App\Models\Page;
 use App\Models\Review;
 use App\Models\SupportTicket;
 use App\Models\User;
+use App\Models\UserPreference;
 use App\Support\SystemActor;
 use Illuminate\Database\Seeder;
 
@@ -25,13 +26,16 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CurrencySeeder::class);
 
-        $customer = Customer::factory()->for(
-            User::factory()->create([
-                'phone' => '+962777777777',
-                'status' => UserStatus::ACTIVE,
-                'type' => UserType::CUSTOMER,
-            ])
-        )->create();
+        $customer = Customer::factory()
+            ->for(
+                User::factory()
+                    ->has(UserPreference::factory(), 'preferences')
+                    ->create([
+                        'phone' => '+962777777777',
+                        'status' => UserStatus::ACTIVE,
+                        'type' => UserType::CUSTOMER,
+                    ])
+            )->create();
 
         Customer::factory()->for(
             User::factory()->create([

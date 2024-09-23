@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SupportTicketController;
 use App\Http\Controllers\Api\TruckCategoryController;
+use App\Http\Controllers\Api\UserPreferenceController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/otp/send', [OtpController::class, 'send'])->name('otp.send');
@@ -23,6 +24,9 @@ Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faq.show');
 
 Route::get('/me', [ProfileController::class, 'index'])->middleware('auth:sanctum')->name('profile.index');
 Route::patch('/me', [ProfileController::class, 'update'])->middleware('auth:sanctum')->name('profile.update');
+
+Route::get('/me/preferences', [UserPreferenceController::class, 'index'])->middleware('auth:sanctum')->name('profile.preferences.index');
+Route::patch('/me/preferences', [UserPreferenceController::class, 'update'])->middleware('auth:sanctum')->name('profile.preferences.update');
 
 Route::get('/support-tickets', [SupportTicketController::class, 'index'])
     ->middleware('auth:sanctum')
