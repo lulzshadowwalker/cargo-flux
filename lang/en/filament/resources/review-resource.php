@@ -16,4 +16,5 @@ return [
     'decrease' => 'decrease',
     'reviews-count' => 'Reviews Count',
     'average-rating' => 'Average Rating',
+    'review' => 'Review',
 ];

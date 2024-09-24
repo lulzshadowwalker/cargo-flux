@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
+use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
 use IbrahimBougaoua\FilamentRatingStar\Columns\RatingStarColumn;
 
 class ReviewResource extends Resource implements HasShieldPermissions
@@ -26,20 +27,17 @@ class ReviewResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('rating')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Textarea::make('comment')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('reviewer_type')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('reviewer_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Select::make('order_id')
-                    ->relationship('order', 'id')
-                    ->required(),
+                Forms\Components\Section::make(__('filament/resources/review-resource.review'))
+                    ->aside()
+                    ->schema([
+                        RatingStar::make('rating')
+                            ->label(__('filament/resources/review-resource.rating')),
+
+                        Forms\Components\Textarea::make('comment')
+                            ->label(__('filament/resources/review-resource.comment'))
+                            ->columnSpanFull()
+                            ->rows(8),
+                    ]),
             ]);
     }
 
@@ -48,6 +46,7 @@ class ReviewResource extends Resource implements HasShieldPermissions
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('reviewer')
+                    ->label(__('filament/resources/review-resource.reviewer'))
                     ->getStateUsing(fn($record) => $record->reviewer->user->fullName)
                     ->description(fn($record) => $record->reviewer->user->phone)
                     ->sortable()
