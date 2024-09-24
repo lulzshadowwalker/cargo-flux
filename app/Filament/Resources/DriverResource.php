@@ -34,60 +34,39 @@ class DriverResource extends Resource
                     ->description(__('filament/resources/driver-resource.driver-information-description'))
                     ->aside()
                     ->schema([
-                        Forms\Components\TextInput::make('user.first_name')
-                            ->label(__('filament/resources/driver-resource.first-name'))
-                            ->placeholder(__('filament/resources/driver-resource.first-name-placeholder'))
-                            ->maxLength(255)
-                            ->required(),
+                        Forms\Components\Group::make()
+                            ->relationship('user')
+                            ->schema([
+                                Forms\Components\TextInput::make('first_name')
+                                    ->label(__('filament/resources/driver-resource.first-name'))
+                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder'))
+                                    ->maxLength(255)
+                                    ->required(),
 
-                        Forms\Components\TextInput::make('user.last_name')
-                            ->label(__('filament/resources/driver-resource.last-name'))
-                            ->placeholder(__('filament/resources/driver-resource.last-name-placeholder'))
-                            ->maxLength(255)
-                            ->required(),
+                                Forms\Components\TextInput::make('last_name')
+                                    ->label(__('filament/resources/driver-resource.last-name'))
+                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder'))
+                                    ->maxLength(255)
+                                    ->required(),
 
-                        Forms\Components\TextInput::make('user.phone')
-                            ->label(__('filament/resources/driver-resource.phone'))
-                            ->placeholder(__('filament/resources/driver-resource.phone-placeholder'))
-                            ->maxLength(20)
-                            ->required(),
+                                Forms\Components\TextInput::make('phone')
+                                    ->label(__('filament/resources/driver-resource.phone'))
+                                    ->placeholder(__('filament/resources/driver-resource.phone-placeholder'))
+                                    ->maxLength(20)
+                                    ->disabled()
+                                    ->required(),
 
-                        Forms\Components\TextInput::make('user.email')
-                            ->label(__('filament/resources/driver-resource.email'))
-                            ->placeholder('email@example.com')
-                            ->maxLength(255)
-                            ->email(),
+                                Forms\Components\TextInput::make('email')
+                                    ->label(__('filament/resources/driver-resource.email'))
+                                    ->placeholder('email@example.com')
+                                    ->maxLength(255)
+                                    ->email(),
 
-                        Forms\Components\Select::make('status')
-                            ->options(Arr::collapse(Arr::map(DriverStatus::cases(), fn($status) => [$status->value => $status->label()])))
-                            ->default(DriverStatus::APPROVED)
-                            ->label(__('filament/resources/driver-resource.registeration-status'))
-                            ->searchable()
-                            ->required(),
-
-                        Forms\Components\TextInput::make('iban')
-                            ->label(__('filament/resources/driver-resource.iban'))
-                            ->placeholder(__('filament/resources/driver-resource.iban-placeholder'))
-                            ->maxLength(34),
-                    ]),
-
-                Forms\Components\Section::make(__('filament/resources/driver-resource.truck-information'))
-                    ->description(__('filament/resources/driver-resource.truck-information-description'))
-                    ->aside()
-                    ->schema([
-                        Forms\Components\TextInput::make('truck.license_plate')
-                            ->label(__('filament/resources/driver-resource.license-plate'))
-                            ->placeholder(__('filament/resources/driver-resource.license-plate-placeholder'))
-                            ->maxLength(255)
-                            ->required(),
-
-                        Forms\Components\Select::make('driver.truck.category')
-                            ->label(__('filament/resources/driver-resource.truck-category'))
-                            ->searchable()
-                            ->getSearchResultsUsing(fn(string $search): array => TruckCategory::where('name', 'like', "%{$search}%")->orWhere('tonnage', 'like', "%{$search}%")->get()->map(fn($category) => [$category->id => $category->name . ' (' . $category->tonnage . ' ' . __('filament/resources/driver-resource.tons') . ')'])->toArray())
-                            ->preload()
-                            ->live()
-                            ->required(),
+                                Forms\Components\TextInput::make('iban')
+                                    ->label(__('filament/resources/driver-resource.iban'))
+                                    ->placeholder(__('filament/resources/driver-resource.iban-placeholder'))
+                                    ->maxLength(34),
+                            ]),
                     ]),
             ]);
     }
@@ -239,7 +218,6 @@ class DriverResource extends Resource
     {
         return [
             'index' => Pages\ListDrivers::route('/'),
-            'create' => Pages\CreateDriver::route('/create'),
             'edit' => Pages\EditDriver::route('/{record}/edit'),
         ];
     }

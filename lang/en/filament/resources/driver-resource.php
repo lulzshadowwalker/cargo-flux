@@ -37,4 +37,6 @@ return [
     'license-plate-placeholder' => 'enter license plate number',
     'truck-category' => 'Truck Category',
     'tons' => 'Tons',
+    'account-information' => 'Account Information',
+    'account-information-description' => 'Manage the driver\'s account details',
 ];

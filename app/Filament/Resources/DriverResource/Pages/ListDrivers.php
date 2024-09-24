@@ -4,7 +4,6 @@ namespace App\Filament\Resources\DriverResource\Pages;
 
 use App\Enums\DriverStatus;
 use App\Filament\Resources\DriverResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 
@@ -34,7 +33,7 @@ class ListDrivers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            //
         ];
     }
 }
