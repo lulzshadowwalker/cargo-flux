@@ -12,6 +12,7 @@ class VerifyOtpRequest extends BaseFormRequest
         return [
             'phone' => 'required|phone',
             'code' => 'required|string',
+            'type' => 'required|in:CUSTOMER,DRIVER',
         ];
     }
 

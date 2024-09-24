@@ -16,11 +16,11 @@ class DriverProfileController extends ApiController // implements ProfileControl
 
     /**
      * Update the specified resource in storage.
-     * 
+     *
      * @param  UpdateDriverProfileRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDriverProfileRequest $request)
+    public function update(string $language, UpdateDriverProfileRequest $request)
     {
         Auth::user()->update($request->mappedAttributes()->toArray());
         return DriverResource::make(Auth::user()->driver);
