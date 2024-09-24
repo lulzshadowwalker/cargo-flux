@@ -6,21 +6,29 @@ use App\Contracts\RegisterationService;
 use App\Enums\UserType;
 use App\Http\Requests\CustomerRegisterationRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
-class CustomerRegisterationService // implements RegisterationService
+class CustomerRegisterationService implements RegisterationService
 {
-    /**
-     * Register a user based on the provided form request data.
-     *
-     * @param CustomerRegisterationRequest $request
-     * @return User
-     */
-    public function register(CustomerRegisterationRequest $request): User
+    public function register($request): User
     {
+        $request = $this->validate($request);
+
         $user = User::create($request->mappedAttributes(['type' => UserType::CUSTOMER])->toArray());
 
         $user->customer()->create($request->mappedAttributes()->toArray());
 
         return $user;
+    }
+
+    private function validate(Request $request): CustomerRegisterationRequest
+    {
+        $r = new CustomerRegisterationRequest;
+        $r->setMethod('POST');
+        $r->merge($request->all());
+
+        $r->validate($r->rules());
+
+        return $r;
     }
 }

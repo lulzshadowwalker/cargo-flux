@@ -45,7 +45,7 @@ class BaseRegisterationRequest extends BaseFormRequest
             'authorization.required' => 'Bearer token is required.',
             'authorization.starts_with' => 'Bearer token must start with "Bearer ".',
             'data.attributes.phone.phone' => 'Phone number should be in e.164 format',
-            'data.attributes.type.in' => 'type has to be either CUSTOMER or DRIVER',
+            'data.attributes.type' => 'type has to be either CUSTOMER or DRIVER',
         ];
     }
 

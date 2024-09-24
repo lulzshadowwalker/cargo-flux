@@ -3,15 +3,9 @@
 namespace App\Contracts;
 
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 interface RegisterationService
 {
-    /**
-     * Register a user based on the provided form request data.
-     *
-     * @param FormRequest $request
-     * @return User
-     */
-    public function register($request): User;
+    public function register(Request $request): User;
 }

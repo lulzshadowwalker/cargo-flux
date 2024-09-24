@@ -14,6 +14,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
             'data.attributes.companyName' => 'company_name',
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
+            'data.attributes.phone' => 'phone',
         ], $extraAttributes);
     }
 

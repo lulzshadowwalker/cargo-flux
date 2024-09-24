@@ -1,19 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Enums\TokenType;
 use App\Factories\RegisterationServiceFactory;
 use App\Http\Requests\BaseRegisterationRequest;
-use App\Http\Requests\CustomerRegisterationRequest;
-use App\Http\Requests\DriverRegisterationRequest;
 use App\Http\Resources\TokenResource;
-use App\Services\CustomerRegisterationService;
-use App\Services\DriverRegisterationService;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
 {
