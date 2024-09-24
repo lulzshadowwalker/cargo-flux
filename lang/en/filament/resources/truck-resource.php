@@ -9,4 +9,5 @@ return [
     'tons' => 'tons',
     'orders' => 'Orders',
     'registeration-date' => 'Registeration Date',
+    'truck-information' => 'Truck Information',
 ];

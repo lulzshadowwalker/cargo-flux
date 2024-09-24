@@ -72,7 +72,7 @@ class SupportTicketResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table,
+        return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subject')
                     ->label(__('filament/resources/support-ticket-resource.subject'))

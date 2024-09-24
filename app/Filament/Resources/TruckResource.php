@@ -24,15 +24,14 @@ class TruckResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('license_plate')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('driver_id')
-                    ->relationship('driver', 'id')
-                    ->required(),
-                Forms\Components\TextInput::make('truck_category_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Section::make(__('filament/resources/truck-resource.truck-information'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\TextInput::make('license_plate')
+                            ->label(__('filament/resources/truck-resource.license-plate'))
+                            ->required()
+                            ->maxLength(255),
+                    ])
             ]);
     }
 
