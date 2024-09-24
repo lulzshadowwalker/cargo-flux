@@ -39,14 +39,18 @@ class JsonResponseBuilder implements ResponseBuilder
         return $this;
     }
 
-    public function error(string $title, string $detail, int $code = null, array $meta = [], string $pointer = null): self
+    public function error(string $title, string $detail, int $code = null, array $meta = [], string $pointer = null, string $indicator = null): self
     {
         $error = [
             'status' => (string) $code,
-            // 'code' => 'ERROR_CODE',
+            'code' => Response::$statusTexts[$code] ?: (string) $code,
             'title' => $title,
             'detail' => $detail,
         ];
+
+        if ($indicator) {
+            $error['indicator'] = $indicator;
+        }
 
         if ($meta) {
             $error['meta'] = $meta;

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\TokenType;
+use App\Enums\UserType;
 use App\Http\Requests\SendOtpRequest;
 use App\Http\Requests\VerifyOtpRequest;
 use App\Http\Resources\TokenResource;
 use App\Models\Otp;
 use App\Models\User;
 use App\Support\AuthToken;
+use Filament\Tables\Filters\Indicator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -41,8 +43,19 @@ class OtpController extends ApiController
 
     public function verify(VerifyOtpRequest $request)
     {
+        $user = User::wherePhone('phone')->first();
+        if (isset($user?->type) && $user->type !== UserType::tryFrom($request->type)) {
+            return $this->response
+                ->error(
+                    title: 'User already registerd with a different type',
+                    detail: 'User cannot register as both a customer and a driver',
+                    code: Response::HTTP_CONFLICT,
+                    indicator: 'USER_TYPE_CONFLICT'
+                )->build();
+        }
+
         $otp = Otp::latest()
-            ->where('phone', $request->phone)
+            ->wherePhone($request->phone)
             ->latest()
             ->first();
 
@@ -75,6 +88,7 @@ class OtpController extends ApiController
                     title: 'OTP already verified',
                     detail: 'The OTP has already been verified',
                     code: Response::HTTP_CONFLICT,
+                    indicator: 'OTP_ALREADY_VERIFIED',
                 )
                 ->build();
         }

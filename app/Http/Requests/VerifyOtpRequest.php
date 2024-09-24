@@ -20,6 +20,7 @@ class VerifyOtpRequest extends BaseFormRequest
     {
         return [
             'phone.phone' => 'Phone number should be in e.164 format',
+            'type' => 'type must be one of CUSTOMER, DRIVER',
         ];
     }
 }
