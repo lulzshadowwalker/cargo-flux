@@ -8,7 +8,6 @@ class CustomerRegisterationRequest extends BaseFormRequest
 {
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
-        dd('customer');
         return $this->mapped([
             'data.attributes.firstName' => 'first_name',
             'data.attributes.lastName' => 'last_name',

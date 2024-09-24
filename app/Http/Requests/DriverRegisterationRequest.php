@@ -8,7 +8,6 @@ class DriverRegisterationRequest extends BaseFormRequest
 {
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
-        dd('driver');
         return $this->mapped([
             'data.attributes.firstName' => 'first_name',
             'data.attributes.lastName' => 'last_name',
