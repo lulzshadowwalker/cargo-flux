@@ -46,6 +46,17 @@ class OrderResource extends Resource
                             ->formatStateUsing(fn($state) => Str::replace('ORDER-', '', $state))
                             ->maxLength(255),
 
+                        Forms\Components\TextInput::make('cargo')
+                            ->label(__('filament/resources/order-resource.cargo'))
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\Select::make('status')
+                            ->label(__('filament/resources/order-resource.status'))
+                            ->options(Arr::collapse(Arr::map(OrderStatus::cases(), fn($status) => [$status->value => $status->label()])))
+                            ->searchable()
+                            ->required(),
+
                         Forms\Components\TextInput::make('amount')
                             ->label(__('filament/resources/order-resource.amount'))
                             ->required()
@@ -53,11 +64,6 @@ class OrderResource extends Resource
                             ->numeric()
                             ->prefix(fn($record) => $record->currency->symbol),
 
-                        Forms\Components\Select::make('status')
-                            ->label(__('filament/resources/order-resource.status'))
-                            ->options(Arr::collapse(Arr::map(OrderStatus::cases(), fn($status) => [$status->value => $status->label()])))
-                            ->searchable()
-                            ->required(),
 
                         Forms\Components\Select::make('payment_method')
                             ->label(__('filament/resources/order-resource.payment-method'))
