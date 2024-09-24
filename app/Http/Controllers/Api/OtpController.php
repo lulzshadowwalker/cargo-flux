@@ -43,7 +43,7 @@ class OtpController extends ApiController
 
     public function verify(VerifyOtpRequest $request)
     {
-        $user = User::wherePhone('phone')->first();
+        $user = User::wherePhone($request->phone)->first();
         if (isset($user?->type) && $user->type !== UserType::tryFrom($request->type)) {
             return $this->response
                 ->error(

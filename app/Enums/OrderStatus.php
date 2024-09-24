@@ -54,4 +54,9 @@ enum OrderStatus: string
     {
         return array_map(fn($e) => $e->label(), self::cases());
     }
+
+    public static function values(): array
+    {
+        return array_map(fn($e) => $e->value, self::cases());
+    }
 }
