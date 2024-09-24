@@ -31,7 +31,7 @@ class OrderObserver
                     ->label(__('notifications.order-created.view-order'))
                     ->url(OrderResource::getUrl('edit', ['record' => $order]))
             ])
-            ->icon('heroicon-o-ticket')
+            ->icon(OrderResource::getNavigationIcon())
             ->sendToDatabase($admins);
     }
 

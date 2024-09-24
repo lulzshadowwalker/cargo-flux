@@ -20,8 +20,9 @@ class ReviewObserver
                 Action::make('go-to-review')
                     ->button()
                     ->label(__('notifications.review-created.view-review'))
-                    ->url(ReviewResource::getUrl('index'))
+                    ->url(ReviewResource::getUrl('view', ['record' => $review]))
             ])
+            ->icon(ReviewResource::getNavigationIcon())
             ->sendToDatabase($admins);
     }
 }

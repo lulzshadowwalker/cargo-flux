@@ -65,7 +65,8 @@ class SupportTicketResource extends Resource
                         Forms\Components\Select::make('status')
                             ->label(__('filament/resources/support-ticket-resource.status'))
                             ->required()
-                            ->options(Arr::collapse(Arr::map(SupportTicketStatus::cases(), fn ($status) => [$status->value => $status->label()]))),
+                            ->options(Arr::collapse(Arr::map(SupportTicketStatus::cases(), fn ($status) => [$status->value => $status->label()])))
+                            ->searchable(),
                     ])
             ]);
     }

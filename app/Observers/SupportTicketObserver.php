@@ -30,9 +30,9 @@ class SupportTicketObserver
                 Action::make('go-to-ticket')
                     ->button()
                     ->label('View Ticket')
-                    ->url(SupportTicketResource::getUrl('index'))
+                    ->url(SupportTicketResource::getUrl('edit', ['record' => $supportTicket]))
             ])
-            ->icon('heroicon-o-ticket')
+            ->icon(SupportTicketResource::getNavigationIcon())
             ->sendToDatabase($admins);
     }
 }

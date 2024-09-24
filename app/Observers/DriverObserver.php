@@ -28,6 +28,7 @@ class DriverObserver
                     ->label(__('notifications.driver-created.view-driver'))
                     ->url(DriverResource::getUrl('edit', ['record' => $driver]))
             ])
+            ->icon(DriverResource::getNavigationIcon())
             ->sendToDatabase($admins);
     }
 }
