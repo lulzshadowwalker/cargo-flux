@@ -3,11 +3,14 @@
 namespace App\Observers;
 
 use App\Enums\OrderPaymentMethod;
+use App\Events\OrderScheduleUpdated;
+use App\Events\OrderStatusUpdated;
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
+use Illuminate\Support\Facades\Auth;
 
 class OrderObserver
 {
@@ -26,11 +29,20 @@ class OrderObserver
                 Action::make('go-to-order')
                     ->button()
                     ->label(__('notifications.order-created.view-order'))
-
-                    // TODO: Add the edit order route below
-                    // ->url(OrderResource::getUrl('edit', ['record' => $order]))
+                    ->url(OrderResource::getUrl('edit', ['record' => $order]))
             ])
             ->icon('heroicon-o-ticket')
             ->sendToDatabase($admins);
+    }
+
+    public function updated(Order $order)
+    {
+        if ($order->isDirty('status')) {
+            OrderStatusUpdated::dispatch($order, Auth::user());
+        }
+
+        if ($order->isDirty('scheduled_at')) {
+            OrderScheduleUpdated::dispatch($order, Auth::user());
+        }
     }
 }

@@ -20,4 +20,6 @@ return [
     'actor' => 'Actor',
     'system' => 'System',
     'unknown' => 'Unknown',
+    'order-information' => 'Order Information',
+    'order-information-description' => 'Carefully manage and audit order details'
 ];

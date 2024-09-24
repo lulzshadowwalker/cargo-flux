@@ -6,7 +6,6 @@ use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\RelationManagers\CustomerRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\DriverRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\ReviewsRelationManager;
@@ -14,15 +13,16 @@ use App\Filament\Resources\OrderResource\RelationManagers\TrackingRelationManage
 use App\Filament\Resources\OrderResource\RelationManagers\TruckCategoryRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\TruckRelationManager;
 use App\Models\Order;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class OrderResource extends Resource
@@ -35,48 +35,56 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('number')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('amount')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-                Forms\Components\TextInput::make('payment_method')
-                    ->required(),
-                Forms\Components\TextInput::make('payment_status')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('scheduled_at'),
-                Forms\Components\TextInput::make('pickup_location_latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('pickup_location_longitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('delivery_location_latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('delivery_location_longitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('current_location_latitude')
-                    ->numeric(),
-                Forms\Components\TextInput::make('current_location_longitude')
-                    ->numeric(),
-                Forms\Components\DateTimePicker::make('current_location_recorded_at'),
-                Forms\Components\Select::make('customer_id')
-                    ->relationship('customer', 'id')
-                    ->required(),
-                Forms\Components\Select::make('driver_id')
-                    ->relationship('driver', 'id')
-                    ->required(),
-                Forms\Components\Select::make('currency_id')
-                    ->relationship('currency', 'id')
-                    ->required(),
-                Forms\Components\Select::make('truck_id')
-                    ->relationship('truck', 'id')
-                    ->required(),
+                Forms\Components\Section::make(__('filament/resources/order-resource.order-information'))
+                    ->aside()
+                    ->description(__('filament/resources/order-resource.order-information-description'))
+                    ->schema([
+                        Forms\Components\TextInput::make('number')
+                            ->label(__('filament/resources/order-resource.number'))
+                            ->required()
+                            ->disabled()
+                            ->formatStateUsing(fn($state) => Str::replace('ORDER-', '', $state))
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('amount')
+                            ->label(__('filament/resources/order-resource.amount'))
+                            ->required()
+                            ->disabled()
+                            ->numeric()
+                            ->prefix(fn($record) => $record->currency->symbol),
+
+                        Forms\Components\Select::make('status')
+                            ->label(__('filament/resources/order-resource.status'))
+                            ->options(Arr::collapse(Arr::map(OrderStatus::cases(), fn($status) => [$status->value => $status->label()])))
+                            ->searchable()
+                            ->required(),
+
+                        Forms\Components\Select::make('payment_method')
+                            ->label(__('filament/resources/order-resource.payment-method'))
+                            ->options(Arr::collapse(Arr::map(OrderPaymentMethod::cases(), fn($status) => [$status->value => $status->label()])))
+                            ->searchable()
+                            ->disabled()
+                            ->required(),
+
+                        Forms\Components\Select::make('payment_status')
+                            ->label(__('filament/resources/order-resource.payment-status'))
+                            ->options(Arr::collapse(Arr::map(OrderPaymentStatus::cases(), fn($status) => [$status->value => $status->label()])))
+                            ->searchable()
+                            ->disabled()
+                            ->required(),
+
+                        Forms\Components\DateTimePicker::make('scheduled_at')
+                            ->label(__('filament/resources/order-resource.scheduled-at'))
+                            ->native(false)
+                            ->suffixAction(
+                                Action::make('unschedule-order')
+                                    ->icon('heroicon-o-x-mark')
+                                    ->requiresConfirmation()
+                                    ->action(function (Set $set, $state) {
+                                        $set('scheduled_at', null);
+                                    })
+                            ),
+                    ])
             ]);
     }
 
