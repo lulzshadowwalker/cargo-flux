@@ -15,7 +15,7 @@ return [
     'orders' => 'Orders',
     'registeration-status' => 'Registeration Status',
     'iban' => 'IBAN',
-    'all-driver' => 'All Drivers',
+    'all-drivers' => 'All Drivers',
     'under-review' => 'Under Review',
     'approved' => 'Approved',
     'rejected' => 'Rejected',

@@ -18,6 +18,7 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CustomerResource extends Resource implements HasShieldPermissions
 {
@@ -29,9 +30,46 @@ class CustomerResource extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'id')
-                    ->required(),
+                Forms\Components\Section::make(__('filament/resources/customer-resource.customer-information'))
+                    ->relationship('user')
+                    ->description(__('filament/resources/customer-resource.customer-information-description'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\TextInput::make('first_name')
+                            ->label(__('filament/resources/customer-resource.first-name'))
+                            ->placeholder(__('filament/resources/customer-resource.first-name-placeholder'))
+                            ->maxLength(255)
+                            ->required(),
+
+                        Forms\Components\TextInput::make('last_name')
+                            ->label(__('filament/resources/customer-resource.last-name'))
+                            ->placeholder(__('filament/resources/customer-resource.last-name-placeholder'))
+                            ->maxLength(255)
+                            ->required(),
+
+                        Forms\Components\TextInput::make('phone')
+                            ->label(__('filament/resources/customer-resource.phone'))
+                            ->placeholder(__('filament/resources/customer-resource.phone-placeholder'))
+                            ->maxLength(20)
+                            ->disabled()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('email')
+                            ->label(__('filament/resources/customer-resource.email'))
+                            ->placeholder('email@example.com')
+                            ->maxLength(255)
+                            ->email(),
+                    ]),
+
+                Forms\Components\Section::make(__('filament/resources/customer-resource.company-information'))
+                    ->description(__('filament/resources/customer-resource.company-information-description'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\TextInput::make('company_name')
+                            ->label(__('filament/resources/customer-resource.company-name'))
+                            ->maxLength(255)
+                            ->required(),
+                    ])
             ]);
     }
 

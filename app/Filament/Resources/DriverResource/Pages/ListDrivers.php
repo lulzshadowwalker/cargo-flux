@@ -15,7 +15,7 @@ class ListDrivers extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make(__('filament/resources/driver-resource.all-driver')),
+            'all' => Tab::make(__('filament/resources/driver-resource.all-drivers')),
             'under-review' => Tab::make(__('filament/resources/driver-resource.under-review'))
                 ->modifyQueryUsing(function ($query) {
                     return $query->where('status', DriverStatus::UNDER_REVIEW);
