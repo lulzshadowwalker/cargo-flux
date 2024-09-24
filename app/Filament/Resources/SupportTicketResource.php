@@ -14,6 +14,7 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class SupportTicketResource extends Resource
@@ -26,50 +27,52 @@ class SupportTicketResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('number')
-                    ->label(__('filament/resources/support-ticket-resource.number'))
-                    ->required()
-                    ->maxLength(255)
-                    ->disabled()
-                    ->formatStateUsing(fn($state) => Str::replace('TICKET-', '', $state)),
+                Forms\Components\Section::make(__('filament/resources/support-ticket-resource.ticket-information'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\TextInput::make('number')
+                            ->label(__('filament/resources/support-ticket-resource.number'))
+                            ->required()
+                            ->maxLength(255)
+                            ->disabled()
+                            ->formatStateUsing(fn($state) => Str::replace('TICKET-', '', $state)),
 
-                Forms\Components\Select::make('status')
-                    ->label(__('filament/resources/support-ticket-resource.status'))
-                    ->required()
-                    ->options(SupportTicketStatus::class)
-                    ->formatStateUsing(fn($state) => SupportTicketStatus::tryFrom($state)->label()),
+                        Forms\Components\TextInput::make('subject')
+                            ->label(__('filament/resources/support-ticket-resource.subject'))
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull()
+                            ->disabled(),
 
-                Forms\Components\TextInput::make('subject')
-                    ->label(__('filament/resources/support-ticket-resource.subject'))
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                        Forms\Components\Textarea::make('message')
+                            ->label(__('filament/resources/support-ticket-resource.message'))
+                            ->required()
+                            ->columnSpanFull()
+                            ->rows(8)
+                            ->disabled(),
 
-                Forms\Components\Textarea::make('message')
-                    ->label(__('filament/resources/support-ticket-resource.message'))
-                    ->required()
-                    ->columnSpanFull(),
+                        Forms\Components\TextInput::make('phone')
+                            ->label(__('filament/resources/support-ticket-resource.attached-phone'))
+                            ->tel()
+                            ->maxLength(20)
+                            ->disabled(),
 
-                Forms\Components\Select::make('user_id')
-                    ->label(__('filament/resources/support-ticket-resource.registered-author'))
-                    ->relationship('user', 'fullName')
-                    ->searchable()
-                    ->placeholder(__('filament/resources/support-ticket-resource.guest-author')),
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('filament/resources/support-ticket-resource.attached-name'))
+                            ->maxLength(255)
+                            ->disabled(),
 
-                Forms\Components\TextInput::make('phone')
-                    ->label(__('filament/resources/support-ticket-resource.attached-phone'))
-                    ->tel()
-                    ->maxLength(20),
-
-                Forms\Components\TextInput::make('name')
-                    ->label(__('filament/resources/support-ticket-resource.attached-name'))
-                    ->maxLength(255),
+                        Forms\Components\Select::make('status')
+                            ->label(__('filament/resources/support-ticket-resource.status'))
+                            ->required()
+                            ->options(Arr::collapse(Arr::map(SupportTicketStatus::cases(), fn ($status) => [$status->value => $status->label()]))),
+                    ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
+        return $table,
             ->columns([
                 Tables\Columns\TextColumn::make('subject')
                     ->label(__('filament/resources/support-ticket-resource.subject'))
@@ -174,6 +177,7 @@ class SupportTicketResource extends Resource
 
     public static function getRelations(): array
     {
+        // TODO: Add register user relation manager
         return [
             //
         ];

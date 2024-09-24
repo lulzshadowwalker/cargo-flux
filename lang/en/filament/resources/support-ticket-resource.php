@@ -22,4 +22,5 @@ return [
     'tickets' => 'Tickets',
     'increase' => 'increase',
     'decrease' => 'decrease',
+    'ticket-information' => 'Ticket Information',
 ];
