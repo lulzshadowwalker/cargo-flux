@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
+use App\Contracts\ResponseBuilder;
 use App\Enums\TokenType;
 use App\Factories\RegisterationServiceFactory;
 use App\Http\Requests\BaseRegisterationRequest;
@@ -11,8 +13,10 @@ use Illuminate\Http\Request;
 
 class AuthController extends ApiController
 {
-    public function __construct(protected RegisterationServiceFactory $serviceFactory)
-    {
+    public function __construct(
+        protected RegisterationServiceFactory $serviceFactory,
+        protected ResponseBuilder $response
+    ) {
         //
     }
 

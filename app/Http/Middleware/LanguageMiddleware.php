@@ -6,12 +6,14 @@ use App\Contracts\ResponseBuilder;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
 class LanguageMiddleware
 {
-    public function __construct(protected ResponseBuilder $response) {}
+    public function __construct(protected ResponseBuilder $response)
+    {
+            //
+    }
 
     public function handle(Request $request, Closure $next): Response
     {
