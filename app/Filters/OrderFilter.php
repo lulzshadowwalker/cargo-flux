@@ -16,7 +16,7 @@ class OrderFilter extends QueryFilter
 
     public function include($relationships)
     {
-        $allowedRelationships = ['customer', 'driver', 'truck', 'reviews', 'truckCategory'];
+        $allowedRelationships = ['customer', 'driver', 'truck', 'reviews', 'truckCategory', 'tracking'];
 
         $relationships = explode(',', $relationships);
         $relationships = array_intersect($relationships, $allowedRelationships);

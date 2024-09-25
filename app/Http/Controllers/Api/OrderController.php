@@ -36,7 +36,7 @@ class OrderController extends ApiController
             $details['status'] = OrderStatus::PENDING_DRIVER_ASSIGNMENT;
         }
 
-        $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews', 'truckCategory');
+        $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews', 'truckCategory', 'tracking');
 
         return OrderResource::make($order);
     }

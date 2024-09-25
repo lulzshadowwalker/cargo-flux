@@ -64,7 +64,6 @@ class OrderResource extends Resource
                             ->numeric()
                             ->prefix(fn($record) => $record->currency->symbol),
 
-
                         Forms\Components\Select::make('payment_method')
                             ->label(__('filament/resources/order-resource.payment-method'))
                             ->options(Arr::collapse(Arr::map(OrderPaymentMethod::cases(), fn($status) => [$status->value => $status->label()])))
