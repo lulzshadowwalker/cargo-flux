@@ -14,7 +14,6 @@ class OrderTrackingEntryResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'status' => $this->status,
-                'note' => $this->note,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],

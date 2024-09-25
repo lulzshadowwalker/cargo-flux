@@ -21,7 +21,6 @@ class OrderTrackingEntry extends Model
         'status',
         'actor_type',
         'actor_id',
-        'note'
     ];
 
     protected function casts(): array

@@ -32,6 +32,7 @@ class AuthController extends ApiController
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
+
         return $this->response->message('Logged out successfully')->build(Response::HTTP_OK);
     }
 }

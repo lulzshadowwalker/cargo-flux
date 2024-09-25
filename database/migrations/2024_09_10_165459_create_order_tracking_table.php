@@ -15,7 +15,6 @@ return new class extends Migration
             $table->enum('status', array_map(fn($status) => $status->value, OrderStatus::cases()));
             $table->string('actor_type');
             $table->unsignedBigInteger('actor_id')->nullable();
-            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

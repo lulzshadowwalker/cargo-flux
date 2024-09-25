@@ -23,7 +23,6 @@ class OrderTrackingEntryFactory extends Factory
             'status' => $this->faker->randomElement(OrderStatus::cases())->value,
             'actor_type' => $actorType,
             'actor_id' => $actorId,
-            'note' => $this->faker->text(),
         ];
     }
 }
