@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TruckCategoryResource\Pages;
-use App\Filament\Resources\TruckCategoryResource\RelationManagers;
 use App\Filament\Resources\TruckCategoryResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\TruckCategoryResource\RelationManagers\TrucksRelationManager;
 use App\Models\TruckCategory;
@@ -13,8 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TruckCategoryResource extends Resource
 {
@@ -49,6 +46,15 @@ class TruckCategoryResource extends Resource
                             ->suffix(trans_choice('filament/resources/truck-category-resource.ton', 10))
                             ->disabled($disabled)
                             ->minValue(0),
+
+                        Forms\Components\TextInput::make('length')
+                            ->helperText($disabled ? __('filament/resources/truck-category-resource.length-disabled-helper-text') : __('filament/resources/truck-category-resource.length-helper-text'))
+                            ->placeholder(__('filament/resources/truck-category-resource.length-placeholder'))
+                            ->required()
+                            ->numeric()
+                            ->suffix(trans_choice('filament/resources/truck-category-resource.meter', 10))
+                            ->disabled($disabled)
+                            ->minValue(0),
                     ]),
             ]);
     }
@@ -65,6 +71,13 @@ class TruckCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('tonnage')
                     ->label(__('filament/resources/truck-category-resource.tonnage'))
                     ->formatStateUsing(fn($state) => $state . ' ' . trans_choice('filament/resources/truck-category-resource.ton', $state))
+                    ->searchable()
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('length')
+                    ->label(__('filament/resources/truck-category-resource.length'))
+                    ->formatStateUsing(fn($state) => $state . ' ' . trans_choice('filament/resources/truck-category-resource.meter', $state))
                     ->searchable()
                     ->badge()
                     ->sortable(),

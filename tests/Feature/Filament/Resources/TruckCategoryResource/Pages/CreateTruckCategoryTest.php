@@ -32,6 +32,7 @@ class CreateTruckCategoryTest extends TestCase
             ->fillForm([
                 'name.en' => 'Truck Category',
                 'tonnage' => 10,
+                'length' => 10,
             ])
             ->call('create')
             ->assertHasNoFormErrors();
@@ -39,6 +40,7 @@ class CreateTruckCategoryTest extends TestCase
         $this->assertDatabaseHas('truck_categories', [
             'name' => json_encode(['en' => 'Truck Category']),
             'tonnage' => 10,
+            'length' => 10,
         ]);
     }
 

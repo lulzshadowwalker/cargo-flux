@@ -15,6 +15,7 @@ class TruckCategoryResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'tonnage' => $this->tonnage,
+                'length' => $this->length,
                 'image' => $this->image,
             ],
             'links' => [

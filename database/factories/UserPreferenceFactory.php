@@ -15,7 +15,7 @@ class UserPreferenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'language' => $this->faker->randomElement(array_map(fn ($language) => Str::lower($language->value), Language::cases())),
+            'language' => $this->faker->randomElement(array_map(fn($language) => Str::lower($language->value), Language::cases())),
             'user_id' => User::factory(),
         ];
     }

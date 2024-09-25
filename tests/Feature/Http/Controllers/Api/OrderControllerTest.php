@@ -154,7 +154,7 @@ class OrderControllerTest extends TestCase
     {
         $customer = Customer::factory()->create();
         $truckCategory = TruckCategory::factory()->create();
-        $currency = Currency::factory()->create();
+        Currency::factory()->create();
 
         $data = [
             'data' => [
@@ -162,10 +162,6 @@ class OrderControllerTest extends TestCase
                     'paymentMethod' => 'DIRECT',
                     'scheduledAt' => now()->addDay()->toDateTimeString(),
                     'cargo' => 'Cargo',
-                    'price' => [
-                        'amount' => 100.0,
-                        'currency' => $currency->code,
-                    ],
                     'pickupLocation' => [
                         'latitude' => 1.0,
                         'longitude' => 1.0,
@@ -199,8 +195,6 @@ class OrderControllerTest extends TestCase
             'status' => 'PENDING_APPROVAL',
             'scheduled_at' => now()->addDay()->toDateTimeString(),
             'cargo' => 'Cargo',
-            'amount' => 100.0,
-            'currency_id' => $currency->id,
             'pickup_location_latitude' => 1.0,
             'pickup_location_longitude' => 1.0,
             'delivery_location_latitude' => 1.0,

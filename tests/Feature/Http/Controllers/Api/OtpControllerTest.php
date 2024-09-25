@@ -3,6 +3,7 @@
 namespace Tests\Unit\Http\Controllers\Api;
 
 use App\Enums\TokenType;
+use App\Enums\UserType;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Requests\SendOtpRequest;
 use App\Http\Requests\VerifyOtpRequest;
@@ -58,7 +59,10 @@ class OtpControllerTest extends TestCase
 
     public function test_verify_otp_success_existing_user()
     {
-        User::factory()->create(['phone' => '+1234567890']);
+        User::factory()->create([
+            'phone' => '+1234567890',
+            'type' => UserType::CUSTOMER,
+        ]);
 
         Otp::create([
             'phone' => '+1234567890',
@@ -69,6 +73,7 @@ class OtpControllerTest extends TestCase
         $request = VerifyOtpRequest::create('/api/auth/otp/verify', 'POST', [
             'phone' => '+1234567890',
             'code' => '111111',
+            'type' => 'CUSTOMER',
         ]);
 
         $controller = new OtpController(new JsonResponseBuilder);

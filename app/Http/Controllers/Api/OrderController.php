@@ -9,6 +9,7 @@ use App\Filters\OrderFilter;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\Currency;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,11 @@ class OrderController extends ApiController
     {
         $this->authorize('create', Order::class);
 
-        $details = $request->mappedAttributes();
+        $details = $request->mappedAttributes([
+            'amount' => '123',
+            'currency_id' => Currency::first()->id,
+        ]);
+
         $details['status'] = OrderStatus::PENDING_APPROVAL;
         $details['payment_status'] = OrderPaymentStatus::PENDING_APPROVAL;
         if (OrderPaymentMethod::tryFrom($details['payment_method']) === OrderPaymentMethod::ONLINE) {

@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('truck_categories', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->integer('tonnage');
+            $table->decimal('tonnage');
+            $table->decimal('length');
             $table->timestamps();
         });
     }

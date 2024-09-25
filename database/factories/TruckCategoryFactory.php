@@ -13,7 +13,8 @@ class TruckCategoryFactory extends BaseFactory
     {
         return [
             'name' => $this->localized(fn() => $this->faker->word),
-            'tonnage' => $this->faker->randomElement([5, 10, 15, 20, 25, 30]),
+            'tonnage' => $this->faker->randomelement([5, 10, 15, 20, 25, 30]),
+            'length' => $this->faker->randomelement([3, 4, 5, 6]),
         ];
     }
 }

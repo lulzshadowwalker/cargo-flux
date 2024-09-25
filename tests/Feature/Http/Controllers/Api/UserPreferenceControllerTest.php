@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\UserPreference;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class UserPreferenceControllerTest extends TestCase
@@ -34,21 +33,21 @@ class UserPreferenceControllerTest extends TestCase
     public function test_it_updates_preferences()
     {
         $user = User::factory()
-            ->has(UserPreference::factory(['language' => Language::AR]), 'preferences')
+            ->has(UserPreference::factory(), 'preferences')
             ->create();
 
         $this->actingAs($user);
 
-        $this->assertEquals($user->preferences->language, 'ar');
+        $this->assertEquals($user->preferences->language, 'en');
         $this->patchJson(route('profile.preferences.update', ['lang' => Language::EN]), [
             'data' => [
                 'attributes' => [
-                    'language' => 'en',
+                    'language' => 'ar',
                 ]
             ]
         ])->assertOk();
 
         $user->preferences->refresh();
-        $this->assertEquals('en', $user->preferences->language);
+        $this->assertEquals('ar', $user->preferences->language);
     }
 }
