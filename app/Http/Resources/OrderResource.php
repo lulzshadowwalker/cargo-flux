@@ -47,7 +47,7 @@ class OrderResource extends JsonResource
                 ]),
             ],
             'relationships' => (object) [],
-            'includes' =>  [
+            'includes' =>  (object) [
                 'customer' => new CustomerResource($this->whenLoaded('customer')),
                 'driver' => new DriverResource($this->whenLoaded('driver')),
                 'truck' => new TruckResource($this->whenLoaded('truck')),
