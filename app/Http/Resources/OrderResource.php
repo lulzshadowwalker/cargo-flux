@@ -9,6 +9,8 @@ class OrderResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $hasIncludes = $request->has('include');
+
         return [
             'type' => 'order',
             'id' => $this->id,
@@ -47,7 +49,7 @@ class OrderResource extends JsonResource
                 ]),
             ],
             'relationships' => (object) [],
-            'includes' =>  (object) [
+            'includes' => !$hasIncludes ? (object) [] : [
                 'customer' => new CustomerResource($this->whenLoaded('customer')),
                 'driver' => new DriverResource($this->whenLoaded('driver')),
                 'truck' => new TruckResource($this->whenLoaded('truck')),

@@ -26,11 +26,12 @@ class OrderControllerTest extends TestCase
         $customer = Customer::factory()->create();
         $orders = Order::factory()->count(3)->for($customer)->create();
         $resource = OrderResource::collection($orders);
-        $request = Request::create(route('orders.index', ['lang' => Language::EN]), 'GET');
+        $request = Request::create(route('orders.index', ['lang' => Language::EN, 'include' => 'customer']), 'GET');
         $this->actingAs($customer->user);
 
         $this->getJson(route('orders.index', [
             'lang' => Language::EN,
+            'include' => 'CUSTOMER',
         ]))
             ->assertOk()
             ->assertExactJson(
@@ -45,6 +46,7 @@ class OrderControllerTest extends TestCase
         $request = Request::create(route('orders.show', [
             'lang' => Language::EN,
             'order' => $order,
+            'include' => 'CUSTOMER',
         ]), 'GET');
         $this->actingAs($order->customer->user);
 
