@@ -17,6 +17,7 @@ class BaseRegisterationRequest extends BaseFormRequest
             'data.attributes.email' => 'email',
             'data.attributes.phone' => 'phone',
             'data.attributes.type' => 'type',
+            'data.relationships.deviceTokens.data.token' => 'device_token',
         ], $extraAttributes);
     }
 
@@ -35,6 +36,7 @@ class BaseRegisterationRequest extends BaseFormRequest
         return [
             'data.attributes.type' => 'required|in:CUSTOMER,DRIVER',
             'data.attributes.phone' => 'required|phone|unique:users,phone',
+            'data.relationships.deviceTokens.data.token' => 'nullable|string',
             'authorization' => 'required|starts_with:Bearer ',
         ];
     }

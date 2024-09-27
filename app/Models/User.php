@@ -165,4 +165,9 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
 
         throw new \Exception('User is neither a customer nor a driver');
     }
+
+    public function deviceTokens(): HasMany
+    {
+        return $this->hasMany(DeviceToken::class);
+    }
 }

@@ -59,7 +59,7 @@ class OtpControllerTest extends TestCase
 
     public function test_verify_otp_success_existing_user()
     {
-        User::factory()->create([
+        $user = User::factory()->create([
             'phone' => '+1234567890',
             'type' => UserType::CUSTOMER,
         ]);
@@ -74,6 +74,7 @@ class OtpControllerTest extends TestCase
             'phone' => '+1234567890',
             'code' => '111111',
             'type' => 'CUSTOMER',
+            'deviceToken' => 'abc',
         ]);
 
         $controller = new OtpController(new JsonResponseBuilder);
@@ -84,6 +85,8 @@ class OtpControllerTest extends TestCase
             TokenType::PERMANENT,
             $response->resource->type
         );
+
+        $this->assertEquals('abc', $user->deviceTokens?->first()?->token);
     }
 
     public function test_verify_otp_not_found()

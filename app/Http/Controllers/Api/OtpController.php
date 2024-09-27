@@ -10,7 +10,6 @@ use App\Http\Resources\TokenResource;
 use App\Models\Otp;
 use App\Models\User;
 use App\Support\AuthToken;
-use Filament\Tables\Filters\Indicator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -108,6 +107,10 @@ class OtpController extends ApiController
 
         $user = User::firstWhere('phone', $request->phone);
         if ($user) {
+            if ($request->deviceToken) {
+                $user->deviceTokens()->firstOrCreate(['token' => $request->deviceToken]);
+            }
+
             $token = $user->createToken(config('app.name'))->plainTextToken;
             return TokenResource::make(new AuthToken($token, TokenType::PERMANENT));
         }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->string('phone', 20)->unique();
             $table->string('email')->nullable();
-            $table->enum('status', array_map(fn(UserStatus $status) => $status->value, UserStatus::cases()));
+            $table->enum('status', array_map(fn(UserStatus $status) => $status->value, UserStatus::cases()))->default(UserStatus::ACTIVE);
             $table->enum('type', array_map(fn(UserType $type) => $type->value, UserType::cases()));
             $table->string('password')->nullable();
             $table->rememberToken();
