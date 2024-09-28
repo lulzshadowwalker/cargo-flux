@@ -45,5 +45,10 @@ return [
         'customer' => 'Customer',
         'driver' => 'Driver',
         'admin' => 'Admin',
-    ]
+    ],
+    'audience' => [
+        'all' => 'All',
+        'customers' => 'Customers',
+        'drivers' => 'Drivers',
+    ],
 ];

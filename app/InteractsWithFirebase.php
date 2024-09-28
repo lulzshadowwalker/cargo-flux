@@ -38,7 +38,7 @@ trait InteractsWithFirebase
     public static function firebaseAccessToken(): string
     {
         $client = new Client;
-        $client->setAuthConfig('firebase/dev.json');
+        $client->setAuthConfig(storage_path('../firebase/dev.json'));
         $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
         $client->fetchAccessTokenWithAssertion();
         return $client->getAccessToken()['access_token'];

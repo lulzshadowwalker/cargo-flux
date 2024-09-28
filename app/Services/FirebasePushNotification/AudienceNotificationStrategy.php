@@ -27,6 +27,9 @@ class AudienceNotificationStrategy implements NotificationStrategy
         if (!is_array($audience)) $audience = [$audience];
 
         foreach ($audience as $a) {
+            $topic = $a;
+            if (!is_string($a)) $topic = $a->value;
+
             $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::firebaseAccessToken()])
                 ->post(self::endpoint('messages:send'), [
                     'message' => [
@@ -36,7 +39,7 @@ class AudienceNotificationStrategy implements NotificationStrategy
                             'body' => $notification->body,
                             'image' => $notification->image,
                         ],
-                        'topic' => $a->value,
+                        'topic' => $topic,
                     ],
                 ]);
 
@@ -53,6 +56,8 @@ class AudienceNotificationStrategy implements NotificationStrategy
     public static function isSatisfiedBy(mixed $notifiable): bool
     {
         if (! $notifiable) return false;
+
+        if (is_string($notifiable)) return (bool) Audience::tryFrom($notifiable);
 
         $n = $notifiable;
         if (is_array($notifiable)) $n = $notifiable[0];
