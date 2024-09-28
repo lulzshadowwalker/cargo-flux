@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'firebase' => [
+        'base_url' => env('FIREBASE_BASE_URL', 'https://fcm.googleapis.com/v1/projects/'),
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+        'messaging' => [],
+    ]
+
 ];

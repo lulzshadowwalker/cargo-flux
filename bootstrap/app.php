@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\LanguageMiddleware;
-use App\Http\Middleware\SandboxMiddleware;
 use App\Http\Response\JsonResponseBuilder;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;

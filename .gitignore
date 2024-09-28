@@ -21,3 +21,4 @@ yarn-error.log
 /draft.yaml
 /.blueprint
 .DS_Store
+firebase/*
