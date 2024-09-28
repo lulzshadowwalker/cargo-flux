@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 
 #[ObservedBy(OrderObserver::class)]
 class Order extends Model
@@ -142,5 +143,17 @@ class Order extends Model
     public function truckCategory(): BelongsTo
     {
         return $this->belongsTo(TruckCategory::class, 'truck_category_id');
+    }
+
+    public function stages(): Attribute
+    {
+        return Attribute::get(fn() => Arr::map(OrderStatus::cases(), function ($status) {
+            $entry = $this->tracking()->where('status', $status)->latest()->first();
+            return [
+                'status' => $status,
+                'is_completed' => isset($entry),
+                'completed_at' => $entry?->created_at,
+            ];
+        }));
     }
 }
