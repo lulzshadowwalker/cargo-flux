@@ -56,7 +56,7 @@ class OrderResource extends JsonResource
                 'reviews' => ReviewResource::collection($this->whenLoaded('reviews')),
                 'truckCategory' => new TruckCategoryResource($this->whenLoaded('truckCategory')),
                 'tracking' => OrderTrackingEntryResource::collection($this->whenLoaded('tracking')),
-                'stages' => $this->mergeWhen($this->includes('stages'), OrderStagesResource::collection($this->stages)),
+                'stages' => $this->mergeWhen($this->includes('stages'), OrderStageResource::collection($this->stages)),
             ],
         ];
     }

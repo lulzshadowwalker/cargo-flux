@@ -56,7 +56,13 @@ class PushNotification extends Page
                             ->required(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label(__('filament/pages/push-notification.image')),
+                            ->label(__('filament/pages/push-notification.image'))
+                            ->image()
+                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
+                            ->storeFiles(false)
+                            ->maxSize(4 * 1024 * 1024),
 
                         Forms\Components\TextInput::make('title')
                             ->label(__('filament/pages/push-notification.title'))
@@ -83,6 +89,7 @@ class PushNotification extends Page
 
     public function publish(): void
     {
+        dd($this->data);
         try {
             $notification = new SupportPushNotification(
                 title: $this->data['title'],
@@ -96,6 +103,7 @@ class PushNotification extends Page
                 ->title(__('filament/pages/push-notification.notification-sent'))
                 ->send();
         } catch (Exception $e) {
+            dd($e);
             Log::error('Failed to send push notification', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
