@@ -11,9 +11,9 @@ enum Audience: string
     public function label(): string
     {
         return match ($this) {
+            self::ALL => __('enums.audience.all'),
             self::CUSTOMERS => __('enums.audience.customers'),
             self::DRIVERS => __('enums.audience.drivers'),
-            self::ALL => __('enums.audience.all'),
         };
     }
 }
