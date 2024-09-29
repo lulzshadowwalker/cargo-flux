@@ -3,7 +3,7 @@
 namespace App\Services\FirebasePushNotification;
 
 use App\Contracts\NotificationStrategy;
-use App\InteractsWithFirebase;
+use App\Traits\InteractsWithFirebase;
 use App\Models\User;
 use App\Support\PushNotification;
 use Exception;
@@ -23,7 +23,7 @@ class UserNotificationStrategy implements NotificationStrategy
 
         foreach ($users as $u) {
             foreach ($u->deviceTokens as $t)
-                $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::firebaseAccessToken()])
+                $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::accessToken()])
                     ->post(self::endpoint('messages:send'), [
                         'message' => [
                             'data' => (object) [],

@@ -5,6 +5,7 @@ namespace Tests\Unit\Services\FirebasePushNotification;
 use App\Models\User;
 use App\Services\FirebasePushNotification\UserNotificationStrategy;
 use App\Support\PushNotification;
+use App\Traits\InteractsWithFirebase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,7 @@ use Tests\TestCase;
 class UserNotificationStrategyTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use RefreshDatabase, InteractsWithFirebase;
 
     public function test_it_matches_the_specification_correctly()
     {
@@ -37,7 +38,7 @@ class UserNotificationStrategyTest extends TestCase
 
         Http::assertSent(function ($request) {
             return $request->hasHeader('Authorization') &&
-                $request->url() === (string) UserNotificationStrategy::endpoint('messages:send') &&
+                $request->url() === (string) self::endpoint('messages:send') &&
                 $request['message']['notification']['title'] === 'Test Title' &&
                 $request['message']['notification']['body'] === 'Test Body' &&
                 $request['message']['notification']['image'] === 'Test Image' &&

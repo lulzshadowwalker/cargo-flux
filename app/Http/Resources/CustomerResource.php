@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +21,7 @@ class CustomerResource extends JsonResource
                 'email' => $this->user->email,
                 'phone' => $this->user->phone,
                 'dateOfBirth' => $this->user->date_of_birth,
+                'avatar' => $this->user->getFirstMediaUrl(User::MEDIA_COLLECTION_AVATAR),
                 'status' => $this->user->status,
             ],
             'links' => (object) [],

@@ -15,6 +15,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
             'data.attributes.phone' => 'phone',
+            'data.attributes.avatar' => 'profile_picture',
         ], $extraAttributes);
     }
 
@@ -29,6 +30,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
             'data.attributes.companyName' => ['nullable', 'string', 'max:255'],
             'data.attributes.dateOfBirth' => ['nullable', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
+            'data.attributes.avatar' => ['nullable', 'image'],
         ];
     }
 }

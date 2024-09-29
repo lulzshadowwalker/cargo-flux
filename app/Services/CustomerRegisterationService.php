@@ -18,6 +18,8 @@ class CustomerRegisterationService implements RegisterationService
 
         $user->customer()->create($request->mappedAttributes()->toArray());
 
+        // $user->addMedia($request->file('data.attributes.avatar'))->toMediaCollection(User::MEDIA_COLLECTION_AVATAR);
+
         return $user;
     }
 

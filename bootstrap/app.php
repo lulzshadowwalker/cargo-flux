@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
@@ -107,6 +108,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 title: 'Invalid Token',
                 detail: 'The provided token is invalid.',
                 code: Response::HTTP_UNAUTHORIZED
+            );
+            return $builder->build();
+        });
+
+        $exceptions->render(function (PostTooLargeException $exception, Request $request) {
+            $builder = new JsonResponseBuilder();
+            $builder->error(
+                title: 'Request Entity Too Large',
+                detail: 'The request entity is too large.',
+                code: Response::HTTP_REQUEST_ENTITY_TOO_LARGE
             );
             return $builder->build();
         });

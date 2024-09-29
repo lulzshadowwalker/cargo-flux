@@ -6,6 +6,7 @@ use App\Enums\Audience;
 use App\Models\User;
 use App\Services\FirebasePushNotification\AudienceNotificationStrategy;
 use App\Support\PushNotification;
+use App\Traits\InteractsWithFirebase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,7 @@ use Tests\TestCase;
 
 class AudienceNotificationStrategyTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, InteractsWithFirebase;
 
     public function test_it_matches_the_specification_correctly()
     {
@@ -35,7 +36,7 @@ class AudienceNotificationStrategyTest extends TestCase
 
         Http::assertSent(function ($request) use ($notification, $audience) {
             return $request->hasHeader('Authorization') &&
-                $request->url() === (string) AudienceNotificationStrategy::endpoint('messages:send') &&
+                $request->url() === (string) self::endpoint('messages:send') &&
                 $request['message']['notification']['title'] === $notification->title &&
                 $request['message']['notification']['body'] === $notification->body &&
                 $request['message']['notification']['image'] === $notification->image &&

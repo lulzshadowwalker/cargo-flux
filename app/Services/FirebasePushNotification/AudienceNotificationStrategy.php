@@ -4,7 +4,7 @@ namespace App\Services\FirebasePushNotification;
 
 use App\Contracts\NotificationStrategy;
 use App\Enums\Audience;
-use App\InteractsWithFirebase;
+use App\Traits\InteractsWithFirebase;
 use App\Support\PushNotification;
 use Exception;
 use Illuminate\Support\Facades\Http;
@@ -30,7 +30,7 @@ class AudienceNotificationStrategy implements NotificationStrategy
             $topic = $a;
             if (!is_string($a)) $topic = $a->value;
 
-            $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::firebaseAccessToken()])
+            $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::accessToken()])
                 ->post(self::endpoint('messages:send'), [
                     'message' => [
                         'data' => (object) [],

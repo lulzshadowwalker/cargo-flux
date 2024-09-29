@@ -89,7 +89,6 @@ class PushNotification extends Page
 
     public function publish(): void
     {
-        dd($this->data);
         try {
             $notification = new SupportPushNotification(
                 title: $this->data['title'],

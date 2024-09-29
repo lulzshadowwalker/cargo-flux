@@ -19,13 +19,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
+class User extends Authenticatable implements JWTSubject, HasName, FilamentUser, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield, Notifiable, InteractsWithMedia;
 
     protected $fillable = [
         'first_name',
@@ -169,5 +171,13 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser
     public function deviceTokens(): HasMany
     {
         return $this->hasMany(DeviceToken::class);
+    }
+
+    const MEDIA_COLLECTION_AVATAR = 'avatar';
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)
+            ->singleFile();
     }
 }
