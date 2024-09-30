@@ -17,7 +17,8 @@ class TruckCategory extends Model
     protected function casts(): array
     {
         return [
-            'tonnage' => 'integer',
+            'tonnage' => 'decimal:2',
+            'length' => 'decimal:2',
         ];
     }
 
