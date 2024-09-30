@@ -8,6 +8,7 @@ use App\Observers\UserObserver;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Laravel\Sanctum\HasApiTokens;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,7 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements JWTSubject, HasName, FilamentUser, HasMedia
+class User extends Authenticatable implements JWTSubject, HasName, FilamentUser, HasMedia, HasLocalePreference
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield, Notifiable, InteractsWithMedia;
 
@@ -179,5 +181,15 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
     {
         $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)
             ->singleFile();
+    }
+
+    public function preferredLocale(): string
+    {
+        return $this->preferences->language;
+    }
+
+    public function routeNotificationForPush(Notification $notification): array
+    {
+        return $this->deviceTokens->pluck('token')->toArray();
     }
 }

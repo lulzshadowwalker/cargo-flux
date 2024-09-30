@@ -14,7 +14,7 @@ interface PushNotificationService
     public function body(string $body): self;
 
     /**
-    * @param User|array<User>|Audience $notifiable
+    * @param Object|array<Object>|Audience $notifiable
     *
     * @return self
     */

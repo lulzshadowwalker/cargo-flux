@@ -15,14 +15,14 @@ class UserNotificationStrategy implements NotificationStrategy
     use InteractsWithFirebase;
 
     /**
-     * @param User|array<User> $users
+     * @param Object|array<Object> $notifiable
      */
-    public static function send(PushNotification $notification, $users): void
+    public static function send(PushNotification $notification, $notifiable): void
     {
-        if (!is_array($users)) $users = [$users];
+        if (! is_array($notifiable)) $notifiable = [$notifiable];
 
-        foreach ($users as $u) {
-            foreach ($u->deviceTokens as $t)
+        foreach ($notifiable as $n) {
+            foreach ($n->deviceTokens as $t) {
                 $response = Http::withHeaders(['Authorization' => 'Bearer ' . self::accessToken()])
                     ->post(self::endpoint('messages:send'), [
                         'message' => [
@@ -36,13 +36,14 @@ class UserNotificationStrategy implements NotificationStrategy
                         ],
                     ]);
 
-            if ($response->ok()) return;
+                if ($response->ok()) return;
 
-            Log::error('Failed to send notification', [
-                'status' => $response->status(),
-                'response' => $response->body(),
-            ]);
-            throw new Exception('Failed to send notification');
+                Log::error('Failed to send notification', [
+                    'status' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+                throw new Exception('Failed to send notification');
+            }
         }
     }
 

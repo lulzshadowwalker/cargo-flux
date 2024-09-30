@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Notifications\Notification;
 
 class Customer extends Model
 {
@@ -58,5 +59,10 @@ class Customer extends Model
     public function phone(): Attribute
     {
         return Attribute::get(fn() => $this->user->phone);
+    }
+
+    public function deviceTokens(): HasMany
+    {
+        return $this->user->deviceTokens();
     }
 }

@@ -13,7 +13,9 @@ class DriverObserver
 {
     public function creating(Driver $driver): void
     {
-        $driver->status = DriverStatus::UNDER_REVIEW;
+        if ($driver->status === null) {
+            $driver->status = DriverStatus::UNDER_REVIEW;
+        }
     }
 
     public function created(Driver $driver): void

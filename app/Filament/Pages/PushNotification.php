@@ -95,6 +95,7 @@ class PushNotification extends Page
                 body: $this->data['body'],
             );
 
+            // TODO: use PushNotificationService instead
             (new AudienceNotificationStrategy)->send($notification, $this->data['audience']);
 
             Notification::make()
@@ -102,7 +103,6 @@ class PushNotification extends Page
                 ->title(__('filament/pages/push-notification.notification-sent'))
                 ->send();
         } catch (Exception $e) {
-            dd($e);
             Log::error('Failed to send push notification', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),

@@ -17,4 +17,8 @@ return [
         'title' => 'New review has been submitted.',
         'view-review' => 'View Review'
     ],
+    'driver-offer' => [
+        'title' => 'New offer has been received.',
+        'body' => 'You have received a new offer catch it before you miss it'
+    ],
 ];

@@ -42,7 +42,7 @@ class FirebasePushNotificationService implements PushNotificationService
     }
 
     /**
-     * @param User|array<User>|Audience $notifiable
+     * @param Object|array<Object>|Audience $notifiable
      *
      * @return self
      */

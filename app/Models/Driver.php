@@ -13,12 +13,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Propaganistas\LaravelPhone\Rules\Phone;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 
 #[ObservedBy(DriverObserver::class)]
 class Driver extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'status',
@@ -90,7 +91,7 @@ class Driver extends Model
 
     public function approve(): void
     {
-        // TODO: Dispatch event .. 
+        // TODO: Dispatch event ..
         $this->status = DriverStatus::APPROVED;
         $this->save();
     }
@@ -99,5 +100,10 @@ class Driver extends Model
     {
         $this->status = DriverStatus::REJECTED;
         $this->save();
+    }
+
+    public function deviceTokens(): HasMany
+    {
+        return $this->user->deviceTokens();
     }
 }

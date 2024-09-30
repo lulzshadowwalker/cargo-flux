@@ -16,7 +16,7 @@ class DriverFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => $this->faker->randomElement(DriverStatus::cases())->value,
+            'status' => DriverStatus::APPROVED,
             'iban' => $this->faker->word(),
             'user_id' => User::factory()->create(['type' => UserType::DRIVER]),
         ];
