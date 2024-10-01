@@ -21,4 +21,9 @@ return [
         'title' => 'New offer has been received.',
         'body' => 'You have received a new offer catch it before you miss it'
     ],
+    'admin-pending-order' => [
+        'introduction' => 'An order has been placed but no driver has accepted it yet.',
+        'view-order' => 'View Order',
+        'ending' => 'Please take action on this order as soon as possible.'
+    ]
 ];
