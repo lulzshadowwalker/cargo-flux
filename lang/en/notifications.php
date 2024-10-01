@@ -25,5 +25,9 @@ return [
         'introduction' => 'An order has been placed but no driver has accepted it yet.',
         'view-order' => 'View Order',
         'ending' => 'Please take action on this order as soon as possible.'
+    ],
+    'order-payment-status-updated' => [
+        'title' => 'Order payment status has been :status.',
+        'body' => 'Your order payment status has been updated to :status.',
     ]
 ];

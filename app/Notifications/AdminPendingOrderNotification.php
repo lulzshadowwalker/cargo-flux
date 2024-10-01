@@ -4,14 +4,14 @@ namespace App\Notifications;
 
 use App\Filament\Resources\OrderResource;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Order;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification as FilamentNotification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AdminPendingOrderNotification extends Notification
+class AdminPendingOrderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

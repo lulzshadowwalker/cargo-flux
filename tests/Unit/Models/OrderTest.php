@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Models;
 
+use App\Enums\OrderPaymentStatus;
+use App\Events\OrderPaymentStatusUpdated;
 use App\Events\OrderPlaced;
 use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,5 +28,16 @@ class OrderTest extends TestCase
         Order::factory()->create(['number' => 'ORDER-1234']);
 
         Event::assertDispatched(OrderPlaced::class);
+    }
+
+    public function test_it_emits_order_payment_status_updated_event_when_payment_status_is_updated()
+    {
+        Event::fake(OrderPaymentStatusUpdated::class);
+
+        $order = Order::factory()->create(['payment_status' => OrderPaymentStatus::PENDING_APPROVAL]);
+
+        $order->update(['payment_status' => OrderPaymentStatus::APPROVED]);
+
+        Event::assertDispatched(OrderPaymentStatusUpdated::class);
     }
 }

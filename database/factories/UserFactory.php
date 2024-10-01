@@ -29,4 +29,11 @@ class UserFactory extends Factory
             'type' => $this->faker->randomElement(UserType::cases())->value,
         ];
     }
+
+    public function admin(): self
+    {
+        return $this->state([
+            'type' => UserType::ADMIN,
+        ]);
+    }
 }

@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Enums\DriverStatus;
+use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
 use App\Events\OrderPlaced;
+use App\Events\OrderStatusUpdated;
 use App\Models\Driver;
 use App\Notifications\DriverOfferNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,8 +19,12 @@ class NotifyDriversOfNewOffer implements ShouldQueue
         //
     }
 
-    public function handle(OrderPlaced $event): void
+    public function handle(OrderStatusUpdated $event): void
     {
+        if ($event->order->status !== OrderStatus::PENDING_DRIVER_ASSIGNMENT) {
+            return;
+        }
+
         $requestedCategory = $event->order->truckCategory;
 
         // TODO: Might want to use a global scope for this.

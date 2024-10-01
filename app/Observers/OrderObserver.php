@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\OrderPaymentStatusUpdated;
 use App\Events\OrderPlaced;
 use App\Events\OrderScheduleUpdated;
 use App\Events\OrderStatusUpdated;
@@ -28,6 +29,10 @@ class OrderObserver
 
         if ($order->isDirty('scheduled_at')) {
             OrderScheduleUpdated::dispatch($order, Auth::user());
+        }
+
+        if ($order->isDirty('payment_status')) {
+            OrderPaymentStatusUpdated::dispatch($order, Auth::user());
         }
     }
 }
