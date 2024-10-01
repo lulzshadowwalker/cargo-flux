@@ -17,7 +17,9 @@ class NotifyAdminsOfPendingOrders extends Command
 
     public function handle()
     {
-        $pending = Order::whereStatus(OrderStatus::PENDING_DRIVER_ASSIGNMENT)->get();
+        $pending = Order::whereStatus(OrderStatus::PENDING_DRIVER_ASSIGNMENT)
+            ->where('created_at', '>=', now()->subHours(6))
+            ->get();
 
         $pending->each(function ($order) {
             Notification::send(

@@ -12,4 +12,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('telescope:prune --hours=120')->daily();
 
-Schedule::command('notify:pending')->everySixHours();
+Schedule::command('notify:pending')->hourly();
