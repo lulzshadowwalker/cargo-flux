@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Enums\DriverStatus;
 use App\Enums\Language;
+use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Http\Resources\OrderResource;
@@ -83,7 +84,7 @@ class OrderControllerTest extends TestCase
             ])
         )->create(['status' => DriverStatus::APPROVED]);
 
-        $order = Order::factory()->for($driver)->create();
+        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::IN_PROGRESS]);
         $data = [
             'data' => [
                 'attributes' => [
@@ -122,6 +123,53 @@ class OrderControllerTest extends TestCase
             );
     }
 
+    public function test_it_can_update_the_current_active_order()
+    {
+        $driver = Driver::factory()->for(
+            User::factory()->create([
+                'type' => UserType::DRIVER,
+                'status' => UserStatus::ACTIVE
+            ])
+        )->create(['status' => DriverStatus::APPROVED]);
+
+        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::IN_PROGRESS]);
+        $data = [
+            'data' => [
+                'attributes' => [
+                    'currentLocation' => [
+                        'latitude' => 1.0,
+                        'longitude' => 1.0,
+                    ],
+                ]
+            ]
+        ];
+
+        $this->actingAs($driver->user);
+
+        $this->patchJson(route('orders.update-current', [
+            'lang' => Language::EN
+        ]), $data)
+            ->assertOk();
+
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'current_location_latitude' => 1.0,
+            'current_location_longitude' => 1.0,
+        ]);
+
+        $resource = OrderResource::make($order->refresh()->load('customer', 'truck', 'driver', 'reviews'));
+
+        $this->getJson(route('orders.show', [
+            'lang' => Language::EN,
+            'order' => $order,
+            'include' => 'CUSTOMER,TRUCK,DRIVER,REVIEWS',
+        ]))
+            ->assertOk()
+            ->assertExactJson(
+                $resource->response()->getData(true),
+            );
+    }
+
     public function test_driver_cannot_update_an_order_of_another_driver()
     {
         $driver = Driver::factory()->for(
@@ -131,7 +179,7 @@ class OrderControllerTest extends TestCase
             ])
         )->create(['status' => DriverStatus::APPROVED]);
 
-        $order = Order::factory()->create();
+        $order = Order::factory()->for(Driver::factory()->create())->create();
         $data = [
             'data' => [
                 'attributes' => [

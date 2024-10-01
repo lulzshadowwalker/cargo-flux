@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\DriverStatus;
+use App\Enums\OrderStatus;
 use App\Observers\DriverObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
 
 #[ObservedBy(DriverObserver::class)]
 class Driver extends Model

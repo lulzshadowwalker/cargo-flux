@@ -130,6 +130,17 @@ class Order extends Model
         return $query->where('status', OrderStatus::PENDING_DRIVER_ASSIGNMENT);
     }
 
+    public function scopeActive(Builder $query)
+    {
+        return $query->whereNotIn('status', [
+            OrderStatus::PENDING_APPROVAL,
+            OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::SCHEDULED,
+            OrderStatus::CANCELED,
+            OrderStatus::COMPLETED,
+        ]);
+    }
+
     public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
     {
         return $filters->apply($builder);

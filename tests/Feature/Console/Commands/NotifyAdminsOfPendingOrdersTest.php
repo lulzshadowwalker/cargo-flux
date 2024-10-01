@@ -30,7 +30,7 @@ class NotifyAdminsOfPendingOrdersTest extends TestCase
             ->doesntExpectOutput()
             ->assertSuccessful();
 
-        // NOTE: One pending orders, three admins = three notifications
+        // NOTE: One pending order, three admins = three notifications
         Notification::assertCount(3);
         Notification::assertSentTo(
             $admins,
@@ -61,7 +61,6 @@ class NotifyAdminsOfPendingOrdersTest extends TestCase
             ->doesntExpectOutput()
             ->assertSuccessful();
 
-        // NOTE: One pending orders that has been posted for longer than threshold, three admins = three notifications
         Notification::assertCount(1);
         Notification::assertSentTo(
             $admins,

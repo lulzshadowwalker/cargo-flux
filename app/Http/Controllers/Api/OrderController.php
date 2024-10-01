@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Currency;
 use App\Models\Order;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends ApiController
@@ -62,6 +63,19 @@ class OrderController extends ApiController
 
     public function update(string $language, UpdateOrderRequest $request, Order $order)
     {
+        $this->authorize('update', $order);
+
+        $order->update($request->mappedAttributes()->toArray());
+
+        return OrderResource::make($order);
+    }
+
+    public function updateCurrent(string $language, UpdateOrderRequest $request)
+    {
+        if (! Auth::user()->isDriver) abort(Response::HTTP_FORBIDDEN, 'Only drivers can update orders');
+
+        $order = Auth::user()->driver?->orders()->active()->firstOrFail();
+
         $this->authorize('update', $order);
 
         $order->update($request->mappedAttributes()->toArray());
