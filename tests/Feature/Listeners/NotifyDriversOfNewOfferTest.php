@@ -13,11 +13,9 @@ use App\Models\Truck;
 use App\Models\TruckCategory;
 use App\Models\User;
 use App\Notifications\DriverOfferNotification;
-use Database\Factories\DeviceTokenFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class NotifyDriversOfNewOfferTest extends TestCase
@@ -51,11 +49,17 @@ class NotifyDriversOfNewOfferTest extends TestCase
         Driver::factory()->for(User::factory()->create(['status' => UserStatus::BANNED]))->create(['status' => DriverStatus::APPROVED]);
         Driver::factory()->for(User::factory()->create(['status' => UserStatus::SUSPENDED]))->create(['status' => DriverStatus::APPROVED]);
 
-        $order = Order::factory()->for($requestedCategory)->create(['driver_id' => null, 'truck_id' => null]);
+        Order::withoutEvents(function () use ($requestedCategory) {
+            Order::factory()->for($requestedCategory)->create([
+                'driver_id' => null,
+                'truck_id' => null,
+                'number' => uniqid(),
+            ]);
+        });
 
         //
         $listener = new NotifyDriversOfNewOffer();
-        $listener->handle(new OrderPlaced($order));
+        $listener->handle(new OrderPlaced(Order::first()));
 
         //
         Notification::assertSentTo(

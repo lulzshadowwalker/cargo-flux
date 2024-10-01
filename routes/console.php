@@ -11,3 +11,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('telescope:prune --hours=120')->daily();
+
+Schedule::command('notify:pending')->everySixHours();
