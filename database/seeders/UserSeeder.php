@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = User::factory()->create([
-            'email' => 'admin@email.com',
-            'password' => bcrypt('password'),
+            'email' => 'bayanata.dvteam@gmail.com',
+            'password' => bcrypt('eOXyZj6uoykYVS8'),
             'status' => UserStatus::ACTIVE,
             'type' => UserType::ADMIN,
         ]);
