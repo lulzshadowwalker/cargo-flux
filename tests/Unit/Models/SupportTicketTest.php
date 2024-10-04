@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Models;
 
+use App\Events\SupportTicketReceived;
 use App\Models\SupportTicket;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class SupportTicketTest extends TestCase
@@ -32,5 +34,14 @@ class SupportTicketTest extends TestCase
         $this->assertFalse($ticket->isOpen);
         $this->assertTrue($ticket->isInProgress);
         $this->assertFalse($ticket->isResolved);
+    }
+
+    public function test_it_emits_support_ticket_received_event_when_created()
+    {
+        Event::fake(SupportTicketReceived::class);
+
+        SupportTicket::factory()->create(['number' => 'TICKET-1234']);
+
+        Event::assertDispatched(SupportTicketReceived::class);
     }
 }

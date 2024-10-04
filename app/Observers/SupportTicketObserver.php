@@ -3,11 +3,8 @@
 namespace App\Observers;
 
 use App\Enums\SupportTicketStatus;
-use App\Filament\Resources\SupportTicketResource;
+use App\Events\SupportTicketReceived;
 use App\Models\SupportTicket;
-use App\Models\User;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 
 class SupportTicketObserver
 {
@@ -22,17 +19,6 @@ class SupportTicketObserver
 
     public function created(SupportTicket $supportTicket): void
     {
-        $admins = User::admins()->get();
-
-        Notification::make()
-            ->title(__('notifications.support-ticket-created.title'))
-            ->actions([
-                Action::make('go-to-ticket')
-                    ->button()
-                    ->label('View Ticket')
-                    ->url(SupportTicketResource::getUrl('edit', ['record' => $supportTicket]))
-            ])
-            ->icon(SupportTicketResource::getNavigationIcon())
-            ->sendToDatabase($admins);
+        SupportTicketReceived::dispatch($supportTicket);
     }
 }
