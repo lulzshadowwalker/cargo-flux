@@ -3,6 +3,7 @@
 use App\Contracts\ProfileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
@@ -48,4 +49,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // NOTE: Do not switch the order of the /orders/current and /orders/{order} routes
     Route::patch('/orders/current', [OrderController::class, 'updateCurrent'])->name('orders.update-current');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{notification}', [NotificationController::class, 'show'])->name('notifications.show');
+    Route::delete('/notifications', [NotificationController::class, 'destroyAll'])->name('notifications.destroy.all');
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy.single');
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+    Route::patch('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-as-read');
 });

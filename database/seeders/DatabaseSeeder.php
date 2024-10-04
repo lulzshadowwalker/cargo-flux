@@ -15,8 +15,10 @@ use App\Models\Review;
 use App\Models\SupportTicket;
 use App\Models\User;
 use App\Models\UserPreference;
+use App\Notifications\FakeDatabaseNotification;
 use App\Support\SystemActor;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Notification;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +38,8 @@ class DatabaseSeeder extends Seeder
                         'type' => UserType::CUSTOMER,
                     ])
             )->create();
+
+        Notification::send($customer->user, new FakeDatabaseNotification);
 
         Customer::factory()->for(
             User::factory()->create([
@@ -77,6 +81,8 @@ class DatabaseSeeder extends Seeder
             ])
         )->create(['status' => DriverStatus::APPROVED]);
         // Otp::factory(3)->create();
+
+        Notification::send($driver->user, new FakeDatabaseNotification);
 
         Order::factory()->count(20)->for($customer)->for($driver)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
