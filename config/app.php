@@ -70,17 +70,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Sandbox Domain
-    |--------------------------------------------------------------------------
-    |
-    | The sandbox domain is used to provide a separate environment for testing
-    | and development.
-    |
-     */
-    'sandbox_subdomain' => env('APP_SANDBOX_DOMAIN', 'sandbox'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
