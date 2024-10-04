@@ -29,5 +29,9 @@ return [
     'order-payment-status-updated' => [
         'title' => 'Order payment status has been :status.',
         'body' => 'Your order payment status has been updated to :status.',
-    ]
+    ],
+    'pending-direct-payment-order' => [
+        'title' => 'Order has been made :since with direct payment and still is neither approved nor rejected.',
+        'view-order' => 'View Order'
+    ],
 ];

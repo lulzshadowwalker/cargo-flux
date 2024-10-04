@@ -13,3 +13,4 @@ Artisan::command('inspire', function () {
 Schedule::command('telescope:prune --hours=120')->daily();
 
 Schedule::command('notify:pending')->hourly();
+Schedule::command('notify:pending-direct-payment-orders')->hourly();
