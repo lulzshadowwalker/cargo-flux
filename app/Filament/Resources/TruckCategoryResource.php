@@ -86,14 +86,20 @@ class TruckCategoryResource extends Resource
                     ->label(__('filament/resources/truck-category-resource.trucks'))
                     ->getStateUsing(fn($record) => $record->trucks()->count())
                     ->badge()
-                    ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af'))
-                    ->sortable(),
+                    ->tooltip(__('filament/resources/truck-category-resource.is-available-tooltip'))
+                    ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af')),
 
                 Tables\Columns\TextColumn::make('orders')
                     ->label(__('filament/resources/truck-category-resource.orders'))
                     ->getStateUsing(fn($record) => $record->orders()->count())
                     ->badge()
                     ->color(fn($state) => $state > 0 ? 'primary' : Color::hex('#9ca3af'))
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('isAvailable')
+                    ->label(__('filament/resources/truck-category-resource.is-available'))
+                    ->boolean()
+                    ->getStateUsing(fn($record) => $record->isAvailable)
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')

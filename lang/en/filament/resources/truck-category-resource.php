@@ -20,4 +20,6 @@ return [
     'orders' => 'Orders',
     'created-at' => 'Created At',
     'updated-at' => 'Updated At',
+    'is-available' => 'Available',
+    'is-available-tooltip' => 'A truck category is unavailable if it either has no associated trucks or all associated trucks either have an active or upcoming shipments',
 ];

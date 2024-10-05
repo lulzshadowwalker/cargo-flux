@@ -38,4 +38,11 @@ class TruckCategory extends Model
     {
         return Attribute::get(fn(): string => "https://via.placeholder.com/150");
     }
+
+    public function isAvailable(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->trucks()->exists() && (! $this->orders()->activeOrScheduled()->exists());
+        });
+    }
 }

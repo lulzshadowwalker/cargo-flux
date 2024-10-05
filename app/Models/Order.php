@@ -7,6 +7,7 @@ use App\Casts\MoneyCast;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
+use App\Events\OrderStatusUpdated;
 use App\Filters\QueryFilter;
 use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -136,6 +137,16 @@ class Order extends Model
             OrderStatus::PENDING_APPROVAL,
             OrderStatus::PENDING_DRIVER_ASSIGNMENT,
             OrderStatus::SCHEDULED,
+            OrderStatus::CANCELED,
+            OrderStatus::COMPLETED,
+        ]);
+    }
+
+    public function scopeActiveOrScheduled(Builder $query)
+    {
+        return $query->whereNotIn('status', [
+            OrderStatus::PENDING_APPROVAL,
+            OrderStatus::PENDING_DRIVER_ASSIGNMENT,
             OrderStatus::CANCELED,
             OrderStatus::COMPLETED,
         ]);

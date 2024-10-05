@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Enums\OrderPaymentStatus;
+use App\Enums\OrderStatus;
 use App\Events\OrderPaymentStatusUpdated;
 use App\Events\OrderPlaced;
 use App\Models\Order;
@@ -39,5 +40,46 @@ class OrderTest extends TestCase
         $order->update(['payment_status' => OrderPaymentStatus::APPROVED]);
 
         Event::assertDispatched(OrderPaymentStatusUpdated::class);
+    }
+
+    public function test_active_orders_scope()
+    {
+        $total = count(OrderStatus::cases());
+        $excluded = [
+            OrderStatus::PENDING_APPROVAL,
+            OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::SCHEDULED,
+            OrderStatus::CANCELED,
+            OrderStatus::COMPLETED,
+        ];
+
+        collect(OrderStatus::cases())->each(function ($status) {
+            Order::factory()->create(['status' => $status]);
+        });
+
+        $expected = $total - count($excluded);
+        $actual = Order::active()->get();
+
+        $this->assertCount($expected, $actual);
+    }
+
+    public function test_active_or_scheduled_scope()
+    {
+        $total = count(OrderStatus::cases());
+        $excluded = [
+            OrderStatus::PENDING_APPROVAL,
+            OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::CANCELED,
+            OrderStatus::COMPLETED,
+        ];
+
+        collect(OrderStatus::cases())->each(function ($status) {
+            Order::factory()->create(['status' => $status]);
+        });
+
+        $expected = $total - count($excluded);
+        $actual = Order::activeOrScheduled()->get();
+
+        $this->assertCount($expected, $actual);
     }
 }

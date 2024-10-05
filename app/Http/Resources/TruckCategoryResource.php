@@ -17,6 +17,7 @@ class TruckCategoryResource extends JsonResource
                 'tonnage' => (float) $this->tonnage,
                 'length' => (float) $this->length,
                 'image' => $this->image,
+                'isAvailable' => $this->isAvailable,
             ],
             'links' => [
                 'self' => route('trucks.categories.show', ['lang' => app()->getLocale(), 'truckCategory' => $this]),
