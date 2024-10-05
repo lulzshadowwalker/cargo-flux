@@ -21,4 +21,31 @@ class DriverFactory extends Factory
             'user_id' => User::factory()->create(['type' => UserType::DRIVER]),
         ];
     }
+
+    public function underReview(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => DriverStatus::UNDER_REVIEW,
+            ];
+        });
+    }
+
+    public function approved(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => DriverStatus::APPROVED,
+            ];
+        });
+    }
+
+    public function rejected(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => DriverStatus::REJECTED,
+            ];
+        });
+    }
 }

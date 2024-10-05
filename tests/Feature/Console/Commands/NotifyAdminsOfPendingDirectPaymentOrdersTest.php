@@ -21,7 +21,7 @@ class NotifyAdminsOfPendingDirectPaymentOrdersTest extends TestCase
     {
         Notification::fake();
 
-        $admins = User::factory()->count(3)->create(['type' => UserType::ADMIN]);
+        $admins = User::factory()->admin()->count(3)->create();
         Order::withoutEvents(function () {
             Order::factory()->create([
                 'status' => OrderStatus::PENDING_APPROVAL,
@@ -42,7 +42,6 @@ class NotifyAdminsOfPendingDirectPaymentOrdersTest extends TestCase
         });
 
         $this->artisan('notify:pending-direct-payment-orders')
-            ->doesntExpectOutput()
             ->assertSuccessful();
 
         Notification::assertCount(3);

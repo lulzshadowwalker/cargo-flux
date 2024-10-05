@@ -18,10 +18,14 @@ class NotifyAdminsOfPendingDirectPaymentOrders extends Command
 
     public function handle()
     {
+        $this->info('Notifying admins of pending direct payment orders...');
+
         $pending = Order::where('payment_method', OrderPaymentMethod::DIRECT)
             ->where('payment_status', OrderPaymentStatus::PENDING_APPROVAL)
             ->where('created_at', '<=', now()->subHours(2))
             ->get();
+
+        $this->info('Found ' . $pending->count() . ' pending direct payment orders');
 
         $pending->each(function ($order) {
             Notification::send(
@@ -29,5 +33,7 @@ class NotifyAdminsOfPendingDirectPaymentOrders extends Command
                 new AdminPendingDirectPaymentOrderNotification($order),
             );
         });
+
+        $this->info('Notified ' . $pending->count() . ' admins of pending direct payment orders');
     }
 }

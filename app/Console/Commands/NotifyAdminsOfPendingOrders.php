@@ -17,9 +17,13 @@ class NotifyAdminsOfPendingOrders extends Command
 
     public function handle()
     {
+        $this->info('Notifying admins of pending orders...');
+
         $pending = Order::whereStatus(OrderStatus::PENDING_DRIVER_ASSIGNMENT)
             ->where('created_at', '<=', now()->subHours(6))
             ->get();
+
+        $this->info('Found ' . $pending->count() . ' pending orders');
 
         $pending->each(function ($order) {
             Notification::send(
@@ -27,5 +31,7 @@ class NotifyAdminsOfPendingOrders extends Command
                 new AdminPendingOrderNotification($order),
             );
         });
+
+        $this->info('Notified ' . $pending->count() . ' admins of pending orders');
     }
 }

@@ -41,7 +41,6 @@ class NotifyAdminsOfPendingOrdersTest extends TestCase
         });
 
         $this->artisan('notify:pending')
-            ->doesntExpectOutput()
             ->assertSuccessful();
 
         Notification::assertCount(1);

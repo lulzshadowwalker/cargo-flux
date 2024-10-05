@@ -34,4 +34,8 @@ return [
         'title' => 'Order has been made :since with direct payment and still is neither approved nor rejected.',
         'view-order' => 'View Order'
     ],
+    'admin-pending-driver-registeration-request' => [
+        'title' => 'Driver :name has registered :since and stil is under review.',
+        'view-driver' => 'View Driver'
+    ],
 ];

@@ -14,3 +14,4 @@ Schedule::command('telescope:prune --hours=120')->daily();
 
 Schedule::command('notify:pending')->hourly();
 Schedule::command('notify:pending-direct-payment-orders')->hourly();
+Schedule::command('notify:pending-driver-registeration-requests')->hourly();

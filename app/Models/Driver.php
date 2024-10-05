@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\DriverStatus;
-use App\Enums\OrderStatus;
+use Illuminate\Database\Eloquent\Builder;
 use App\Observers\DriverObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Builder;
 
 #[ObservedBy(DriverObserver::class)]
 class Driver extends Model
@@ -88,6 +87,21 @@ class Driver extends Model
     public function isUnderReview(): Attribute
     {
         return Attribute::get(fn() => $this->status === DriverStatus::UNDER_REVIEW);
+    }
+
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('status', DriverStatus::APPROVED);
+    }
+
+    public function scopeRejected(Builder $query): Builder
+    {
+        return $query->where('status', DriverStatus::REJECTED);
+    }
+
+    public function scopeUnderReview(Builder $query): Builder
+    {
+        return $query->where('status', DriverStatus::UNDER_REVIEW);
     }
 
     public function approve(): void
