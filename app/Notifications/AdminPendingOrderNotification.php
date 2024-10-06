@@ -43,6 +43,7 @@ class AdminPendingOrderNotification extends Notification implements ShouldQueue
                     ->url(OrderResource::getUrl('edit', ['record' => $this->order]))
                     ->button(),
             ])
+            ->icon(OrderResource::getNavigationIcon())
             ->getDatabaseMessage();
     }
 }
