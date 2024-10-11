@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ShieldSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(CurrencySeeder::class);
+        $this->call(WorldTableSeeder::class);
 
         $customer = Customer::factory()
             ->for(

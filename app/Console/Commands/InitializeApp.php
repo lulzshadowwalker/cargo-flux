@@ -18,6 +18,12 @@ class InitializeApp extends Command
         Artisan::call('upsert:pages');
         $this->info('Pages upserted successfully.');
 
+        Artisan::call('upsert:currencies');
+        $this->info('Currencies upserted successfully.');
+
+        Artisan::call('upsert:world');
+        $this->info('Countries and cities upserted successfully.');
+
         $this->info('⏺ Application initialized successfully.');
     }
 }

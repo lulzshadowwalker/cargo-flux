@@ -2,14 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Currency;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class CurrencySeeder extends Seeder
 {
     public function run(): void
     {
-        // NOTE: It is important for testing in the sandbox environment to seed all currencies.
-        Currency::factory()->count(180)->create();
+        $failed = Artisan::call('upsert:currencies');
+        if ($failed) {
+            $this->command->error('Failed to seed currencies');
+        }
     }
 }
