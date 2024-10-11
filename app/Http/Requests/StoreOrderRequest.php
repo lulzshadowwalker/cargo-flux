@@ -32,6 +32,10 @@ class StoreOrderRequest extends BaseFormRequest
     {
         return [
             'data.attributes.paymentMethod' => 'The payment method must be one of the following: ' . implode(', ', OrderPaymentMethod::values()),
+            'data.attributes.pickupLocation.latitude' => 'Pickup location latitude must be a valid location between -90 and 90',
+            'data.attributes.pickupLocation.longitude' => 'Pickup location longitude must be a valid location between -90 and 90',
+            'data.attributes.deliveryLocation.latitude' => 'Delivery location latitude must be a valid location between -90 and 90',
+            'data.attributes.deliveryLocation.longitude' => 'Delivery location longitude must be a valid location between -90 and 90',
         ];
     }
 

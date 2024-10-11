@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderPreviewController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SupportTicketController;
@@ -45,6 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    //  TODO: Add tests to POST /orders/preview
+    Route::post('/orders/preview', [OrderPreviewController::class, 'index'])->name('orders.preview')->withoutMiddleware('auth:sanctum');
 
     // NOTE: Do not switch the order of the /orders/current and /orders/{order} routes
     Route::patch('/orders/current', [OrderController::class, 'updateCurrent'])->name('orders.update-current');
