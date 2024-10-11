@@ -12,6 +12,9 @@ use App\Models\Order;
 use App\Models\OrderTrackingEntry;
 use App\Models\Page;
 use App\Models\Review;
+use App\Models\RouteGroup;
+use App\Models\RouteGroupDestination;
+use App\Models\RouteGroupTruckOption;
 use App\Models\SupportTicket;
 use App\Models\User;
 use App\Models\UserPreference;
@@ -27,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ShieldSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(CurrencySeeder::class);
-        $this->call(WorldTableSeeder::class);
+        $this->call(WorldSeeder::class);
 
         $customer = Customer::factory()
             ->for(
@@ -111,5 +114,11 @@ class DatabaseSeeder extends Seeder
         SupportTicket::factory()->count(1)->create([
             'created_at' => now()->subDays(20),
         ]);
+
+        RouteGroup::factory()
+            ->count(8)
+            ->has(RouteGroupDestination::factory()->count(rand(1, 2)), 'destinations')
+            ->has(RouteGroupTruckOption::factory()->count(rand(2, 5)), 'truckOptions')
+            ->create();
     }
 }

@@ -178,4 +178,10 @@ class Order extends Model
             ];
         }));
     }
+
+    public function routeGroup(): BelongsTo
+    {
+        //  TODO: implement order.routeGroup relationship
+        throw new \Exception('Unimplemented method order.routeGroup');
+    }
 }

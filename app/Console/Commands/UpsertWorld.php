@@ -2,31 +2,50 @@
 
 namespace App\Console\Commands;
 
-use Altwaireb\World\Database\Seeders\BaseWorldSeeder;
-use Altwaireb\World\World;
-use Altwaireb\World\WorldServiceProvider;
-use Database\Seeders\WorldTableSeeder;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class UpsertWorld extends Command
 {
     protected $signature = 'upsert:world';
+    protected $description = 'Upserts countries, states, and cities into the database';
 
-    protected $description = 'Upserts countries and cities into the database';
-
-    //  NOTE: This command expects you to have manually called
-    //  `php artisan world:seed`
     public function handle()
     {
         $output = [];
         $failed = 0;
-        exec('world:seed', $output, $failed);
-        if ($failed) {
-            $this->error('Failed to seed countries and currencies');
+        exec('php artisan world:seeder', $output, $failed);
+
+        $successfullySeeded = $this->checkSeedingSuccess($output);
+
+        if (!$successfullySeeded) {
+            $this->error('Failed to seed countries, states, or cities.');
             return;
         }
 
-        $this->info('Countries and cities upserted successfully');
+        $this->info('Countries, states, and cities upserted successfully.');
+    }
+
+    /**
+     * Check seeding success by looking for specific output patterns.
+     *
+     * @param array $output
+     * @return bool
+     */
+    protected function checkSeedingSuccess(array $output): bool
+    //  NOTE: Checking the returned exit code seems to be unreliable, so we're checking the output instead.
+    {
+        $countriesSeeded = false;
+        $statesSeeded = false;
+
+        foreach ($output as $line) {
+            if (strpos($line, 'Countries Data Seeded has successful') !== false) {
+                $countriesSeeded = true;
+            }
+            if (strpos($line, 'States Data Seeded has successful') !== false) {
+                $statesSeeded = true;
+            }
+        }
+
+        return $countriesSeeded && $statesSeeded;
     }
 }
