@@ -23,6 +23,7 @@ return [
         'pending-approval' => 'Pending Approval',
         'approved' => 'Approved',
         'rejected' => 'Rejected',
+        'unpaid' => 'Unpaid',
     ],
     'order-status' => [
         'pending-approval' => 'Pending Approval',
@@ -50,5 +51,13 @@ return [
         'all' => 'All',
         'customers' => 'Customers',
         'drivers' => 'Drivers',
+    ],
+    'payment-gateway' => [
+        'my-fatoorah' => 'My Fatoorah',
+    ],
+    'payment-status' => [
+        'pending' => 'Pending',
+        'paid' => 'Paid',
+        'failed' => 'Failed',
     ],
 ];

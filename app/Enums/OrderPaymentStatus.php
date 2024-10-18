@@ -9,6 +9,7 @@ enum OrderPaymentStatus: string
     case PENDING_APPROVAL = 'PENDING_APPROVAL';
     case APPROVED = 'APPROVED';
     case REJECTED = 'REJECTED';
+    case UNPAID = 'UNPAID';
 
     public function color(): string|array|bool|Closure|null
     {
@@ -16,6 +17,7 @@ enum OrderPaymentStatus: string
             self::PENDING_APPROVAL => 'warning',
             self::APPROVED => 'success',
             self::REJECTED => 'danger',
+            self::UNPAID => 'info',
         };
     }
 
@@ -25,6 +27,7 @@ enum OrderPaymentStatus: string
             self::PENDING_APPROVAL => __('enums.order-payment-status.pending-approval'),
             self::APPROVED => __('enums.order-payment-status.approved'),
             self::REJECTED => __('enums.order-payment-status.rejected'),
+            self::UNPAID => __('enums.order-payment-status.unpaid'),
         };
     }
 
@@ -34,6 +37,7 @@ enum OrderPaymentStatus: string
             self::PENDING_APPROVAL => 'heroicon-o-clock',
             self::APPROVED => 'heroicon-o-check-circle',
             self::REJECTED => 'heroicon-o-x-circle',
+            self::UNPAID => 'heroicon-o-currency-dollar',
         };
     }
 

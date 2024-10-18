@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderPreviewController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\SupportTicketController;
 use App\Http\Controllers\Api\TruckCategoryController;
 use App\Http\Controllers\Api\UserPreferenceController;
@@ -61,4 +63,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy.single');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
     Route::patch('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-as-read');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/payments/methods', [PaymentMethodController::class, 'index'])->withoutMiddleware('auth:sanctum')->name('payments.methods.index');
+    Route::post('/payments', [PaymentController::class, 'store']);
+    Route::post('/payments/callback/success', [PaymentController::class, 'success'])->name('payment.callback.success');
+    Route::post('/payments/callback/failure', [PaymentController::class, 'failure'])->name('payment.callback.failure');
 });

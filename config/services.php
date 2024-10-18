@@ -40,6 +40,12 @@ return [
         'service_file' => env('FIREBASE_SERVICE_FILE', storage_path('../firebase/dev.json')),
         'project_id' => env('FIREBASE_PROJECT_ID'),
         'messaging' => [],
-    ]
+    ],
+
+    'myfatoorah' => [
+        'api_key' => env('MYFATOORAH_API_KEY'),
+        'vc_code' => env('MYFATOORAH_VC_CODE'),
+        'is_test' => env('MYFATOORAH_IS_TEST', config('app.env') !== 'production'),
+    ],
 
 ];

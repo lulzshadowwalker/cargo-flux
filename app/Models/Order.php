@@ -7,7 +7,6 @@ use App\Casts\MoneyCast;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
-use App\Events\OrderStatusUpdated;
 use App\Filters\QueryFilter;
 use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -17,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 
 #[ObservedBy(OrderObserver::class)]
@@ -184,4 +184,9 @@ class Order extends Model
         //  TODO: implement order.routeGroup relationship
         throw new \Exception('Unimplemented method order.routeGroup');
     }
+
+    public function payments(): MorphMany
+    {
+        return $this->morphMany(Payment::class, 'payable');
+   }
 }

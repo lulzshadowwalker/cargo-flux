@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\PaymentGatewayService;
 use App\Contracts\ProfileController;
 use App\Contracts\PushNotificationService;
 use Illuminate\Support\ServiceProvider;
@@ -10,6 +11,7 @@ use App\Contracts\ResponseBuilder;
 use App\Http\Controllers\Api\CustomerProfileController;
 use App\Http\Controllers\Api\DriverProfileController;
 use App\Services\FirebasePushNotification\FirebasePushNotificationService;
+use App\Services\MyFatoorahPaymentGatewayService;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ResponseBuilder::class, JsonResponseBuilder::class);
         $this->app->bind(PushNotificationService::class, FirebasePushNotificationService::class);
+        $this->app->bind(PaymentGatewayService::class, MyFatoorahPaymentGatewayService::class);
 
         $this->app->bind(ProfileController::class, function ($app) {
             if (Auth::user()->isCustomer) {
