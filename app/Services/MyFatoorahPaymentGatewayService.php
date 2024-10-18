@@ -52,21 +52,25 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
         $fields = [
             'InvoiceValue' => (string) $price->getAmount(),
             'CustomerName' => $user->fullName,
-            'CallBackUrl' => 'https://0c68-176-29-240-109.ngrok-free.app/api/en/payments/callback', // route('payment.callback', ['lang' => app()->getLocale()]),
-            'ErrorUrl' => 'https://0c68-176-29-240-109.ngrok-free.app/api/en/payments/callback', // route('payment.callback', ['lang' => app()->getLocale()]),
+            'CallBackUrl' => route('payment.callback', ['lang' => app()->getLocale()]),
+            'ErrorUrl' => route('payment.callback', ['lang' => app()->getLocale()]),
 
             'DisplayCurrencyIso' => $price->getCurrency()->getCurrencyCode(),
 
-            // [ISO Lookups](https://docs.myfatoorah.com/docs/iso-lookups)
+            //  NOTE: [ISO Lookups](https://docs.myfatoorah.com/docs/iso-lookups)
             'MobileCountryCode' => $countryCode,
 
-            // String uses English letters ONLY and does not accept Arabic characters Its length is between 0 and 11
-            // Regular expression pattern is ^(?:(+)|(00)|(*)|())[0-9]{3,14}((#)|())$
+            //  NOTE: """
+            //  String uses English letters ONLY and does not accept Arabic characters Its length is between 0 and 11
+            //  Regular expression pattern is ^(?:(+)|(00)|(*)|())[0-9]{3,14}((#)|())$
+            //  """
             'CustomerMobile' => Str::replace($countryCode, '', $user->phone->formatE164()),
             'CustomerEmail' => $user->email,
             'Language' => $user->preferences?->language ?: Language::EN,
-            'CustomerReference' => null,
-            'UserDefinedField' => null,
+            'UserDefinedField' => json_encode([
+                'payable_type' => get_class($payable),
+                'payable_id' => $payable->id,
+            ]),
             'CustomerAddress' => [
                 'Block' => null,
                 'Street' => null,
