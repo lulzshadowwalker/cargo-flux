@@ -101,14 +101,49 @@ class Order extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function scopeDriverAssigned(Builder $query)
+    {
+        return $query->where('status', OrderStatus::DRIVER_ASSIGNED);
+    }
+
     public function scopeScheduled(Builder $query)
     {
         return $query->where('status', OrderStatus::SCHEDULED);
     }
 
-    public function scopeInProgress(Builder $query)
+    public function scopeHeadingToPickup(Builder $query)
     {
-        return $query->where('status', OrderStatus::IN_PROGRESS);
+        return $query->where('status', OrderStatus::HEADING_TO_PICKUP);
+    }
+
+    public function scopePickupStarted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::PICKUP_STARTED);
+    }
+
+    public function scopePickupCompleted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::PICKUP_COMPLETED);
+    }
+
+    public function scopeCustomsProcessingStarted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::CUSTOMS_PROCESSING_STARTED);
+    }
+
+    public function scopeCustomsProcessingCompleted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::CUSTOMS_PROCESSING_COMPLETED);
+    }
+
+    public function scopeDropOffStarted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::DROP_OFF_STARTED);
+    }
+
+    public function scopeDropOffCompleted(Builder $query)
+    {
+        return $query->where('status', OrderStatus::DROP_OFF_COMPLETED);
     }
 
     public function scopeCompleted(Builder $query)
@@ -136,6 +171,7 @@ class Order extends Model
         return $query->whereNotIn('status', [
             OrderStatus::PENDING_APPROVAL,
             OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::DRIVER_ASSIGNED,
             OrderStatus::SCHEDULED,
             OrderStatus::CANCELED,
             OrderStatus::COMPLETED,

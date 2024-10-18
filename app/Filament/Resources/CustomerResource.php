@@ -103,8 +103,8 @@ class CustomerResource extends Resource implements HasShieldPermissions
                     ->color(fn($state) => $state !== 'none' ? $state?->color() : Color::hex('#4b5563'))
                     ->formatStateUsing((fn($state) => $state !== 'none' ? $state->label() :   __('filament/resources/customer-resource.none')))
                     ->getStateUsing(function ($record) {
-                        if ($record->orders()->inProgress()->count() > 0) {
-                            return OrderStatus::IN_PROGRESS;
+                        if ($activeOrder = $record->orders()->active()->first()) {
+                            return $activeOrder->status;
                         }
 
                         if ($record->orders()->scheduled()->count() > 0) {

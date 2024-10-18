@@ -48,6 +48,7 @@ class OrderTest extends TestCase
         $excluded = [
             OrderStatus::PENDING_APPROVAL,
             OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::DRIVER_ASSIGNED,
             OrderStatus::SCHEDULED,
             OrderStatus::CANCELED,
             OrderStatus::COMPLETED,

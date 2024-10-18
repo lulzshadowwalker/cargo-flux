@@ -84,7 +84,7 @@ class OrderControllerTest extends TestCase
             ])
         )->create(['status' => DriverStatus::APPROVED]);
 
-        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::IN_PROGRESS]);
+        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::HEADING_TO_PICKUP]);
         $data = [
             'data' => [
                 'attributes' => [
@@ -132,7 +132,7 @@ class OrderControllerTest extends TestCase
             ])
         )->create(['status' => DriverStatus::APPROVED]);
 
-        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::IN_PROGRESS]);
+        $order = Order::factory()->for($driver)->create(['status' => OrderStatus::HEADING_TO_PICKUP]);
         $data = [
             'data' => [
                 'attributes' => [
