@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\PaymentGatewayService;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Resources\PaymentResource;
+use Illuminate\Http\Request;
 
 class PaymentController extends ApiController
 {
@@ -27,18 +28,10 @@ class PaymentController extends ApiController
     }
 
     /**
-     * Handle a successful payment callback from the payment gateway.
+     * Handle a successful/failed payment callback from the payment gateway.
      */
-    public function success()
+    public function callback(Request $request)
     {
-        //
-    }
-
-    /**
-     * Handle a failed payment callback from the payment gateway.
-     */
-    public function failure()
-    {
-        //
+        $this->gateway->callback($request);
     }
 }

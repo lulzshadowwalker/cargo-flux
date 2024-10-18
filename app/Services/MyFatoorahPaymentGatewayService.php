@@ -5,14 +5,19 @@ namespace App\Services;
 use App\Contracts\PaymentGatewayService;
 use App\Enums\Language;
 use App\Enums\PaymentGateway;
+use App\Enums\PaymentStatus;
 use App\Models\Currency;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Support\PaymentMethod;
 use Brick\Money\Money;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use libphonenumber\PhoneNumberUtil;
 use MyFatoorah\Library\API\Payment\MyFatoorahPayment;
 use Illuminate\Support\Str;
+use MyFatoorah\Library\API\Payment\MyFatoorahPaymentStatus;
 
 class MyFatoorahPaymentGatewayService implements PaymentGatewayService
 {
@@ -47,8 +52,9 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
         $fields = [
             'InvoiceValue' => (string) $price->getAmount(),
             'CustomerName' => $user->fullName,
-            'CallBackUrl' => route('payment.callback.success', ['lang' => app()->getLocale()]),
-            'ErrorUrl' => route('payment.callback.failure', ['lang' => app()->getLocale()]),
+            'CallBackUrl' => 'https://0c68-176-29-240-109.ngrok-free.app/api/en/payments/callback', // route('payment.callback', ['lang' => app()->getLocale()]),
+            'ErrorUrl' => 'https://0c68-176-29-240-109.ngrok-free.app/api/en/payments/callback', // route('payment.callback', ['lang' => app()->getLocale()]),
+
             'DisplayCurrencyIso' => $price->getCurrency()->getCurrencyCode(),
 
             // [ISO Lookups](https://docs.myfatoorah.com/docs/iso-lookups)
@@ -89,19 +95,44 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
     }
 
     /**
-     * Handle the success callback
+     * Handle the success/failure callbacks
      */
-    public function success(): void
+    public function callback(Request $request): void
     {
-        //
-    }
+        Log::info('MyFatoorah callback', $request->all());
 
-    /**
-     * Handle the failure callback
-     */
-    public function failure(): void
-    {
-        //
+        $handler = new MyFatoorahPaymentStatus($this->config());
+
+        $details = $handler->getPaymentStatus($request->paymentId, 'PaymentId');
+
+        $payment = Payment::where('external_reference', $details->InvoiceId)->first();
+        if (! $payment) {
+            Log::critical('Payment not found', (array) $details);
+        }
+
+        $payment->details = $details;
+
+        //  TODO: Thoroughly test the payment status handling
+        switch ($details->InvoiceStatus) {
+            case 'Failed':
+                $payment->status = PaymentStatus::FAILED;
+                break;
+            case 'Paid':
+                $payment->status = PaymentStatus::PAID;
+                break;
+            case 'Pending':
+                $payment->status = PaymentStatus::PENDING;
+                break;
+            default:
+                Log::critical('Unknown payment status', (array) $details);
+        }
+
+        $payment->save();
+
+        Log::info('MyFatoorah callback handled successfully', [
+            'payment_id' => $payment->id,
+            'external_reference' => $details->InvoiceId,
+        ]);
     }
 
     /**
@@ -113,12 +144,18 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
             return $this->client;
         }
 
-        $config = [
+        return new MyFatoorahPayment($this->config());
+    }
+
+    /**
+    * Get the configuration
+    */
+    protected function config(): array
+    {
+        return [
             'apiKey' => config('services.myfatoorah.api_key'),
             'vcCode' => config('services.myfatoorah.vc_code'),
             'isTest' => config('services.myfatoorah.is_test'),
         ];
-
-        return new MyFatoorahPayment($config);
     }
 }

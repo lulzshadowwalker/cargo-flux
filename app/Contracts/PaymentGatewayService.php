@@ -4,6 +4,7 @@ namespace App\Contracts;
 
 use Brick\Money\Money;
 use App\Support\PaymentMethod;
+use Illuminate\Http\Request;
 
 interface PaymentGatewayService
 {
@@ -25,12 +26,7 @@ interface PaymentGatewayService
     public function start(Money $price, string $paymentMethodId, object $payable): array;
 
     /**
-     * Handle the success callback
+     * Handle the success/failure callbacks
      */
-    public function success(): void;
-
-    /**
-     * Handle the failure callback
-     */
-    public function failure(): void;
+    public function callback(Request $request): void;
 }

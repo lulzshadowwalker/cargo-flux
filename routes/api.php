@@ -65,9 +65,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/notifications/read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-as-read');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/payments/methods', [PaymentMethodController::class, 'index'])->withoutMiddleware('auth:sanctum')->name('payments.methods.index');
-    Route::post('/payments', [PaymentController::class, 'store']);
-    Route::post('/payments/callback/success', [PaymentController::class, 'success'])->name('payment.callback.success');
-    Route::post('/payments/callback/failure', [PaymentController::class, 'failure'])->name('payment.callback.failure');
-});
+Route::post('/payments/methods', [PaymentMethodController::class, 'index'])->name('payments.methods.index');
+Route::post('/payments', [PaymentController::class, 'store'])->middleware('auth:sanctum')->name('payments.store');
+Route::get('/payments/callback', [PaymentController::class, 'callback'])->name('payment.callback');
