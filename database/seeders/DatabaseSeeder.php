@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
 
         Notification::send($driver->user, new FakeDatabaseNotification);
 
-        Order::factory()->count(20)->for($customer)->for($driver)->create()->each(function (Order $order) {
+        Order::factory()->count(100)->for($customer)->for($driver)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
             $actorId = $actorType === Driver::class ? $order->driver->id : 1;
 

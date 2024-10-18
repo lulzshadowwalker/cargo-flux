@@ -28,7 +28,6 @@ return [
         'pending-approval' => 'بانتظار الموافقة',
         'pending-driver-assignment' => 'بانتظار تعيين سائق',
         'scheduled' => 'مجدول',
-        'in-progress' => 'قيد التنفيذ',
         'completed' => 'مكتمل',
         'canceled' => 'ملغى',
     ],
