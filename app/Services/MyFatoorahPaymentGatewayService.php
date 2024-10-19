@@ -47,13 +47,13 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
     {
         $user = Auth::user();;
 
-        $countryCode = '+' . PhoneNumberUtil::getInstance()->getCountryCodeForRegion('JO');
+        $countryCode = '+' . PhoneNumberUtil::getInstance()->getCountryCodeForRegion($user->phone->getCountry());
 
         $fields = [
             'InvoiceValue' => (string) $price->getAmount(),
             'CustomerName' => $user->fullName,
-            'CallBackUrl' => route('payment.callback', ['lang' => app()->getLocale()]),
-            'ErrorUrl' => route('payment.callback', ['lang' => app()->getLocale()]),
+            'CallBackUrl' => route('payments.callback', ['lang' => app()->getLocale()]),
+            'ErrorUrl' => route('payments.callback', ['lang' => app()->getLocale()]),
 
             'DisplayCurrencyIso' => $price->getCurrency()->getCurrencyCode(),
 
@@ -152,8 +152,8 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
     }
 
     /**
-    * Get the configuration
-    */
+     * Get the configuration
+     */
     protected function config(): array
     {
         return [

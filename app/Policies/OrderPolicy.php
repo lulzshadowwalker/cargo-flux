@@ -28,13 +28,9 @@ class OrderPolicy
 
     public function pay(User $user, Order $order): bool
     {
-        return true;
-
         $isOwner = $user->customer->id === $order->customer_id;
 
         return $user->isCustomer && $isOwner &&
-            //  FIXME: This is obviously incorrect. First we need to redfine OrderStatus cases properly and clearly.
-            in_array($order->status, [OrderStatus::PENDING_DRIVER_ASSIGNMENT]) &&
             in_array($order->payment_status, [OrderPaymentStatus::UNPAID, OrderPaymentStatus::REJECTED]);
     }
 }
