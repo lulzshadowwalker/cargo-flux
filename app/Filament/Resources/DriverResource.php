@@ -101,8 +101,8 @@ class DriverResource extends Resource
                     ->color(fn($state) => $state !== 'none' ? $state?->color() : Color::hex('#4b5563'))
                     ->formatStateUsing((fn($state) => $state !== 'none' ? $state->label() :   __('filament/resources/driver-resource.none')))
                     ->getStateUsing(function ($record) {
-                        if ($record->orders()->inProgress()->count() > 0) {
-                            return OrderStatus::IN_PROGRESS;
+                        if ($active = $record->orders()->active()->first()) {
+                            return $active->status;
                         }
 
                         if ($record->orders()->scheduled()->count() > 0) {
