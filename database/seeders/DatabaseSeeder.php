@@ -115,10 +115,10 @@ class DatabaseSeeder extends Seeder
             'created_at' => now()->subDays(20),
         ]);
 
-        RouteGroup::factory()
-            ->count(8)
-            ->has(RouteGroupDestination::factory()->count(rand(1, 2)), 'destinations')
-            ->has(RouteGroupTruckOption::factory()->count(rand(2, 5)), 'truckOptions')
-            ->create();
+        // RouteGroup::factory()
+        //     ->count(8)
+        //     ->has(RouteGroupDestination::factory()->count(rand(1, 2)), 'destinations')
+        //     ->has(RouteGroupTruckOption::factory()->count(rand(2, 5)), 'truckOptions')
+        //     ->create();
     }
 }
