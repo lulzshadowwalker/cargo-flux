@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'route-information' => 'Route Information',
+    'route-information-description' => 'Define the pickup location and multiple delivery destinations for the route.',
+    'pickup-state' => 'Pickup State',
+    'pickup-state-placeholder' => 'Select a pickup state',
+    'pickup-state-helper-text' => 'Specify the state where the cargo will be picked up (e.g., Amman)',
+    'destinations' => 'Destination States',
+    'destinations-placeholder' => 'Enter one or more delivery destinations',
+    'destinations-helper-text' => 'Add multiple delivery destinations for this route (e.g., Aqaba, Ajloun, Irbid).',
+    'truck-option' => 'Truck Option',
+    'truck-option-placeholder' => 'Select truck option',
+    'truck-option-pricing' => 'Truck Option Pricing',
+    'truck-option-pricing-description' => 'Define the price for each truck option on this route.',
+    'truck-option-helper-text' => 'Specify the price for this route using this truck option.',
+    'price' => 'Price',
+    'amount' => 'Amount',
+    'currency' => 'Currency',
+    'add-truck-option' => 'Add',
+    'route-create-success-title' => 'Route created successfully',
+    'route-create-success-body' => 'The route has been created successfully.',
+    'route-create-failure-title' => 'Failed to create route',
+    'route-create-failure-body' => 'An error occurred while creating the route. Please try again later.',
+];

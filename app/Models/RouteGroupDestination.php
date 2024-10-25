@@ -16,7 +16,7 @@ class RouteGroupDestination extends Model
         'delivery_state_id',
     ];
 
-    public function city(): BelongsTo
+    public function state(): BelongsTo
     {
         return $this->belongsTo(State::class, 'delivery_state_id');
     }

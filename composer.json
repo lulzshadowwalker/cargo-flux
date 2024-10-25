@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "lulzshadowwalker/cargo",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "International shipping application freelanced for Bayanata",
     "keywords": [
         "laravel",
         "framework"
