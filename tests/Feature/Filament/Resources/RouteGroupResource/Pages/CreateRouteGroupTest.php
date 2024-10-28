@@ -65,4 +65,14 @@ class CreateRouteGroupTest extends TestCase
             'delivery_state_id' => $states[1]->id,
         ]);
     }
+
+    public function test_no_two_routes_can_be_created_with_the_same_pickup_and_destination_states(): void
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function test_no_two_truck_options_can_have_the_same_truck_category_for_the_same_route(): void
+    {
+        $this->markTestIncomplete();
+    }
 }

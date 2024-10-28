@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
 
         Notification::send($driver->user, new FakeDatabaseNotification);
 
-        Order::factory()->count(100)->for($customer)->for($driver)->create()->each(function (Order $order) {
+        Order::factory()->count(10)->for($customer)->for($driver)->create()->each(function (Order $order) {
             $actorType = rand(0, 1) ? Driver::class : SystemActor::class;
             $actorId = $actorType === Driver::class ? $order->driver->id : 1;
 
@@ -115,10 +115,9 @@ class DatabaseSeeder extends Seeder
             'created_at' => now()->subDays(20),
         ]);
 
-        // RouteGroup::factory()
-        //     ->count(8)
-        //     ->has(RouteGroupDestination::factory()->count(rand(1, 2)), 'destinations')
-        //     ->has(RouteGroupTruckOption::factory()->count(rand(2, 5)), 'truckOptions')
-        //     ->create();
+        RouteGroup::factory()
+            ->has(RouteGroupDestination::factory()->count(rand(1, 2)), 'destinations')
+            ->has(RouteGroupTruckOption::factory()->count(rand(2, 5)), 'truckOptions')
+            ->create();
     }
 }

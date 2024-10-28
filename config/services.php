@@ -48,4 +48,8 @@ return [
         'is_test' => env('MYFATOORAH_IS_TEST', config('app.env') !== 'production'),
     ],
 
+    'geoapify' => [
+        'api_key' => env('GEOAPIFY_API_KEY'),
+    ],
+
 ];

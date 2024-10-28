@@ -8,9 +8,11 @@ use App\Contracts\PushNotificationService;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Response\JsonResponseBuilder;
 use App\Contracts\ResponseBuilder;
+use App\Contracts\ReverseGeocoder;
 use App\Http\Controllers\Api\CustomerProfileController;
 use App\Http\Controllers\Api\DriverProfileController;
 use App\Services\FirebasePushNotification\FirebasePushNotificationService;
+use App\Services\GeoapifyReverseGeocoder;
 use App\Services\MyFatoorahPaymentGatewayService;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Exception;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ResponseBuilder::class, JsonResponseBuilder::class);
         $this->app->bind(PushNotificationService::class, FirebasePushNotificationService::class);
         $this->app->bind(PaymentGatewayService::class, MyFatoorahPaymentGatewayService::class);
+        $this->app->bind(ReverseGeocoder::class, GeoapifyReverseGeocoder::class);
 
         $this->app->bind(ProfileController::class, function ($app) {
             if (Auth::user()->isCustomer) {

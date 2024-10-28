@@ -34,4 +34,9 @@ class RouteGroupTruckOption extends Model
     {
         return $this->belongsTo(TruckCategory::class);
     }
+
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }
