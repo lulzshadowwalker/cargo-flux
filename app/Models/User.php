@@ -31,16 +31,7 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield, Notifiable, InteractsWithMedia;
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone',
-        'date_of_birth',
-        'email',
-        'password',
-        'status',
-        'type',
-    ];
+    protected $fillable = ['first_name', 'last_name', 'phone', 'date_of_birth', 'email', 'password', 'status', 'type'];
 
     protected $hidden = [
         'password',

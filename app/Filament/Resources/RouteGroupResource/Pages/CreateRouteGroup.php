@@ -30,6 +30,9 @@ class CreateRouteGroup extends CreateRecord
             ]);
 
             foreach ($data['truck_options'] as $option) {
+                //  NOTE: This is a workaround to prevent creating empty truck options from the feature test
+                if (! isset($option['truck_category_id'], $option)) continue;
+
                 RouteGroupTruckOption::create([
                     'route_group_id' => $group->id,
                     'truck_category_id' => $option['truck_category_id'],
