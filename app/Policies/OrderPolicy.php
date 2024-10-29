@@ -28,7 +28,7 @@ class OrderPolicy
 
     public function pay(User $user, Order $order): bool
     {
-        $isOwner = $user->customer->id === $order->customer_id;
+        $isOwner = $user->customer?->id === $order->customer_id;
 
         return $user->isCustomer && $isOwner &&
             in_array($order->payment_status, [OrderPaymentStatus::UNPAID, OrderPaymentStatus::REJECTED]);
