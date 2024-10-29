@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TruckCategory;
+use App\Support\GeoPoint;
+
 class OrderPreviewRequest extends BaseFormRequest
 {
     /**
@@ -26,5 +29,26 @@ class OrderPreviewRequest extends BaseFormRequest
             'data.attributes.deliveryLocation.latitude' => 'Delivery location latitude must be a valid location between -90 and 90',
             'data.attributes.deliveryLocation.longitude' => 'Delivery location longitude must be a valid location between -90 and 90',
         ];
+    }
+
+    public function pickupLocation(): GeoPoint
+    {
+        return new GeoPoint(
+            $this->input('data.attributes.pickupLocation.latitude'),
+            $this->input('data.attributes.pickupLocation.longitude')
+        );
+    }
+
+    public function deliveryLocation(): GeoPoint
+    {
+        return new GeoPoint(
+            $this->input('data.attributes.deliveryLocation.latitude'),
+            $this->input('data.attributes.deliveryLocation.longitude')
+        );
+    }
+
+    public function truckCategory(): TruckCategory
+    {
+        return TruckCategory::find($this->input('data.relationships.truckCategory.data.id'));
     }
 }

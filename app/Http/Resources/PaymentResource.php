@@ -11,7 +11,7 @@ class PaymentResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-        assert($this->url);
+        assert($this->url, 'URL is required for PaymentResource');
 
         return [
             'type' => 'payment',

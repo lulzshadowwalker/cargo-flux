@@ -10,7 +10,6 @@ use App\Http\Requests\LogoutRequest;
 use App\Http\Resources\TokenResource;
 use App\Support\AuthToken;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 
 class AuthController extends ApiController
 {
