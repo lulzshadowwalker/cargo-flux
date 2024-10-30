@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contracts\Payable;
 use App\Contracts\PaymentGatewayService;
 use App\Enums\Language;
 use App\Enums\PaymentGateway;
@@ -12,6 +13,7 @@ use App\Models\Payment;
 use App\Support\PaymentMethod;
 use Brick\Money\Money;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use libphonenumber\PhoneNumberUtil;
@@ -43,19 +45,21 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
     /**
      * Start the payment process
      */
-    public function start(Money $price, string $paymentMethodId, object $payable): array
+    public function start(Payable $payable, string $paymentMethodId): array
     {
         $user = Auth::user();;
 
         $countryCode = '+' . PhoneNumberUtil::getInstance()->getCountryCodeForRegion($user->phone->getCountry());
+        $amount = $payable->price()->getAmount();
+        $currencyCode = $payable->price()->getCurrency()->getCurrencyCode();
 
         $fields = [
-            'InvoiceValue' => (string) $price->getAmount(),
+            'InvoiceValue' => (string) $amount,
             'CustomerName' => $user->fullName,
             'CallBackUrl' => route('payments.callback', ['lang' => app()->getLocale()]),
             'ErrorUrl' => route('payments.callback', ['lang' => app()->getLocale()]),
 
-            'DisplayCurrencyIso' => $price->getCurrency()->getCurrencyCode(),
+            'DisplayCurrencyIso' => $currencyCode,
 
             //  NOTE: [ISO Lookups](https://docs.myfatoorah.com/docs/iso-lookups)
             'MobileCountryCode' => $countryCode,
@@ -78,7 +82,11 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
                 'Address' => null,
                 'AddressInstructions' => null,
             ],
-            // 'InvoiceItems' => $payable->items,
+            'InvoiceItems' => Arr::map($payable->items(), fn($item) => [
+                    'ItemName' => $item->name(),
+                    'Quantity' => $item->quantity(),
+                    'UnitPrice' => $item->price()->getAmount(),
+                ]),
         ];
 
         $response = $this->client()->getInvoiceURL($fields, $paymentMethodId);
@@ -87,8 +95,8 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
             'user_id' => Auth::user()->id,
             'external_reference' => $response['invoiceId'],
             'gateway' => PaymentGateway::MY_FATOORAH,
-            'amount' => $price->getAmount(),
-            'currency_id' => Currency::whereCode($price->getCurrency()->getCurrencyCode())->first()->id,
+            'amount' => $payable->price()->getAmount(),
+            'currency_id' => Currency::whereCode($currencyCode)->first()->id,
 
             //  NOTE: Payment details are provided from MyFatoorah via the success/failure callback
             //  or they can obtained via the [GetPaymentStatus](https://docs.myfatoorah.com/docs/get-payment-status) API

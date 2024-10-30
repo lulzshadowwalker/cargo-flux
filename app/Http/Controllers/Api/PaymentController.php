@@ -19,9 +19,8 @@ class PaymentController extends ApiController
         $this->authorize('pay', $request->payable());
 
         [$payment, $url] = $this->gateway->start(
-            $request->price(),
-            $request->paymentMethodId(),
             $request->payable(),
+            $request->paymentMethodId(),
         );
 
         return PaymentResource::make($payment)->url($url);

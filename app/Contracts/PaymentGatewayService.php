@@ -19,11 +19,15 @@ interface PaymentGatewayService
 
     /**
      * Start the payment process
+     * 
+     * @param Money $price
+     * @param string $paymentMethodId
+     * @param Payable $payable
      *
      * @return array of two elements first one being a Payment object
      * and the second one being the payment url returned from the gateway
      */
-    public function start(Money $price, string $paymentMethodId, object $payable): array;
+    public function start(Payable $payable, string $paymentMethodId): array;
 
     /**
      * Handle the success/failure callbacks

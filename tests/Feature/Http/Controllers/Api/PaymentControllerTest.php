@@ -53,7 +53,8 @@ class PaymentControllerTest extends TestCase
                     ],
                 ],
             ]
-        ], ['Authorization' => "Bearer $token"]);
+        ], ['Authorization' => "Bearer $token"])
+            ->assertCreated();
 
         //
         $this->assertDatabaseHas('payments', [
@@ -128,10 +129,6 @@ class PaymentControllerTest extends TestCase
         $response = $this->postJson(route('payments.store', ['lang' => Language::EN]), [
             'data' => [
                 'attributes' => [
-                    'price' => [
-                        'amount' => $order->price->getAmount(),
-                        'currency' => $order->price->getCurrency()->getCurrencyCode(),
-                    ],
                     'details' => [
                         'paymentMethodId' => 1,
                     ]
@@ -148,13 +145,5 @@ class PaymentControllerTest extends TestCase
         ], ['Authorization' => "Bearer $token"]);
 
         $response->assertStatus(HttpResponse::HTTP_FORBIDDEN);
-    }
-
-    //  FIXME: Validate that $payable->price equals the request price
-    //  TODO: Implemennt Payable interface for payables an accept Payable $payable instead of object $payable ->items(): PayableItem ->price(): Money
-    public function test_it_validates_the_payable_price_against_the_request_price()
-    {
-        //  WARNING: What about service charge ? equals ? or greater than ?
-        $this->markTestIncomplete();
     }
 }

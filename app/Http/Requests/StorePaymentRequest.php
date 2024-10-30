@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Contracts\Payable;
 use App\Models\Order;
-use Brick\Math\RoundingMode;
-use Brick\Money\Money;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
@@ -17,8 +15,6 @@ class StorePaymentRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'data.attributes.price.amount' => ['required', 'numeric', 'min:0'],
-            'data.attributes.price.currency' => ['required', 'string', 'size:3', 'exists:currencies,code'],
             'data.attributes.details.paymentMethodId' => ['required', 'numeric'],
             'data.relationships.payable.data.type' => ['required', 'string', 'in:order'],
             //  NOTE: The `exists` rule may need to be dynamically generated based on the value of `data.relationships.payable.data.type`
@@ -26,21 +22,12 @@ class StorePaymentRequest extends BaseFormRequest
         ];
     }
 
-    public function price(): Money
-    {
-        return Money::of(
-            $this->input('data.attributes.price.amount'),
-            $this->input('data.attributes.price.currency'),
-            roundingMode: RoundingMode::HALF_UP,
-        );
-    }
-
     public function paymentMethodId(): int
     {
         return $this->input('data.attributes.details.paymentMethodId');
     }
 
-    public function payable(): Model
+    public function payable(): Payable
     {
         $type = $this->input('data.relationships.payable.data.type');
 

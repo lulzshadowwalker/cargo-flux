@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Casts\GeoPointCast;
 use App\Casts\MoneyCast;
+use App\Contracts\Payable;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
 use App\Filters\QueryFilter;
 use App\Observers\OrderObserver;
+use App\Support\PayableItem;
+use Brick\Money\Money;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -20,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 
 #[ObservedBy(OrderObserver::class)]
-class Order extends Model
+class Order extends Model implements Payable
 {
     use HasFactory;
 
@@ -225,4 +228,24 @@ class Order extends Model
     {
         return $this->morphMany(Payment::class, 'payable');
    }
+
+    public function items(): array {
+        return [
+            new PayableItem(
+                //  TODO: Better payable item name for orders
+                name: 'Shipment Order',
+                price: $this->price,
+                
+                //  NOTE: Make sure quantity aligns with bulk orders.
+                //   As it currently stands, "bulk orders" are simply multiple completely separate orders.
+                //   So this should be fine, but something to consider.
+                quantity: 1,
+            ),
+         ];
+    }
+    
+    public function price(): Money
+    {
+        return $this->price;
+    }
 }
