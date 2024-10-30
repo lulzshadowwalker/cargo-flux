@@ -30,6 +30,7 @@
         "owenvoke/blade-fontawesome": "^2.6",
         "propaganistas/laravel-phone": "^5.3",
         "rmsramos/activitylog": "^1.0",
+        "spatie/browsershot": "^4.3",
         "spatie/laravel-medialibrary": "^11.9",
         "spatie/laravel-translatable": "^6.8",
         "tymon/jwt-auth": "^2.1"
@@ -73,7 +74,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail\" \"npm run dev\" --names=server,queue,logs,vite"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"mailhog\" \"php artisan pail\" \"npm run dev\" --names=server,queue,mailhog,logs,vite"
         ]
     },
     "extra": {

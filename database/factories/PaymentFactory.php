@@ -29,6 +29,16 @@ class PaymentFactory extends BaseFactory
 
     public function pending(): self
     {
-        return $this->state(fn () => ['status' => PaymentStatus::PENDING]);
+        return $this->state(fn() => ['status' => PaymentStatus::PENDING]);
+    }
+
+    public function paid(): self
+    {
+        return $this->state(fn() => ['status' => PaymentStatus::PAID]);
+    }
+
+    public function failed(): self
+    {
+        return $this->state(fn() => ['status' => PaymentStatus::FAILED]);
     }
 }

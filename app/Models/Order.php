@@ -227,25 +227,31 @@ class Order extends Model implements Payable
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
-   }
+    }
 
-    public function items(): array {
+    public function items(): array
+    {
         return [
             new PayableItem(
                 //  TODO: Better payable item name for orders
                 name: 'Shipment Order',
                 price: $this->price,
-                
+
                 //  NOTE: Make sure quantity aligns with bulk orders.
                 //   As it currently stands, "bulk orders" are simply multiple completely separate orders.
                 //   So this should be fine, but something to consider.
                 quantity: 1,
             ),
-         ];
+        ];
     }
-    
+
     public function price(): Money
     {
         return $this->price;
+    }
+
+    public function payer(): User
+    {
+        return $this->customer->user;
     }
 }

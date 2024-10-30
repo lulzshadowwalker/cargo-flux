@@ -7,6 +7,8 @@ use App\Contracts\PaymentGatewayService;
 use App\Enums\Language;
 use App\Enums\PaymentGateway;
 use App\Enums\PaymentStatus;
+use App\Events\PayablePaid;
+use App\Events\PaymentPaid;
 use App\Models\Currency;
 use App\Models\Order;
 use App\Models\Payment;
@@ -83,10 +85,10 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
                 'AddressInstructions' => null,
             ],
             'InvoiceItems' => Arr::map($payable->items(), fn($item) => [
-                    'ItemName' => $item->name(),
-                    'Quantity' => $item->quantity(),
-                    'UnitPrice' => $item->price()->getAmount(),
-                ]),
+                'ItemName' => $item->name(),
+                'Quantity' => $item->quantity(),
+                'UnitPrice' => $item->price()->getAmount(),
+            ]),
         ];
 
         $response = $this->client()->getInvoiceURL($fields, $paymentMethodId);
