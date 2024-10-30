@@ -174,9 +174,9 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
             ->singleFile();
     }
 
-    public function preferredLocale(): string
+    public function preferredLocale(): ?string
     {
-        return $this->preferences->language;
+        return $this->preferences?->language;
     }
 
     public function routeNotificationForPush(Notification $notification): array
