@@ -10,7 +10,7 @@
         /* Additional PDF-specific styles */
         @media print {
             @page {
-                margin: 20mm;
+                margin: 30mm;
             }
 
             body {

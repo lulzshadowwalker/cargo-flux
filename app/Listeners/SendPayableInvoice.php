@@ -27,7 +27,6 @@ class SendPayableInvoice implements ShouldQueue
             if (! app()->environment('testing')) {
                 Browsershot::html($html)
                     ->showBackground()
-                    ->margins(10, 10, 10, 10)
                     ->save($invoice->filepath());
             }
 
