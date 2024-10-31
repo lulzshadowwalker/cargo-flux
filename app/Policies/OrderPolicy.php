@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\OrderPaymentStatus;
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\User;
 
@@ -31,5 +32,18 @@ class OrderPolicy
 
         return $user->isCustomer && $isOwner &&
             in_array($order->payment_status, [OrderPaymentStatus::UNPAID, OrderPaymentStatus::REJECTED]);
+    }
+
+    //  TODO: Refactor into a new OfferPolicy
+    public function viewOffers(User $user): bool
+    {
+        return $user->isDriver;
+    }
+
+    public function acceptOffer(User $user, Order $order): bool
+    {
+        return $user->isDriver &&
+            $order->status === OrderStatus::PENDING_DRIVER_ASSIGNMENT &&
+            ! $user->driver->orders()->active()->exists();
     }
 }

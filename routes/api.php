@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\SupportTicketController;
 use App\Http\Controllers\Api\TruckCategoryController;
 use App\Http\Controllers\Api\UserPreferenceController;
+use App\Http\Controllers\Api\OfferController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/otp/send', [OtpController::class, 'send'])->name('otp.send');
@@ -54,6 +55,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // NOTE: Do not switch the order of the /orders/current and /orders/{order} routes
     Route::patch('/orders/current', [OrderController::class, 'updateCurrent'])->name('orders.update-current');
     Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
+    Route::post('/offers/{order}/accept', [OfferController::class, 'accept'])->name('offers.accept');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

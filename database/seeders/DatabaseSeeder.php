@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\DriverStatus;
+use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Customer;
@@ -16,6 +17,7 @@ use App\Models\RouteGroup;
 use App\Models\RouteGroupDestination;
 use App\Models\RouteGroupTruckOption;
 use App\Models\SupportTicket;
+use App\Models\Truck;
 use App\Models\User;
 use App\Models\UserPreference;
 use App\Notifications\FakeDatabaseNotification;
@@ -84,7 +86,14 @@ class DatabaseSeeder extends Seeder
                 'type' => UserType::DRIVER,
             ])
         )->create(['status' => DriverStatus::APPROVED]);
-        // Otp::factory(3)->create();
+
+        Truck::factory()->for($driver)->create();
+
+        //  NOTE: Offers
+        Order::factory()->count(3)->create([
+            'status' => OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            'truck_category_id' => $driver->truck->truck_category_id,
+        ]);
 
         Notification::send($driver->user, new FakeDatabaseNotification);
 
