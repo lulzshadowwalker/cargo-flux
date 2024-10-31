@@ -19,4 +19,15 @@ class OfferController extends ApiController
 
         return OrderResource::collection($offers);
     }
+
+    public function accept(string $language, Order $order)
+    {
+        $this->authorize('accept-offer', $order);
+
+        $order->update([ 'status' => OrderStatus::DRIVER_ASSIGNED ]);
+
+        $order->driver()->associate(Auth::user()->driver)->save();
+
+        return OrderResource::make($order);
+    }
 }

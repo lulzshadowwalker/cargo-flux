@@ -36,6 +36,7 @@ class OfferControllerTest extends TestCase
         $eligibleOffer = Order::factory()->create([
             'truck_category_id' => $truckCategory->id,
             'status' => OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            'driver_id' => null,
         ]);
 
         $request = Request::create(route('offers.index', ['lang' => Language::EN]), 'GET');
@@ -48,5 +49,57 @@ class OfferControllerTest extends TestCase
             ->assertExactJson(
                 $resource->response($request)->getData(true),
             );
+    }
+
+    public function test_it_accepts_offer(): void
+    {
+        $driver = Driver::factory()->create();
+        $truckCategory = TruckCategory::factory()->create();
+        Truck::factory()->for($driver)->for($truckCategory, 'category')->create();
+
+        $offer = Order::factory()->create([
+            'truck_category_id' => $truckCategory->id,
+            'status' => OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            'driver_id' => null,
+        ]);
+
+        $this->actingAs($driver->user);
+
+        $response = $this->postJson(route('offers.accept', ['lang' => Language::EN, 'order' => $offer]))
+            ->assertOk();
+
+        $offer->refresh();
+        $this->assertEquals(OrderStatus::DRIVER_ASSIGNED, $offer->status);
+        $this->assertEquals($driver->id, $offer->driver_id);
+
+        $resource = OrderResource::make($offer);
+
+        $response->assertExactJson(
+            $resource->response([])->getData(true),
+        );
+    }
+
+    public function test_driver_with_an_active_order_cannot_accpet_an_offer(): void
+    {
+
+        $driver = Driver::factory()->create();
+        $truckCategory = TruckCategory::factory()->create();
+        Truck::factory()->for($driver)->for($truckCategory, 'category')->create();
+
+        $offer = Order::factory()->create([
+            'truck_category_id' => $truckCategory->id,
+            'status' => OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            'driver_id' => null,
+        ]);
+
+        Order::factory()->for($driver)->create([
+            'status' => OrderStatus::DRIVER_ASSIGNED,
+            'driver_id' => $driver->id,
+        ]);
+
+        $this->actingAs($driver->user);
+
+        $response = $this->postJson(route('offers.accept', ['lang' => Language::EN, 'order' => $offer]))
+            ->assertForbidden();
     }
 }

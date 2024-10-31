@@ -181,6 +181,16 @@ class Order extends Model implements Payable
         ]);
     }
 
+    public function scopeOngoing(Builder $query)
+    {
+        return $query->whereNotIn('status', [
+            OrderStatus::PENDING_APPROVAL,
+            OrderStatus::PENDING_DRIVER_ASSIGNMENT,
+            OrderStatus::CANCELED,
+            OrderStatus::COMPLETED,
+        ]);
+    }
+
     public function scopeActiveOrScheduled(Builder $query)
     {
         return $query->whereNotIn('status', [

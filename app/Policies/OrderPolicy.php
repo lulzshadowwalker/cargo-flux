@@ -44,6 +44,6 @@ class OrderPolicy
     {
         return $user->isDriver &&
             $order->status === OrderStatus::PENDING_DRIVER_ASSIGNMENT &&
-            ! $user->driver->orders()->active()->exists();
+            ! $user->driver->orders()->ongoing()->exists();
     }
 }
