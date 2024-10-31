@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,8 +12,7 @@ class InvoicePaid extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    //  TODO: Accept Payable $payable
-    public function __construct(protected string $invoicePath)
+    public function __construct(protected Invoice $invoice)
     {
         //
     }
@@ -25,8 +25,8 @@ class InvoicePaid extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('Thank you for your payment')
-                    ->line('We have received your payment.')
-                    ->attach($this->invoicePath);
+            ->subject('Thank you for your payment')
+            ->line('We have received your payment.')
+            ->attach($this->invoice->filepath());
     }
 }
