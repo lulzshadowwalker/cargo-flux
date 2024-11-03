@@ -43,7 +43,8 @@ class OrderPolicy
     public function acceptOffer(User $user, Order $order): bool
     {
         return $user->isDriver &&
-            $order->status === OrderStatus::PENDING_DRIVER_ASSIGNMENT &&
-            ! $user->driver->orders()->ongoing()->exists();
+            $order->status === OrderStatus::PENDING_DRIVER_ASSIGNMENT;
+        // TODO: uncomment me.
+        // ! $user->driver->orders()->ongoing()->exists();
     }
 }
