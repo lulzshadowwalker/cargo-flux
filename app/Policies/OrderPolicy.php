@@ -40,6 +40,12 @@ class OrderPolicy
         return $user->isDriver;
     }
 
+    //  TODO: Refactor into a new OfferPolicy
+    public function viewOffer(User $user, Order $order): bool
+    {
+        return $user->isDriver;
+    }
+
     public function acceptOffer(User $user, Order $order): bool
     {
         return $user->isDriver &&

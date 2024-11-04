@@ -20,6 +20,13 @@ class OfferController extends ApiController
         return OrderResource::collection($offers);
     }
 
+    public function show(string $language, Order $order)
+    {
+        $this->authorize('view-offer', $order);
+
+        return OrderResource::make($order);
+    }
+
     public function accept(string $language, Order $order)
     {
         $this->authorize('accept-offer', $order);

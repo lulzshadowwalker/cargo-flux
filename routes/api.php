@@ -59,6 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
+    Route::get('/offers/{order}', [OfferController::class, 'show'])->name('offers.show');
     Route::post('/offers/{order}/accept', [OfferController::class, 'accept'])->name('offers.accept');
 });
 
