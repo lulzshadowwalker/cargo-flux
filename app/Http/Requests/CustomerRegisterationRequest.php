@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Support\Collection;
+use Illuminate\Http\UploadedFile;
 
 class CustomerRegisterationRequest extends BaseFormRequest
 {
@@ -15,7 +16,7 @@ class CustomerRegisterationRequest extends BaseFormRequest
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
             'data.attributes.phone' => 'phone',
-            'data.attributes.avatar' => 'profile_picture',
+            'data.attributes.avatar' => 'avatar',
         ], $extraAttributes);
     }
 
@@ -32,5 +33,13 @@ class CustomerRegisterationRequest extends BaseFormRequest
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             'data.attributes.avatar' => ['nullable', 'image'],
         ];
+    }
+
+    /**
+     * @return UploadedFile|UploadedFile[]|array|null
+     */
+    public function avatar(): ?UploadedFile
+    {
+        return $this->file('data.attributes.avatar');
     }
 }

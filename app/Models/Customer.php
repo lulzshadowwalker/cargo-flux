@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Notifications\Notification;
 
 class Customer extends Model
 {
@@ -64,5 +63,26 @@ class Customer extends Model
     public function deviceTokens(): HasMany
     {
         return $this->user->deviceTokens();
+    }
+
+    /**
+     *  TODO: Proxy unresolved PROPERTIES to the user model.
+     *  as many of the user's attributes are needed in the customer model
+     */
+
+    /**
+     * Get the user's avatar URL.
+     */
+    public function avatar(): Attribute
+    {
+        return Attribute::get(fn() => $this->user->avatar);
+    }
+
+    /**
+     * Get the user's avatar file.
+     */
+    public function avatarFile(): Attribute
+    {
+        return Attribute::get(fn() => $this->user->avatarFile);
     }
 }

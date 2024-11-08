@@ -170,8 +170,25 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
 
     public function registerMediaCollections(): void
     {
+        // TODO: Add default placeholder
         $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)
             ->singleFile();
+    }
+
+    /**
+     * Get the user's avatar URL.
+     */
+    public function avatar(): Attribute
+    {
+        return Attribute::get(fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AVATAR));
+    }
+
+    /**
+     * Get the user's avatar file.
+     */
+    public function avatarFile(): Attribute
+    {
+        return Attribute::get(fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AVATAR));
     }
 
     public function preferredLocale(): ?string

@@ -121,4 +121,25 @@ class Driver extends Model
     {
         return $this->user->deviceTokens();
     }
+
+    /**
+     *  TODO: Proxy unresolved PROPERTIES to the user model.
+     *  as many of the user's attributes are needed in the customer model
+     */
+
+    /**
+     * Get the user's avatar URL.
+     */
+    public function avatar(): Attribute
+    {
+        return Attribute::get(fn() => $this->user->avatar);
+    }
+
+    /**
+     * Get the user's avatar file.
+     */
+    public function avatarFile(): Attribute
+    {
+        return Attribute::get(fn() => $this->user->avatarFile);
+    }
 }

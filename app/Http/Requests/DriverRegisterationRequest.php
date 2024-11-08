@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Support\Collection;
+use Illuminate\Http\UploadedFile;
 
 class DriverRegisterationRequest extends BaseFormRequest
 {
@@ -14,6 +15,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
             'data.attributes.phone' => 'phone',
+            'data.attributes.avatar' => 'avatar',
         ], $extraAttributes);
     }
 
@@ -27,6 +29,15 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.lastName' => ['required', 'string', 'max:255'],
             'data.attributes.dateOfBirth' => ['nullable', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
+            'data.attributes.avatar' => ['nullable', 'image'],
         ];
+    }
+
+    /**
+     * @return UploadedFile|UploadedFile[]|array|null
+     */
+    public function avatar(): ?UploadedFile
+    {
+        return $this->file('data.attributes.avatar');
     }
 }

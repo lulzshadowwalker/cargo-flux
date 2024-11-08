@@ -9,6 +9,7 @@ use App\Enums\UserType;
 use App\Models\DeviceToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Testing\File;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
@@ -37,6 +38,7 @@ class AuthControllerTest extends TestCase
     {
         $deviceToken = 'abc';
         $user = User::factory()->make(['type' => UserType::CUSTOMER]);
+        $avatar = File::image('avatar.jpg', 200, 200);
 
         //
         {
@@ -61,6 +63,7 @@ class AuthControllerTest extends TestCase
                     'email' => $user->email,
                     'companyName' => 'Netflix',
                     'type' => 'CUSTOMER',
+                    'avatar' => $avatar,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
@@ -92,12 +95,16 @@ class AuthControllerTest extends TestCase
             'user_id' => $user->id,
             'token' => $deviceToken,
         ]);
+
+        $this->assertNotNull($user->avatar);
+        $this->assertFileExists($user->avatarFile?->getPath() ?? '');
     }
 
     public function test_it_registers_a_driver()
     {
         $deviceToken = 'abc';
         $user = User::factory()->make(['type' => UserType::DRIVER]);
+        $avatar = File::image('avatar.jpg', 200, 200);
 
         //
         {
@@ -121,6 +128,7 @@ class AuthControllerTest extends TestCase
                     'dateOfBirth' => $user->date_of_birth,
                     'email' => $user->email,
                     'type' => 'DRIVER',
+                    'avatar' => $avatar,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
@@ -152,5 +160,8 @@ class AuthControllerTest extends TestCase
             'user_id' => $user->id,
             'token' => $deviceToken,
         ]);
+
+        $this->assertNotNull($user->avatar);
+        $this->assertFileExists($user->avatarFile?->getPath() ?? '');
     }
 }
