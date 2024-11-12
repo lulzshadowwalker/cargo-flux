@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contracts\ProfileController;
+//  TODO: Update customer/driver profile avatar 
+
 use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Auth;
