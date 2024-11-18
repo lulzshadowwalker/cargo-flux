@@ -34,7 +34,7 @@ class OrderFactory extends Factory
             'current_location_recorded_at' => $this->faker->dateTime(),
             'customer_id' => Customer::factory(),
             'driver_id' => Driver::factory(),
-            'currency_id' => Currency::factory(),
+            'currency_id' => Currency::firstOrCreate(['code' => 'SAR', 'symbol' => 'ر.س'])->id,
             'truck_id' => Truck::factory(),
             'cargo' => $this->faker->sentence(rand(7, 22)),
             'truck_category_id' => TruckCategory::factory(),
