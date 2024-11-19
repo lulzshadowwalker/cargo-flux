@@ -56,12 +56,10 @@ class CreateRouteGroup extends CreateRecord
                 ->body(__('filament/resources/route-group-resource.route-create-success-body'))
                 ->send();
 
-
             if ($another) {
                 $this->redirect(RouteGroupResource::getUrl('create'));
                 return;
             }
-
 
             $this->redirect(RouteGroupResource::getUrl('edit', ['record' => $group]));
         } catch (Halt $exception) {

@@ -13,12 +13,21 @@ class StateFactory extends BaseFactory
 
     public function definition(): array
     {
+        //  TODO: Remove me
         return [
             'country_id' => CountryFactory::new(),
-            'name' => $this->faker->state(),
-            'latitude' => $this->faker->latitude(),
-            'longitude' => $this->faker->longitude(),
-            'is_active' => $this->faker->boolean(),
+            'name' => "Amman Governate",
+            'latitude' => 90,
+            'longitude' => 180,
+            'is_active' => $this->faker->boolean,
+        ];
+
+        return [
+            'country_id' => CountryFactory::new(),
+            'name' => $this->faker->city,
+            'latitude' => $this->faker->latitude,
+            'longitude' => $this->faker->longitude,
+            'is_active' => $this->faker->boolean,
         ];
     }
 }

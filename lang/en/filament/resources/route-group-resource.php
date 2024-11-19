@@ -22,4 +22,6 @@ return [
     'route-create-success-body' => 'The route has been created successfully.',
     'route-create-failure-title' => 'Failed to create route',
     'route-create-failure-body' => 'An error occurred while creating the route. Please try again later.',
+    'route-edit-failure-title' => 'Failed to edit route',
+    'route-edit-failure-body' => 'An error occurred while editing the route. Please try again later.',
 ];

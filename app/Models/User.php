@@ -27,25 +27,42 @@ use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements JWTSubject, HasName, FilamentUser, HasMedia, HasLocalePreference
+class User extends Authenticatable implements
+    JWTSubject,
+    HasName,
+    FilamentUser,
+    HasMedia,
+    HasLocalePreference
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield, Notifiable, InteractsWithMedia;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        HasRoles,
+        HasPanelShield,
+        Notifiable,
+        InteractsWithMedia;
 
-    protected $fillable = ['first_name', 'last_name', 'phone', 'date_of_birth', 'email', 'password', 'status', 'type'];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $fillable = [
+        "first_name",
+        "last_name",
+        "phone",
+        "date_of_birth",
+        "email",
+        "password",
+        "status",
+        "type",
     ];
+
+    protected $hidden = ["password", "remember_token"];
 
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
-            'date_of_birth' => 'date',
-            'status' => UserStatus::class,
-            'phone' => E164PhoneNumberCast::class,
-            'type' => UserType::class,
+            "password" => "hashed",
+            "date_of_birth" => "date",
+            "status" => UserStatus::class,
+            "phone" => E164PhoneNumberCast::class,
+            "type" => UserType::class,
         ];
     }
 
@@ -86,7 +103,7 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
 
     public function scopeAdmins(Builder $query): Builder
     {
-        return $query->where('type', UserType::ADMIN);
+        return $query->where("type", UserType::ADMIN);
     }
 
     public function getJWTIdentifier()
@@ -94,14 +111,16 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
     public function fullName(): Attribute
     {
-        return Attribute::get(fn(): string => "{$this->first_name} {$this->last_name}");
+        return Attribute::get(
+            fn(): string => "{$this->first_name} {$this->last_name}"
+        );
     }
 
     public function getFilamentName(): string
@@ -129,17 +148,23 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
 
     public function isActive(): Attribute
     {
-        return Attribute::get(fn(): bool => $this->status === UserStatus::ACTIVE);
+        return Attribute::get(
+            fn(): bool => $this->status === UserStatus::ACTIVE
+        );
     }
 
     public function isSuspended(): Attribute
     {
-        return Attribute::get(fn(): bool => $this->status === UserStatus::SUSPENDED);
+        return Attribute::get(
+            fn(): bool => $this->status === UserStatus::SUSPENDED
+        );
     }
 
     public function isBanned(): Attribute
     {
-        return Attribute::get(fn(): bool => $this->status === UserStatus::BANNED);
+        return Attribute::get(
+            fn(): bool => $this->status === UserStatus::BANNED
+        );
     }
 
     /**
@@ -154,11 +179,11 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
     {
         if ($this->isCustomer) {
             return $this->hasManyThrough(Order::class, Customer::class);
-        } else if ($this->isDriver) {
+        } elseif ($this->isDriver) {
             return $this->hasManyThrough(Order::class, Driver::class);
         }
 
-        throw new \Exception('User is neither a customer nor a driver');
+        throw new \Exception("User is neither a customer nor a driver");
     }
 
     public function deviceTokens(): HasMany
@@ -166,13 +191,12 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
         return $this->hasMany(DeviceToken::class);
     }
 
-    const MEDIA_COLLECTION_AVATAR = 'avatar';
+    const MEDIA_COLLECTION_AVATAR = "avatar";
 
     public function registerMediaCollections(): void
     {
         // TODO: Add default placeholder
-        $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)
-            ->singleFile();
+        $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)->singleFile();
     }
 
     /**
@@ -180,7 +204,9 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
      */
     public function avatar(): Attribute
     {
-        return Attribute::get(fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AVATAR));
+        return Attribute::get(
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AVATAR)
+        );
     }
 
     /**
@@ -188,7 +214,9 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
      */
     public function avatarFile(): Attribute
     {
-        return Attribute::get(fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AVATAR));
+        return Attribute::get(
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AVATAR)
+        );
     }
 
     public function preferredLocale(): ?string
@@ -198,6 +226,6 @@ class User extends Authenticatable implements JWTSubject, HasName, FilamentUser,
 
     public function routeNotificationForPush(Notification $notification): array
     {
-        return $this->deviceTokens->pluck('token')->toArray();
+        return $this->deviceTokens->pluck("token")->toArray();
     }
 }

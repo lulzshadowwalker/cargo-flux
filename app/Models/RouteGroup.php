@@ -13,9 +13,7 @@ class RouteGroup extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'pickup_state_id',
-    ];
+    protected $fillable = ['pickup_state_id'];
 
     public function pickupState(): BelongsTo
     {
