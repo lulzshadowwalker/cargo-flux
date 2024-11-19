@@ -36,6 +36,8 @@ class EditRouteGroup extends EditRecord
             $original = $this->getRecord();
             $updated = $this->data;
 
+            $this->callHook('afterValidate');
+
             if ($updated['pickup_state_id'] !== $original->pickup_state_id) {
                 $original->update(['pickup_state_id' => $updated['pickup_state_id']]);
             }

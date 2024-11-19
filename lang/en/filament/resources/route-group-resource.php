@@ -24,4 +24,5 @@ return [
     'route-create-failure-body' => 'An error occurred while creating the route. Please try again later.',
     'route-edit-failure-title' => 'Failed to edit route',
     'route-edit-failure-body' => 'An error occurred while editing the route. Please try again later.',
+    'route-already-exists' => 'A route with the same pickup and destination states already exists.',
 ];

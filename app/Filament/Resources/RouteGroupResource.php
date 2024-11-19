@@ -7,9 +7,11 @@ use App\Filament\Resources\RouteGroupResource\Pages;
 use App\Models\Currency;
 use App\Models\RouteGroup;
 use App\Models\TruckCategory;
+use Closure;
 use Filament\Forms;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -43,7 +45,6 @@ class RouteGroupResource extends Resource
                             ->preload()
                             ->required(),
 
-                        //  FIXME: Everything seems to be working fine when editing a route except for destinations
                         Forms\Components\Select::make('destinations')
                             ->label(__('filament/resources/route-group-resource.destinations'))
                             ->placeholder(__('filament/resources/route-group-resource.destinations-placeholder'))
@@ -139,6 +140,32 @@ class RouteGroupResource extends Resource
                 ]),
             ]);
     }
+
+    //  TODO: Implement pickup state validation + truck options validation + this better be moved to a lifecycle hoo
+    // protected function validatePickupState(): void
+    // {
+    //     $isCreating = (bool) $this->getRecord();
+
+    //     //  NOTE: check if another route group with the same pickup state and destinations already exists
+    //     $query = RouteGroup::where('pickup_state_id', $this->data['pickup_state_id']);
+
+    //     if (!$isCreating) {
+    //         $query->where('id', '!=', $this->getRecord()->id);
+    //     }
+
+    //     $destinations = $this->data['destinations'];
+
+    //     foreach ($destinations as $destination) {
+    //         $query->whereHas('destinations', fn(Builder $query) => $query->where('delivery_state_id', $destination));
+    //     }
+
+    //     if ($query->exists()) {
+    //         Notification::make()
+    //             ->danger()
+    //             ->title(__('filament/resources/route-group-resource.route-already-exists'))
+    //             ->send();
+    //     }
+    // }
 
     public static function getPages(): array
     {

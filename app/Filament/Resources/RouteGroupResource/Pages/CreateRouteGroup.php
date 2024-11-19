@@ -25,6 +25,8 @@ class CreateRouteGroup extends CreateRecord
 
             $data = $this->form->getLivewire()->data;
 
+            $this->callHook('afterValidate');
+
             $group = RouteGroup::create([
                 'pickup_state_id' => $data['pickup_state_id'],
             ]);
