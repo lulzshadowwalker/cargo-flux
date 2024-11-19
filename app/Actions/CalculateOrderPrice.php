@@ -26,7 +26,10 @@ class CalculateOrderPrice
         $pickupState = $this->reverseGeocoder->getState($pickupLocation);
         $deliveryState = $this->reverseGeocoder->getState($deliveryLocation);
 
-        $route = RouteGroup::where('pickup_state_id', State::where('name', $pickupState)->first()?->id)
+        //  NOTE: This is a workaround to remove common words from the state name.
+        $pickupState = preg_replace('/\b(?:Province|Governorate|Region)\b/i', '', $pickupState);
+
+        $route = RouteGroup::where('pickup_state_id', State::where('name', 'like', "%$pickupState%")->first()?->id)
             ->whereHas('destinations', fn ($query) => $query->where('delivery_state_id', State::where('name', $deliveryState)->first()?->id))
             ->whereHas('truckOptions', fn ($query) => $query->where('truck_category_id', $truckCategory->id))
             ->first();
