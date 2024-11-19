@@ -14,8 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
-use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
-use IbrahimBougaoua\FilamentRatingStar\Columns\RatingStarColumn;
+use IbrahimBougaoua\FilamentRatingStar\Columns\Components\RatingStar as RatingStarColumn;
+use IbrahimBougaoua\FilamentRatingStar\Forms\Components\RatingStar;
 
 class ReviewResource extends Resource implements HasShieldPermissions
 {
