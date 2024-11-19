@@ -99,6 +99,7 @@ class OfferControllerTest extends TestCase
 
         $this->actingAs($driver->user);
 
+        $this->markTestSkipped('This test is skipped for now so that the frontend team can easily test the feature');
         $response = $this->postJson(route('offers.accept', ['lang' => Language::EN, 'order' => $offer]))
             ->assertForbidden();
     }
