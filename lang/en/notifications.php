@@ -35,7 +35,7 @@ return [
         'view-order' => 'View Order'
     ],
     'admin-pending-driver-registeration-request' => [
-        'title' => 'Driver :name has registered :since and stil is under review.',
+        'title' => 'Driver :name has registered :since and still is under review.',
         'view-driver' => 'View Driver'
     ],
 ];
