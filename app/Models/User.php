@@ -25,6 +25,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
 
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements
@@ -198,8 +199,11 @@ class User extends Authenticatable implements
 
     public function registerMediaCollections(): void
     {
-        // TODO: Add default placeholder
-        $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)->singleFile();
+        $name = Str::replace(' ', '+', $this->fullName);
+
+        $this->addMediaCollection(self::MEDIA_COLLECTION_AVATAR)
+            ->singleFile()
+            ->useFallbackUrl("https://ui-avatars.com/api/?name={$name}");
     }
 
     /**
