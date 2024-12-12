@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-//  TODO: Update customer/driver profile avatar 
+//  TODO: Update customer/driver profile avatar
 
 use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;

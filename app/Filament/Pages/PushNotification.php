@@ -50,7 +50,7 @@ class PushNotification extends Page
                         Forms\Components\Select::make('audience')
                             ->label(__('filament/pages/push-notification.audience'))
                             ->placeholder(__('filament/pages/push-notification.target-audience'))
-                            ->options(Arr::collapse(Arr::map(Audience::cases(), fn($status) => [$status->value => $status->label()])))
+                            ->options(Arr::sort(Arr::collapse(Arr::map(Audience::cases(), fn($status) => [$status->value => $status->label()]))))
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -97,6 +97,8 @@ class PushNotification extends Page
 
             // TODO: use PushNotificationService instead
             (new AudienceNotificationStrategy)->send($notification, $this->data['audience']);
+
+            $this->form->fill();
 
             Notification::make()
                 ->success()

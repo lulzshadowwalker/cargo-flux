@@ -75,7 +75,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#54e87b,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"mailhog\" \"php artisan pail\" \"npm run dev\" --names=server,queue,mailhog,logs,vite"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#54e87b,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"mailhog\" \"php artisan pail --timeout=0 -vv\" \"npm run dev\" --names=server,queue,mailhog,logs,vite"
         ]
     },
     "extra": {

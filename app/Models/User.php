@@ -169,6 +169,7 @@ class User extends Authenticatable implements
 
     /**
      * Get the user's support tickets.
+     * @return HasMany<SupportTicket,User>
      */
     public function tickets(): HasMany
     {
@@ -185,7 +186,9 @@ class User extends Authenticatable implements
 
         throw new \Exception("User is neither a customer nor a driver");
     }
-
+    /**
+     * @return HasMany<DeviceToken,User>
+     */
     public function deviceTokens(): HasMany
     {
         return $this->hasMany(DeviceToken::class);
