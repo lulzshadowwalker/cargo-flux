@@ -7,6 +7,8 @@ use Tests\TestCase;
 
 class HomeTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_it_renders_the_page(): void
     {
         $this->get(route('website.home'))
