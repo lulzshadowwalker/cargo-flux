@@ -4,35 +4,35 @@ namespace App\Filament\Pages;
 
 use App\Models\Page as ModelsPage;
 use Exception;
+use Filament\Actions\Action;
 use Filament\Forms\Form;
 use Filament\Forms;
-use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Log;
 
-class TermsAndConditions extends Page
+class AboutUs extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.terms-and-conditions';
+    protected static string $view = 'filament.pages.about-us';
 
     public function getTitle(): string|Htmlable
     {
-        return __('filament/pages/terms-and-conditions.terms-and-conditions');
+        return __('filament/pages/about-us.about-us');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('filament/pages/terms-and-conditions.terms-and-conditions');
+        return __('filament/pages/about-us.about-us');
     }
 
     public array $data = [];
 
     public function mount()
     {
-        $page = ModelsPage::where('slug', ModelsPage::TERMS_AND_CONDITIONS)->first();
+        $page = ModelsPage::where('slug', ModelsPage::ABOUT_US)->first();
 
         $this->form->fill([
             'content' => $page->content,
@@ -44,12 +44,12 @@ class TermsAndConditions extends Page
         return $form
             ->statePath('data')
             ->schema([
-                Forms\Components\Section::make(__('filament/pages/terms-and-conditions.terms-and-conditions'))
-                    ->description(__('filament/pages/terms-and-conditions.terms-and-conditions-description'))
+                Forms\Components\Section::make(__('filament/pages/about-us.about-us'))
+                    ->description(__('filament/pages/about-us.about-us-description'))
                     ->aside()
                     ->schema([
                         Forms\Components\Textarea::make('content')
-                            ->label(__('filament/pages/terms-and-conditions.content'))
+                            ->label(__('filament/pages/about-us.content'))
                             ->rows(10)
                             ->required(),
                     ]),
@@ -59,7 +59,7 @@ class TermsAndConditions extends Page
     protected function getActions(): array
     {
         return [
-            Action::make(__('filament/pages/terms-and-conditions.publish'))
+            Action::make(__('filament/pages/about-us.publish'))
                 ->action(fn() => $this->publish()),
         ];
     }
@@ -70,9 +70,9 @@ class TermsAndConditions extends Page
         if (! $content) return;
 
         try {
-            $page = ModelsPage::where('slug', ModelsPage::TERMS_AND_CONDITIONS)->first();
+            $page = ModelsPage::where('slug', ModelsPage::ABOUT_US)->first();
             if (! $page) {
-                throw new Exception('Terms and conditions page not found');
+                throw new Exception('About us page not found');
             }
 
             $page->content = $content;
@@ -80,18 +80,18 @@ class TermsAndConditions extends Page
 
             Notification::make()
                 ->success()
-                ->title(__('filament/pages/terms-and-conditions.terms-and-conditions'))
-                ->body(__('filament/pages/terms-and-conditions.terms-and-conditions-published'))
+                ->title(__('filament/pages/about-us.about-us'))
+                ->body(__('filament/pages/about-us.about-us-published'))
                 ->send();
         } catch (Exception $e) {
-            Log::error('Failed to publish terms and conditions', [
+            Log::error('Failed to publish about us page', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTrace(),
             ]);
 
             Notification::make()
                 ->danger()
-                ->title(__('filament/pages/terms-and-conditions.publish-failed'))
+                ->title(__('filament/pages/about-us.publish-failed'))
                 ->send();
         }
     }
