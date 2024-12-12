@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 #[ObservedBy(OrderObserver::class)]
 class Order extends Model implements Payable
@@ -204,6 +205,19 @@ class Order extends Model implements Payable
     public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
     {
         return $filters->apply($builder);
+    }
+
+    /**
+     * Scope a query to only include orders with a specific number.
+     * It is preferred to use this method as it ensures the order number is prefixed with 'ORDER-'.
+     */
+    public function scopeNumber(Builder $builder, string $number): Builder
+    {
+        if (! Str::startsWith($number, 'ORDER-')) {
+            $number = 'ORDER-' . $number;
+        }
+
+        return $builder->where('order_number', $number);
     }
 
     public function isScheduled(): Attribute
