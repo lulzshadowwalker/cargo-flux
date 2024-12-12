@@ -11,6 +11,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class AboutUs extends Page
 {
@@ -75,7 +76,7 @@ class AboutUs extends Page
                 throw new Exception('About us page not found');
             }
 
-            $page->content = $content;
+            $page->content = Str::trim($content);
             $page->save();
 
             Notification::make()
