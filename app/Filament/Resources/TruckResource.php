@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\TruckExporter;
 use App\Filament\Resources\TruckResource\Pages;
 use App\Filament\Resources\TruckResource\RelationManagers\CategoryRelationManager;
 use App\Filament\Resources\TruckResource\RelationManagers\DriverRelationManager;
@@ -13,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class TruckResource extends Resource
 {
@@ -92,11 +95,16 @@ class TruckResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(TruckExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
+                ExportBulkAction::make()
+                    ->exporter(TruckExporter::class),
             ]);
     }
 
