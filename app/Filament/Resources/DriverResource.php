@@ -5,12 +5,12 @@ namespace App\Filament\Resources;
 use App\Enums\DriverStatus;
 use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
+use App\Filament\Exports\DriverExporter;
 use App\Filament\Resources\DriverResource\RelationManagers\ReviewsRelationManager;
 use App\Filament\Resources\DriverResource\Pages;
 use App\Filament\Resources\DriverResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\DriverResource\RelationManagers\TruckRelationManager;
 use App\Models\Driver;
-use App\Models\TruckCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -18,7 +18,8 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class DriverResource extends Resource
 {
@@ -153,6 +154,10 @@ class DriverResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(DriverExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
 
@@ -201,6 +206,9 @@ class DriverResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->exporter(DriverExporter::class),
             ]);
     }
 
