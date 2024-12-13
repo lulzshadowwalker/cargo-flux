@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\TruckCategoryExporter;
 use App\Filament\Resources\TruckCategoryResource\Pages;
 use App\Filament\Resources\TruckCategoryResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\TruckCategoryResource\RelationManagers\TrucksRelationManager;
@@ -12,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class TruckCategoryResource extends Resource
 {
@@ -117,11 +120,16 @@ class TruckCategoryResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(TruckCategoryExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                //
+                ExportBulkAction::make()
+                    ->exporter(TruckCategoryExporter::class),
             ]);
     }
 
