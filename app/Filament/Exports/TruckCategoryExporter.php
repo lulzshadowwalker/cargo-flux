@@ -24,7 +24,8 @@ class TruckCategoryExporter extends Exporter
                 ->label('Tonnage'),
 
             ExportColumn::make('length')
-                ->label('Length'),
+                ->label('Length')
+                ->suffix(' meters'),
 
             ExportColumn::make('truck_count')
                 ->label('Trucks')
