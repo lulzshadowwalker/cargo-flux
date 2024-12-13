@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\OrderPaymentMethod;
 use App\Enums\OrderPaymentStatus;
 use App\Enums\OrderStatus;
+use App\Filament\Exports\OrderExporter;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers\CustomerRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\DriverRelationManager;
@@ -24,6 +25,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class OrderResource extends Resource
 {
@@ -194,6 +197,10 @@ class OrderResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(OrderExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -201,6 +208,9 @@ class OrderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->exporter(OrderExporter::class),
             ]);
     }
 
