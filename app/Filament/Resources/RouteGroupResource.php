@@ -7,11 +7,9 @@ use App\Filament\Resources\RouteGroupResource\Pages;
 use App\Models\Currency;
 use App\Models\RouteGroup;
 use App\Models\TruckCategory;
-use Closure;
 use Filament\Forms;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,6 +20,11 @@ class RouteGroupResource extends Resource
     protected static ?string $model = RouteGroup::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.operations');
+    }
 
     public static function getLabel(): ?string
     {

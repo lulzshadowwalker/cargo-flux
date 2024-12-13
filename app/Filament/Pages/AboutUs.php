@@ -19,6 +19,11 @@ class AboutUs extends Page
 
     protected static string $view = 'filament.pages.about-us';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.content-management');
+    }
+
     public function getTitle(): string|Htmlable
     {
         return __('filament/pages/about-us.about-us');

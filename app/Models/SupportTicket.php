@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\SupportTicketStatus;
 use App\Observers\SupportTicketObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,21 @@ class SupportTicket extends Model
     public function isResolved(): Attribute
     {
         return Attribute::get(fn(): bool => $this->status === SupportTicketStatus::RESOLVED);
+    }
+
+    public function scopeOpen(Builder $query): Builder
+    {
+        return $query->where('status', SupportTicketStatus::OPEN);
+    }
+
+    public function scopeInProgress(Builder $query): Builder
+    {
+        return $query->where('status', SupportTicketStatus::IN_PROGRESS);
+    }
+
+    public function scopeResolved(Builder $query): Builder
+    {
+        return $query->where('status', SupportTicketStatus::RESOLVED);
     }
 
     public function markAsOpen(): void

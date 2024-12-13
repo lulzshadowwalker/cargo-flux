@@ -6,6 +6,7 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
@@ -35,32 +36,65 @@ class DashboardPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.operations'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.fleet-management'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.user-management'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.support'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.notifications'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.monitor'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.content-management'))
+                    ->collapsible(false),
+
+                NavigationGroup::make()
+                    ->label(__('filament/navigation.access-control'))
+                    ->collapsible(false),
+            ])
             ->navigationItems([
                 NavigationItem::make('telescope')
-                    ->label(fn(): string => __('navigation.telescope'))
+                    ->label(fn(): string => __('filament/navigation.telescope'))
                     ->badge(fn(): string => '●')
-                    ->badgeTooltip(fn(): string => __('navigation.telescope-tooltip'))
+                    ->badgeTooltip(fn(): string => __('filament/navigation.telescope-tooltip'))
                     ->url(fn(): string => route('telescope'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-chart-bar-square')
-                    ->group(fn(): string => __('navigation.monitor'))
+                    ->group(fn(): string => __('filament/navigation.monitor'))
                     ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
 
                 NavigationItem::make('pulse')
-                    ->label(fn(): string => __('navigation.pulse'))
+                    ->label(fn(): string => __('filament/navigation.pulse'))
                     ->badge(fn(): string => '●')
-                    ->badgeTooltip(fn(): string => __('navigation.pulse-tooltip'))
+                    ->badgeTooltip(fn(): string => __('filament/navigation.pulse-tooltip'))
                     ->url(fn(): string => route('pulse'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-heart')
-                    ->group(fn(): string => __('navigation.monitor'))
+                    ->group(fn(): string => __('filament/navigation.monitor'))
                     ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
 
                 NavigationItem::make('horizon')
-                    ->label(fn(): string => __('navigation.horizon'))
+                    ->label(fn(): string => __('filament/navigation.horizon'))
                     ->badge(fn(): string => '●')
                     ->badgeTooltip(fn(): string => __('navigation.horizon-tooltip'))
                     ->url(fn(): string => route('horizon.index'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-lifebuoy')
-                    ->group(fn(): string => __('navigation.monitor'))
+                    ->group(fn(): string => __('filament/navigation.monitor'))
                     ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
             ])
             ->databaseNotifications()
@@ -94,7 +128,8 @@ class DashboardPanelProvider extends PanelProvider
             ->plugins([
                 FilamentTranslatableFieldsPlugin::make()
                     ->supportedLocales(config('app.supported_locales')),
-                ActivitylogPlugin::make(),
+                ActivitylogPlugin::make()
+                    ->navigationGroup(fn() => __('filament/navigation.monitor')),
                 FilamentShieldPlugin::make(),
             ]);
     }

@@ -23,4 +23,5 @@ return [
     'increase' => 'increase',
     'decrease' => 'decrease',
     'ticket-information' => 'Ticket Information',
+    'open-tickets-count' => '{0} No open tickets|{1} One open ticket|[2,*] :count open tickets',
 ];

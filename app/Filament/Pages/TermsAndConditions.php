@@ -19,6 +19,11 @@ class TermsAndConditions extends Page
 
     protected static string $view = 'filament.pages.terms-and-conditions';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.content-management');
+    }
+
     public function getTitle(): string|Htmlable
     {
         return __('filament/pages/terms-and-conditions.terms-and-conditions');

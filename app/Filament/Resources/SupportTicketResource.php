@@ -25,6 +25,21 @@ class SupportTicketResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.support');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return SupportTicket::open()->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return trans_choice('filament/resources/support-ticket-resource.open-tickets-count', SupportTicket::open()->count());
+    }
+
     public static function form(Form $form): Form
     {
         return $form

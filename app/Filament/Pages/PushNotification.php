@@ -23,6 +23,11 @@ class PushNotification extends Page
 
     public array $data = [];
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.notifications');
+    }
+
     public function getTitle(): string|Htmlable
     {
         return __('filament/pages/push-notification.push-notifications');

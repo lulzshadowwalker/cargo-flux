@@ -27,6 +27,11 @@ class DriverResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.user-management');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

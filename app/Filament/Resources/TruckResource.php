@@ -23,6 +23,11 @@ class TruckResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.fleet-management');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

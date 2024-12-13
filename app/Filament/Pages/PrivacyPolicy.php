@@ -19,6 +19,11 @@ class PrivacyPolicy extends Page
 
     protected static string $view = 'filament.pages.privacy-policy';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament/navigation.content-management');
+    }
+
     public function getTitle(): string|Htmlable
     {
         return __('filament/pages/privacy-policy.privacy-policy');
