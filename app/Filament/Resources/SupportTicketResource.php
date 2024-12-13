@@ -3,12 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Enums\SupportTicketStatus;
+use App\Filament\Exports\SupportTicketExporter;
 use App\Filament\Resources\SupportTicketResource\Pages;
 use App\Filament\Resources\SupportTicketResource\Widgets\SupportTicketsStatsWidget;
 use App\Models\SupportTicket;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
@@ -65,7 +67,7 @@ class SupportTicketResource extends Resource
                         Forms\Components\Select::make('status')
                             ->label(__('filament/resources/support-ticket-resource.status'))
                             ->required()
-                            ->options(Arr::collapse(Arr::map(SupportTicketStatus::cases(), fn ($status) => [$status->value => $status->label()])))
+                            ->options(Arr::collapse(Arr::map(SupportTicketStatus::cases(), fn($status) => [$status->value => $status->label()])))
                             ->searchable(),
                     ])
             ]);
@@ -142,6 +144,10 @@ class SupportTicketResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(SupportTicketExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
 
@@ -173,6 +179,9 @@ class SupportTicketResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->exporter(SupportTicketExporter::class),
             ]);
     }
 
