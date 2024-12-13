@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\ReviewExporter;
 use App\Filament\Resources\ReviewResource\Pages;
 use App\Filament\Resources\ReviewResource\RelationManagers\OrderRelationManager;
 use App\Filament\Resources\ReviewResource\RelationManagers\ReviewerRelationManager;
@@ -12,6 +13,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use IbrahimBougaoua\FilamentRatingStar\Columns\Components\RatingStar as RatingStarColumn;
@@ -88,6 +91,10 @@ class ReviewResource extends Resource implements HasShieldPermissions
             ->filters([
                 //
             ])
+            ->headerActions([
+             ExportAction::make()
+                ->exporter(ReviewExporter::class)
+            ])
             ->actions([
                 // TODO: Better format the layout of the view page and add relation managers
                 ViewAction::make(),
@@ -96,6 +103,9 @@ class ReviewResource extends Resource implements HasShieldPermissions
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->exporter(ReviewExporter::class),
             ]);
     }
 
