@@ -4,11 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
+use App\Filament\Exports\CustomerExporter;
 use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\ReviewsRelationManager;
-use App\Filament\Resources\CustomerResource\RelationManagers\TicketsRelationManager;
 use App\Models\Customer;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
@@ -18,7 +17,8 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class CustomerResource extends Resource implements HasShieldPermissions
 {
@@ -144,6 +144,10 @@ class CustomerResource extends Resource implements HasShieldPermissions
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(CustomerExporter::class)
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
 
@@ -174,6 +178,9 @@ class CustomerResource extends Resource implements HasShieldPermissions
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+                ExportBulkAction::make()
+                    ->exporter(CustomerExporter::class),
             ]);
     }
 

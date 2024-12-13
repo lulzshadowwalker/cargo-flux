@@ -92,8 +92,8 @@ class ReviewResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->headerActions([
-             ExportAction::make()
-                ->exporter(ReviewExporter::class)
+                ExportAction::make()
+                    ->exporter(ReviewExporter::class)
             ])
             ->actions([
                 // TODO: Better format the layout of the view page and add relation managers
