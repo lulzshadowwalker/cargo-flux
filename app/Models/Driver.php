@@ -15,11 +15,13 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[ObservedBy(DriverObserver::class)]
-class Driver extends Model
+class Driver extends Model implements HasMedia
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, InteractsWithMedia;
 
     protected $fillable = [
         'status',
@@ -122,13 +124,33 @@ class Driver extends Model
         return $this->user->deviceTokens();
     }
 
+    const MEDIA_COLLECTION_PASSPORT = "passport";
+    const MEDIA_COLLECTION_DRIVER_LICENSE = "driver-license";
+    const MEDIA_COLLECTION_CAR_LICENSE = "car-license";
+    const MEDIA_COLLECTION_CAR = "car";
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::MEDIA_COLLECTION_PASSPORT)
+            ->singleFile();
+
+        $this->addMediaCollection(self::MEDIA_COLLECTION_DRIVER_LICENSE)
+            ->singleFile();
+
+        $this->addMediaCollection(self::MEDIA_COLLECTION_CAR_LICENSE)
+            ->singleFile();
+
+        //  NOTE: multiple files
+        $this->addMediaCollection(self::MEDIA_COLLECTION_CAR);
+    }
+
     /**
      *  TODO: Proxy unresolved PROPERTIES to the user model.
      *  as many of the user's attributes are needed in the customer model
      */
 
     /**
-     * Get the user's avatar URL.
+     * Get the driver's avatar URL.
      */
     public function avatar(): Attribute
     {
@@ -136,10 +158,92 @@ class Driver extends Model
     }
 
     /**
-     * Get the user's avatar file.
+     * Get the driver's avatar file.
      */
     public function avatarFile(): Attribute
     {
         return Attribute::get(fn() => $this->user->avatarFile);
+    }
+
+    /**
+     * Get the driver's passport URL.
+     */
+    public function passport(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_PASSPORT) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's passport file.
+     */
+    public function passportFile(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_PASSPORT) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's driver license URL.
+     */
+    public function driverLicense(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_DRIVER_LICENSE) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's driver license file.
+     */
+    public function driverLicenseFile(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_DRIVER_LICENSE) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's car license URL.
+     */
+    public function carLicense(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_CAR_LICENSE) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's car license file.
+     */
+    public function carLicenseFile(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_CAR_LICENSE) ?: null
+        );
+    }
+
+    /**
+     * Get the driver's car files URLs.
+     */
+    public function carFiles(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getMedia(self::MEDIA_COLLECTION_CAR)->map(
+                fn($media) => $media->getUrl()
+            )
+        );
+    }
+
+    /**
+     * Get the driver's car files.
+     */
+    public function carFilesMedia(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getMedia(self::MEDIA_COLLECTION_CAR)
+        );
     }
 }

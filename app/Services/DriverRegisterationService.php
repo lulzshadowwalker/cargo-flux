@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\RegisterationService;
 use App\Enums\UserType;
 use App\Http\Requests\DriverRegisterationRequest;
+use App\Models\Driver;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,16 @@ class DriverRegisterationService implements RegisterationService
 
             if ($request->avatar()) {
                 $user->addMedia($request->avatar())->toMediaCollection(User::MEDIA_COLLECTION_AVATAR);
+            }
+
+            $user->driver->addMedia($request->passport())->toMediaCollection(Driver::MEDIA_COLLECTION_PASSPORT);
+
+            $user->driver->addMedia($request->driverLicense())->toMediaCollection(Driver::MEDIA_COLLECTION_DRIVER_LICENSE);
+
+            $user->driver->addMedia($request->carLicense())->toMediaCollection(Driver::MEDIA_COLLECTION_CAR_LICENSE);
+
+            foreach ($request->car() as $car) {
+                $user->driver->addMedia($car)->toMediaCollection(Driver::MEDIA_COLLECTION_CAR);
             }
 
             return $user;

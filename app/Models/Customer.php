@@ -71,7 +71,7 @@ class Customer extends Model
      */
 
     /**
-     * Get the user's avatar URL.
+     * Get the customer's avatar URL.
      */
     public function avatar(): Attribute
     {
@@ -79,7 +79,7 @@ class Customer extends Model
     }
 
     /**
-     * Get the user's avatar file.
+     * Get the customer's avatar file.
      */
     public function avatarFile(): Attribute
     {

@@ -105,6 +105,15 @@ class AuthControllerTest extends TestCase
         $deviceToken = 'abc';
         $user = User::factory()->make(['type' => UserType::DRIVER]);
         $avatar = File::image('avatar.jpg', 200, 200);
+        $passport = File::image('passport.jpg', 200, 200);
+        $driverLicense = File::image('driver-license.jpg', 200, 200);
+        $carLicense = File::image('car-license.jpg', 200, 200);
+        $car = [
+            File::image('car-front.jpg', 200, 200),
+            File::image('car-back.jpg', 200, 200),
+            File::image('car-left.jpg', 200, 200),
+            File::image('car-right.jpg', 200, 200),
+        ];
 
         //
         {
@@ -129,6 +138,10 @@ class AuthControllerTest extends TestCase
                     'email' => $user->email,
                     'type' => 'DRIVER',
                     'avatar' => $avatar,
+                    'passport' => $passport,
+                    'driverLicense' => $driverLicense,
+                    'carLicense' => $carLicense,
+                    'car' => $car,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
@@ -151,6 +164,7 @@ class AuthControllerTest extends TestCase
         ]);
 
         $user = User::wherePhone($user->phone)->first();
+        $driver = $user->driver;
         $this->assertDatabaseHas('drivers', [
             'user_id' => $user->id,
             'status' => DriverStatus::UNDER_REVIEW,
@@ -163,5 +177,20 @@ class AuthControllerTest extends TestCase
 
         $this->assertNotNull($user->avatar);
         $this->assertFileExists($user->avatarFile?->getPath() ?? '');
+
+        $this->assertNotNull($driver->passport);
+        $this->assertFileExists($driver->passportFile?->getPath() ?? '');
+
+        $this->assertNotNull($driver->driverLicense);
+        $this->assertFileExists($driver->driverLicenseFile?->getPath() ?? '');
+
+        $this->assertNotNull($driver->carLicense);
+        $this->assertFileExists($driver->carLicenseFile?->getPath() ?? '');
+
+        $this->assertCount(count($car), $driver->carFilesMedia);
+        foreach ($driver->carFilesMedia as $key => $file) {
+            $this->assertEquals($car[$key]->name, $file->file_name);
+            $this->assertFileExists($file->getPath());
+        }
     }
 }

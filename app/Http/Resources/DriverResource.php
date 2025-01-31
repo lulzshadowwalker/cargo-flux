@@ -21,6 +21,7 @@ class DriverResource extends JsonResource
                 'dateOfBirth' => $this->user->date_of_birth,
                 'accountStatus' => $this->user->driver->status,
                 'status' => $this->user->status,
+                'avatar' => $this->user->avatar,
             ],
             'links' => (object) [],
             'relationships' => (object) [],

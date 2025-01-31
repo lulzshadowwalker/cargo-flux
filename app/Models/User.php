@@ -212,7 +212,7 @@ class User extends Authenticatable implements
     public function avatar(): Attribute
     {
         return Attribute::get(
-            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AVATAR)
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AVATAR) ?: null
         );
     }
 
@@ -222,7 +222,7 @@ class User extends Authenticatable implements
     public function avatarFile(): Attribute
     {
         return Attribute::get(
-            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AVATAR)
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AVATAR) ?: null
         );
     }
 
