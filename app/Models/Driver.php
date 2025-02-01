@@ -125,23 +125,16 @@ class Driver extends Model implements HasMedia
     }
 
     const MEDIA_COLLECTION_PASSPORT = "passport";
-    const MEDIA_COLLECTION_DRIVER_LICENSE = "driver-license";
-    const MEDIA_COLLECTION_CAR_LICENSE = "car-license";
-    const MEDIA_COLLECTION_CAR = "car";
+    const MEDIA_COLLECTION_LICENSE = "license";
 
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(self::MEDIA_COLLECTION_PASSPORT)
             ->singleFile();
 
-        $this->addMediaCollection(self::MEDIA_COLLECTION_DRIVER_LICENSE)
+        $this->addMediaCollection(self::MEDIA_COLLECTION_LICENSE)
             ->singleFile();
 
-        $this->addMediaCollection(self::MEDIA_COLLECTION_CAR_LICENSE)
-            ->singleFile();
-
-        //  NOTE: multiple files
-        $this->addMediaCollection(self::MEDIA_COLLECTION_CAR);
     }
 
     /**
@@ -188,62 +181,20 @@ class Driver extends Model implements HasMedia
     /**
      * Get the driver's driver license URL.
      */
-    public function driverLicense(): Attribute
+    public function license(): Attribute
     {
         return Attribute::get(
-            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_DRIVER_LICENSE) ?: null
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_LICENSE) ?: null
         );
     }
 
     /**
      * Get the driver's driver license file.
      */
-    public function driverLicenseFile(): Attribute
+    public function licenseFile(): Attribute
     {
         return Attribute::get(
-            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_DRIVER_LICENSE) ?: null
-        );
-    }
-
-    /**
-     * Get the driver's car license URL.
-     */
-    public function carLicense(): Attribute
-    {
-        return Attribute::get(
-            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_CAR_LICENSE) ?: null
-        );
-    }
-
-    /**
-     * Get the driver's car license file.
-     */
-    public function carLicenseFile(): Attribute
-    {
-        return Attribute::get(
-            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_CAR_LICENSE) ?: null
-        );
-    }
-
-    /**
-     * Get the driver's car files URLs.
-     */
-    public function carFiles(): Attribute
-    {
-        return Attribute::get(
-            fn() => $this->getMedia(self::MEDIA_COLLECTION_CAR)->map(
-                fn($media) => $media->getUrl()
-            )
-        );
-    }
-
-    /**
-     * Get the driver's car files.
-     */
-    public function carFilesMedia(): Attribute
-    {
-        return Attribute::get(
-            fn() => $this->getMedia(self::MEDIA_COLLECTION_CAR)
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_LICENSE) ?: null
         );
     }
 }

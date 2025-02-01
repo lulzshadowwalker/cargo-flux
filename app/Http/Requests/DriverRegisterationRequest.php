@@ -17,9 +17,11 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.phone' => 'phone',
             'data.attributes.avatar' => 'avatar',
             'data.attributes.passport' => 'passport',
-            'data.attributes.driverLicense' => 'driver_license',
-            'data.attributes.carLicense' => 'car_license',
-            'data.attributes.car' => 'car',
+            'data.attributes.license' => 'driver_license',
+            'data.relationships.truck.data.attributes.license' => 'license',
+            'data.relationships.truck.data.attributes.images' => 'images',
+            'data.relationships.truck.data.attributes.licensePlate' => 'license_plate',
+            'data.relationships.truck.data.attributes.truckCategory' => 'truck_category_id',
         ], $extraAttributes);
     }
 
@@ -35,10 +37,12 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             'data.attributes.avatar' => ['nullable', 'image'],
             'data.attributes.passport' => ['required', 'image'],
-            'data.attributes.driverLicense' => ['required', 'image'],
-            'data.attributes.carLicense' => ['required', 'image'],
-            // 'data.attributes.car' => ['required', 'array', 'min:4', 'max:4'],
-            'data.attributes.car' => ['required'],
+            'data.attributes.license' => ['required', 'image'],
+            'data.relationships.truck.data.licensePlate' => ['required', 'string', 'max:255'],
+            'data.relationships.truck.data.license' => ['required', 'image'],
+            'data.relationships.truck.data.images' => ['required', 'array', 'size:4'],
+            'data.relationships.truck.data.images.*' => ['required', 'image'],
+            'data.relationships.truck.data.truckCategory' => ['required', 'integer', 'exists:truck_categories,id'],
         ];
     }
 
@@ -63,22 +67,35 @@ class DriverRegisterationRequest extends BaseFormRequest
      */
     public function driverLicense(): UploadedFile
     {
-        return $this->file('data.attributes.driverLicense');
+        return $this->file('data.attributes.license');
     }
 
     /**
      * @return UploadedFile|UploadedFile[]|array
      */
-    public function carLicense(): UploadedFile
+    public function truckLicense(): UploadedFile
     {
-        return $this->file('data.attributes.carLicense');
+        return $this->file('data.relationships.truck.data.license');
     }
 
     /**
      * @return UploadedFile|UploadedFile[]|array
      */
-    public function car(): mixed
+    public function truckImages(): mixed
     {
-        return $this->file('data.attributes.car');
+        return $this->file('data.relationships.truck.data.images');
+    }
+
+    public function licensePlate(): string
+    {
+        return $this->input('data.relationships.truck.data.licensePlate');
+    }
+
+    /**
+     * returns the truck category id
+     */
+    public function truckCategory(): int
+    {
+        return (int) $this->input('data.relationships.truck.data.truckCategory');
     }
 }

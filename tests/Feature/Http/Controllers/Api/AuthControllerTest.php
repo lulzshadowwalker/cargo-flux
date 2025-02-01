@@ -7,6 +7,7 @@ use App\Enums\Language;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\DeviceToken;
+use App\Models\TruckCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Testing\File;
@@ -102,17 +103,19 @@ class AuthControllerTest extends TestCase
 
     public function test_it_registers_a_driver()
     {
+        $truckCategory = TruckCategory::factory()->create();
+
         $deviceToken = 'abc';
         $user = User::factory()->make(['type' => UserType::DRIVER]);
         $avatar = File::image('avatar.jpg', 200, 200);
         $passport = File::image('passport.jpg', 200, 200);
         $driverLicense = File::image('driver-license.jpg', 200, 200);
-        $carLicense = File::image('car-license.jpg', 200, 200);
-        $car = [
-            File::image('car-front.jpg', 200, 200),
-            File::image('car-back.jpg', 200, 200),
-            File::image('car-left.jpg', 200, 200),
-            File::image('car-right.jpg', 200, 200),
+        $truckLicense = File::image('truck-license.jpg', 200, 200);
+        $truckImages = [
+            File::image('truck-front.jpg', 200, 200),
+            File::image('truck-back.jpg', 200, 200),
+            File::image('truck-left.jpg', 200, 200),
+            File::image('truck-right.jpg', 200, 200),
         ];
 
         //
@@ -139,16 +142,22 @@ class AuthControllerTest extends TestCase
                     'type' => 'DRIVER',
                     'avatar' => $avatar,
                     'passport' => $passport,
-                    'driverLicense' => $driverLicense,
-                    'carLicense' => $carLicense,
-                    'car' => $car,
+                    'license' => $driverLicense,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
                         'data' => [
                             'token' => $deviceToken,
                         ],
-                    ]
+                    ],
+                    'truck' => [
+                        'data' => [
+                            'license' => $truckLicense,
+                            'images' => $truckImages,
+                            'licensePlate' => 'ABC123',
+                            'truckCategory' => $truckCategory->id,
+                        ],
+                    ],
                 ]
             ],
         ], ['Authorization' => "Bearer $token"])->assertSuccessful();
@@ -170,6 +179,12 @@ class AuthControllerTest extends TestCase
             'status' => DriverStatus::UNDER_REVIEW,
         ]);
 
+        $this->assertDatabaseHas('trucks', [
+            'driver_id' => $driver->id,
+            'license_plate' => 'ABC123',
+            'truck_category_id' => $truckCategory->id,
+        ]);
+
         $this->assertDatabaseHas('device_tokens', [
             'user_id' => $user->id,
             'token' => $deviceToken,
@@ -181,15 +196,15 @@ class AuthControllerTest extends TestCase
         $this->assertNotNull($driver->passport);
         $this->assertFileExists($driver->passportFile?->getPath() ?? '');
 
-        $this->assertNotNull($driver->driverLicense);
-        $this->assertFileExists($driver->driverLicenseFile?->getPath() ?? '');
+        $this->assertNotNull($driver->license);
+        $this->assertFileExists($driver->licenseFile?->getPath() ?? '');
 
-        $this->assertNotNull($driver->carLicense);
-        $this->assertFileExists($driver->carLicenseFile?->getPath() ?? '');
+        $this->assertNotNull($driver->truck->license);
+        $this->assertFileExists($driver->truck->licenseFile?->getPath() ?? '');
 
-        $this->assertCount(count($car), $driver->carFilesMedia);
-        foreach ($driver->carFilesMedia as $key => $file) {
-            $this->assertEquals($car[$key]->name, $file->file_name);
+        $this->assertCount(count($truckImages), $driver->truck->images);
+        foreach ($driver->truck->images as $key => $file) {
+            $this->assertEquals($truckImages[$key]->name, $file->file_name);
             $this->assertFileExists($file->getPath());
         }
     }
