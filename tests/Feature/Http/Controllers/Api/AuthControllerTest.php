@@ -143,6 +143,8 @@ class AuthControllerTest extends TestCase
                     'avatar' => $avatar,
                     'passport' => $passport,
                     'license' => $driverLicense,
+                    'truckLicense' => $truckLicense,
+                    'truckImages' => $truckImages,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
@@ -152,8 +154,6 @@ class AuthControllerTest extends TestCase
                     ],
                     'truck' => [
                         'data' => [
-                            'license' => $truckLicense,
-                            'images' => $truckImages,
                             'licensePlate' => 'ABC123',
                             'truckCategory' => $truckCategory->id,
                         ],
