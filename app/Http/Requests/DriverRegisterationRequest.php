@@ -40,7 +40,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.passport' => ['required', 'image'],
             'data.attributes.license' => ['required', 'image'],
             'data.attributes.truckLicense' => ['required', 'image'],
-            'data.attributes.truckImages' => ['required', 'array', 'size:4'],
+            'data.attributes.truckImages' => ['required', 'array'],
             'data.attributes.truckImages.*' => ['required', 'image'],
             'data.relationships.truck.data.licensePlate' => ['required', 'string', 'max:255'],
             'data.relationships.truck.data.truckCategory' => ['required', 'integer', 'exists:truck_categories,id'],
