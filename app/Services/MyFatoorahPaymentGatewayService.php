@@ -111,7 +111,7 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
     /**
      * Handle the success/failure callbacks
      */
-    public function callback(Request $request): void
+    public function callback(Request $request): Payment
     {
         Log::info('MyFatoorah callback', $request->all());
 
@@ -147,6 +147,8 @@ class MyFatoorahPaymentGatewayService implements PaymentGatewayService
             'payment_id' => $payment->id,
             'external_reference' => $details->InvoiceId,
         ]);
+
+        return $payment;
     }
 
     /**

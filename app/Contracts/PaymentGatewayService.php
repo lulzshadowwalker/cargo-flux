@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use App\Models\Payment;
 use Brick\Money\Money;
 use App\Support\PaymentMethod;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ interface PaymentGatewayService
 
     /**
      * Start the payment process
-     * 
+     *
      * @param Money $price
      * @param string $paymentMethodId
      * @param Payable $payable
@@ -32,5 +33,5 @@ interface PaymentGatewayService
     /**
      * Handle the success/failure callbacks
      */
-    public function callback(Request $request): void;
+    public function callback(Request $request): Payment;
 }

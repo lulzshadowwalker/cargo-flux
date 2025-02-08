@@ -31,6 +31,8 @@ class PaymentController extends ApiController
      */
     public function callback(Request $request)
     {
-        $this->gateway->callback($request);
+        $payment = $this->gateway->callback($request);
+
+        return redirect()->away('myapp://payment?success=' . $payment->isPaid ? 'true' : 'false');
     }
 }
