@@ -16,6 +16,7 @@ use App\Models\Order;
 use App\Models\TruckCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Testing\File;
 use Tests\TestCase;
 
 class OrderControllerTest extends TestCase
@@ -205,6 +206,12 @@ class OrderControllerTest extends TestCase
         $customer = Customer::factory()->create();
         $truckCategory = TruckCategory::factory()->create();
         Currency::factory()->create();
+        $images = [
+            File::image('one.jpg', 200, 200),
+            File::image('two.jpg', 200, 200),
+            File::image('three.jpg', 200, 200),
+            File::image('four.jpg', 200, 200),
+        ];
 
         $data = [
             'data' => [
@@ -220,6 +227,7 @@ class OrderControllerTest extends TestCase
                         'latitude' => 1.0,
                         'longitude' => 1.0,
                     ],
+                    'images' => $images,
                 ],
                 'relationships' => [
                     'truckCategory' => [
@@ -251,5 +259,12 @@ class OrderControllerTest extends TestCase
             'delivery_location_longitude' => 1.0,
             'truck_category_id' => 1 ?? $truckCategory->id,
         ]);
+
+        $order = Order::first();
+        $this->assertCount(count($images), $order->images);
+        foreach ($order->images as $key => $file) {
+            $this->assertEquals($images[$key]->name, $file->file_name);
+            $this->assertFileExists($file->getPath());
+        }
     }
 }

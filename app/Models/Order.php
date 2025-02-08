@@ -22,11 +22,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[ObservedBy(OrderObserver::class)]
-class Order extends Model implements Payable
+class Order extends Model implements Payable, HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'amount',
@@ -277,5 +279,32 @@ class Order extends Model implements Payable
     public function payer(): User
     {
         return $this->customer->user;
+    }
+
+    const MEDIA_COLLECTION_IMAGES = "images";
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::MEDIA_COLLECTION_IMAGES);
+    }
+
+    /**
+     * Get the order's images.
+     */
+    public function images(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getMedia(self::MEDIA_COLLECTION_IMAGES)
+        );
+    }
+
+    /**
+     * Get the order's images URLs.
+     */
+    public function imagesUrls(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getMedia(self::MEDIA_COLLECTION_IMAGES)->map(fn($media) => $media->getUrl())
+        );
     }
 }

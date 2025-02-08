@@ -44,6 +44,10 @@ class OrderController extends ApiController
 
         $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews', 'truckCategory', 'tracking');
 
+        foreach ($request->images() as $image) {
+            $order->addMedia($image)->toMediaCollection(Order::MEDIA_COLLECTION_IMAGES);
+        }
+
         return OrderResource::make($order);
     }
 

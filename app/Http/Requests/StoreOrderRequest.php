@@ -24,7 +24,8 @@ class StoreOrderRequest extends BaseFormRequest
             'data.attributes.deliveryLocation.latitude' => ['required', 'numeric', 'min:-90', 'max:90'],
             'data.attributes.deliveryLocation.longitude' => ['required', 'numeric', 'min:-180', 'max:180'],
             'data.relationships.truckCategory.data.id' => ['required', 'exists:truck_categories,id'],
-
+            'data.attributes.images' => ['required', 'array'],
+            'data.attributes.images.*' => ['required', 'image'],
         ];
     }
 
@@ -50,9 +51,19 @@ class StoreOrderRequest extends BaseFormRequest
             'data.attributes.deliveryLocation.latitude' => 'delivery_location_latitude',
             'data.attributes.deliveryLocation.longitude' => 'delivery_location_longitude',
             'data.relationships.truckCategory.data.id' => 'truck_category_id',
+            'data.attributes.images' => 'images',
         ], [
             ...$extraAttributes,
             'customer_id' => Auth::user()->customer->id,
         ]);
+    }
+
+
+    /**
+     * @return UploadedFile|UploadedFile[]|array
+     */
+    public function images(): mixed
+    {
+        return $this->file('data.attributes.images');
     }
 }
