@@ -39,4 +39,9 @@ return [
     'tons' => 'Tons',
     'account-information' => 'Account Information',
     'account-information-description' => 'Manage the driver\'s account details',
+    'license' => 'License',
+    'passport' => 'Passport',
+    'avatar' => 'Avatar',
+    'driver-documents' => 'Driver Documents',
+    'driver-documents-description' => 'Review and manage driver documents',
 ];

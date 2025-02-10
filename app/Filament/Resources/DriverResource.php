@@ -11,6 +11,7 @@ use App\Filament\Resources\DriverResource\Pages;
 use App\Filament\Resources\DriverResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\DriverResource\RelationManagers\TruckRelationManager;
 use App\Models\Driver;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -43,6 +44,12 @@ class DriverResource extends Resource
                         Forms\Components\Group::make()
                             ->relationship('user')
                             ->schema([
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('avatar')
+                                    ->collection(User::MEDIA_COLLECTION_AVATAR)
+                                    ->label(__('filament/resources/driver-resource.avatar'))
+                                    ->alignCenter()
+                                    ->avatar(),
+
                                 Forms\Components\TextInput::make('first_name')
                                     ->label(__('filament/resources/driver-resource.first-name'))
                                     ->placeholder(__('filament/resources/driver-resource.first-name-placeholder'))
@@ -74,6 +81,22 @@ class DriverResource extends Resource
                                     ->maxLength(34),
                             ]),
                     ]),
+
+                Forms\Components\Section::make(__('filament/resources/driver-resource.driver-documents'))
+                    ->description(__('filament/resources/driver-resource.driver-documents-description'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('license')
+                            ->collection(Driver::MEDIA_COLLECTION_PASSPORT)
+                            ->label(__('filament/resources/driver-resource.license'))
+                            ->previewable(),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('passport')
+                            ->collection(Driver::MEDIA_COLLECTION_PASSPORT)
+                            ->label(__('filament/resources/driver-resource.passport'))
+                            ->previewable(),
+                    ]),
+
             ]);
     }
 
