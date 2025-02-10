@@ -14,13 +14,12 @@ class OrderTrackingButton extends Component
 
     public function trackOrder()
     {
-
         if (! $this->orderNumber) return;
 
         $this->order = Order::whereNumber($this->orderNumber)->first();
 
         if (!$this->order) {
-            $this->js('alert("Order not found")');
+            $this->dispatch('warning', ['message' => __('website/order-tracking.order-not-found')]);
             return;
         }
 

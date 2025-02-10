@@ -17,6 +17,7 @@
     <x-website.header />
     {{ $slot }}
     <x-website.footer />
+    <x-website.toaster />
 </body>
 
 </html>
