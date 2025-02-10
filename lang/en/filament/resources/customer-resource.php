@@ -24,4 +24,5 @@ return [
     'company-name' => 'Name',
     'company-information' => 'Company Information',
     'company-information-description' => 'Customer\'s associated company details',
+    'avatar' => 'Avatar',
 ];

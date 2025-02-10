@@ -9,6 +9,7 @@ use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\ReviewsRelationManager;
 use App\Models\Customer;
+use App\Models\User;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -40,6 +41,12 @@ class CustomerResource extends Resource implements HasShieldPermissions
                     ->description(__('filament/resources/customer-resource.customer-information-description'))
                     ->aside()
                     ->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('avatar')
+                            ->collection(User::MEDIA_COLLECTION_AVATAR)
+                            ->label(__('filament/resources/customer-resource.avatar'))
+                            ->alignCenter()
+                            ->avatar(),
+
                         Forms\Components\TextInput::make('first_name')
                             ->label(__('filament/resources/customer-resource.first-name'))
                             ->placeholder(__('filament/resources/customer-resource.first-name-placeholder'))
@@ -72,8 +79,7 @@ class CustomerResource extends Resource implements HasShieldPermissions
                     ->schema([
                         Forms\Components\TextInput::make('company_name')
                             ->label(__('filament/resources/customer-resource.company-name'))
-                            ->maxLength(255)
-                            ->required(),
+                            ->maxLength(255),
                     ])
             ]);
     }
