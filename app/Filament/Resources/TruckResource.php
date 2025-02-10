@@ -46,7 +46,7 @@ class TruckResource extends Resource
                     ->description(__('filament/resources/truck-resource.truck-documents-description'))
                     ->aside()
                     ->schema([
-                        Forms\Components\SpatieMedialibraryFileUpload::make('license')
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('license')
                             ->label(__('filament/resources/truck-resource.license'))
                             ->disabled()
                             ->collection(Truck::MEDIA_COLLECTION_LICENSE),
