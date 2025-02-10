@@ -48,6 +48,7 @@ class DriverResource extends Resource
                                     ->collection(User::MEDIA_COLLECTION_AVATAR)
                                     ->label(__('filament/resources/driver-resource.avatar'))
                                     ->alignCenter()
+                                    ->disabled()
                                     ->avatar(),
 
                                 Forms\Components\TextInput::make('first_name')
@@ -89,11 +90,13 @@ class DriverResource extends Resource
                         Forms\Components\SpatieMediaLibraryFileUpload::make('license')
                             ->collection(Driver::MEDIA_COLLECTION_PASSPORT)
                             ->label(__('filament/resources/driver-resource.license'))
+                            ->disabled()
                             ->previewable(),
 
                         Forms\Components\SpatieMediaLibraryFileUpload::make('passport')
                             ->collection(Driver::MEDIA_COLLECTION_PASSPORT)
                             ->label(__('filament/resources/driver-resource.passport'))
+                            ->disabled()
                             ->previewable(),
                     ]),
 

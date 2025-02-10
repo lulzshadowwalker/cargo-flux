@@ -33,12 +33,29 @@ class TruckResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make(__('filament/resources/truck-resource.truck-information'))
+                    ->description(__('filament/resources/truck-resource.truck-information-description'))
                     ->aside()
                     ->schema([
                         Forms\Components\TextInput::make('license_plate')
                             ->label(__('filament/resources/truck-resource.license-plate'))
                             ->required()
                             ->maxLength(255),
+                    ]),
+
+                Forms\Components\Section::make(__('filament/resources/truck-resource.truck-documents'))
+                    ->description(__('filament/resources/truck-resource.truck-documents-description'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\SpatieMedialibraryFileUpload::make('license')
+                            ->label(__('filament/resources/truck-resource.license'))
+                            ->disabled()
+                            ->collection(Truck::MEDIA_COLLECTION_LICENSE),
+
+                        Forms\Components\SpatieMedialibraryFileUpload::make('images')
+                            ->label(__('filament/resources/truck-resource.images'))
+                            ->collection(Truck::MEDIA_COLLECTION_IMAGES)
+                            ->disabled()
+                            ->multiple()
                     ])
             ]);
     }
