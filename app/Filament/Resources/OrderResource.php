@@ -27,12 +27,37 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
+    public static function getgloballysearchableattributes(): array
+    {
+        return [
+            'number',
+            'cargo',
+            'customer.user.first_name',
+            'customer.user.last_name',
+            'customer.user.phone',
+            'driver.user.first_name',
+            'driver.user.last_name',
+            'driver.user.phone',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/order-resource.number') => Str::replace('ORDER-', '', $record->number),
+            __('filament/resources/order-resource.cargo') => $record->cargo,
+            __('filament/resources/order-resource.customer') => $record->customer->fullName,
+            __('filament/resources/order-resource.driver') => $record->driver->fullName,
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

@@ -20,12 +20,33 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
+use Illuminate\Database\Eloquent\Model;
 
 class CustomerResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    public static function getgloballysearchableattributes(): array
+    {
+        return [
+            'user.first_name',
+            'user.last_name',
+            'user.phone',
+            'user.email',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/customer-resource.full-name') => $record->user->fullName,
+            __('filament/resources/customer-resource.phone') => $record->user->phone,
+            __('filament/resources/customer-resource.email') => $record->user->email,
+        ];
+    }
+
 
     public static function getNavigationGroup(): ?string
     {

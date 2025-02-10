@@ -15,12 +15,29 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
+use Illuminate\Database\Eloquent\Model;
 
 class TruckCategoryResource extends Resource
 {
     protected static ?string $model = TruckCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'name',
+            'tonnage',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/truck-category-resource.name') => $record->name,
+            __('filament/resources/truck-category-resource.tonnage') => $record
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

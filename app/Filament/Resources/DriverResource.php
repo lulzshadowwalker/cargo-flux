@@ -21,12 +21,34 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
+use Illuminate\Database\Eloquent\Model;
 
 class DriverResource extends Resource
 {
     protected static ?string $model = Driver::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+
+    public static function getgloballysearchableattributes(): array
+    {
+        return [
+            'user.first_name',
+            'user.last_name',
+            'user.phone',
+            'user.email',
+            'iban',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/driver-resource.full-name') => $record->user->fullName,
+            __('filament/resources/driver-resource.phone') => $record->user->phone,
+            __('filament/resources/driver-resource.email') => $record->user->email,
+            __('filament/resources/driver-resource.iban') => $record->iban,
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class RouteGroupResource extends Resource
@@ -20,6 +21,16 @@ class RouteGroupResource extends Resource
     protected static ?string $model = RouteGroup::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
+
+    protected static ?string $recordTitleAttribute = 'pickupState.name';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/route-group-resource.pickup-state') => $record->pickupState->name,
+            __('filament/resources/route-group-resource.destinations') => Arr::join($record->destinations->pluck('state.name')->toArray(), ', '),
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

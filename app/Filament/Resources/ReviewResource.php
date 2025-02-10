@@ -19,6 +19,8 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use IbrahimBougaoua\FilamentRatingStar\Columns\Components\RatingStar as RatingStarColumn;
 use IbrahimBougaoua\FilamentRatingStar\Forms\Components\RatingStar;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ReviewResource extends Resource implements HasShieldPermissions
 {
@@ -26,10 +28,25 @@ class ReviewResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
+    public static function getgloballysearchableattributes(): array
+    {
+        return ['comment'];
+    }
+
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return  [
+            __('filament/resources/review-resource.comment') => Str::limit($record->comment, 50),
+            __('filament/resources/review-resource.rating') => $record->rating,
+        ];
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return __('filament/navigation.operations');
     }
+
     public static function form(Form $form): Form
     {
         return $form

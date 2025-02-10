@@ -16,12 +16,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
+use Illuminate\Database\Eloquent\Model;
 
 class TruckResource extends Resource
 {
     protected static ?string $model = Truck::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
+
+    protected static ?string $recordTitleAttribute = 'license_plate';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/truck-resource.license-plate') => $record->license_plate,
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {

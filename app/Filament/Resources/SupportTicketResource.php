@@ -16,6 +16,7 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -24,6 +25,24 @@ class SupportTicketResource extends Resource
     protected static ?string $model = SupportTicket::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'subject',
+            'message',
+            'name',
+            'phone',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            __('filament/resources/support-ticket-resource.subject') => $record->subject,
+            __('filament/resources/support-ticket-resource.attached-information') => $record->name . ' ' . $record->phone,
+        ];
+    }
 
     public static function getNavigationGroup(): ?string
     {
