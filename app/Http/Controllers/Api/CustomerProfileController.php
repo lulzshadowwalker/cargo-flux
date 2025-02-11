@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Http\Resources\CustomerResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerProfileController extends ApiController // implements ProfileController
@@ -25,6 +26,10 @@ class CustomerProfileController extends ApiController // implements ProfileContr
     {
         Auth::user()->update($request->mappedAttributes()->toArray());
         Auth::user()->customer->update($request->customerMappedAttributes()->toArray());
+
+        if ($avatar = $request->avatar()) {
+            Auth::user()->addMedia($avatar)->toMediaCollection(User::MEDIA_COLLECTION_AVATAR);
+        }
 
         return CustomerResource::make(Auth::user()->customer);
     }

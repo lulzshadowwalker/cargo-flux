@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 class UpdateCustomerProfileRequest extends BaseFormRequest
@@ -12,6 +13,7 @@ class UpdateCustomerProfileRequest extends BaseFormRequest
             'data.attributes.firstName' => 'first_name',
             'data.attributes.lastName' => 'last_name',
             'data.attributes.email' => 'email',
+            'data.attributes.avatar' => 'avatar',
         ], $extraAttributes);
     }
 
@@ -31,7 +33,16 @@ class UpdateCustomerProfileRequest extends BaseFormRequest
             'data.attributes.firstName' => 'sometimes|string',
             'data.attributes.lastName' => 'sometimes|string',
             'data.attributes.email' => 'sometimes|email',
-            'data.attributes.companyName' => 'nullable|string'
+            'data.attributes.companyName' => 'nullable|string',
+            'data.attributes.avatar' => 'nullable|image',
         ];
+    }
+
+    /**
+     * @return UploadedFile|UploadedFile[]|array|null
+     */
+    public function avatar(): ?UploadedFile
+    {
+        return $this->file('data.attributes.avatar');
     }
 }

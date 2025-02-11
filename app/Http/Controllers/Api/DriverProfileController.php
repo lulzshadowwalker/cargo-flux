@@ -23,6 +23,11 @@ class DriverProfileController extends ApiController // implements ProfileControl
     public function update(string $language, UpdateDriverProfileRequest $request)
     {
         Auth::user()->update($request->mappedAttributes()->toArray());
+        if ($avatar = $request->avatar()) {
+            //  TODO: Should we delete the old avatar ?
+            Auth::user()->addMedia($avatar)->toMediaCollection('avatar');
+        }
+
         return DriverResource::make(Auth::user()->driver);
     }
 }
