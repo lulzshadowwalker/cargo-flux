@@ -1,24 +1,24 @@
 <div>
-    <button class="outline-none" onclick="tracking_modal.showModal()">Order Tracking</button>
+    <button class="outline-none" onclick="tracking_modal.showModal()">{{ __('website/order-tracking.order-tracking') }}</button>
 
     <dialog id="tracking_modal" class="modal">
         <div class="modal-box">
             <form wire:submit.prevent="clear()">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
-            <h2 class="text-lg font-bold">Track Your Shipment</h2>
-            <p class="py-4">Enter your unique order number below to get the latest updates on your shipment’s journey.</p>
+            <h2 class="text-lg font-bold">{{ __('website/order-tracking.track-your-shipment') }}</h2>
+            <p class="py-4">{{ __('website/order-tracking.enter-order-number') }}</p>
 
             <form class="flex flex-col justify-center" wire:submit.prevent="trackOrder">
                 <label class="form-control w-full">
                     <div class="label">
-                        <span class="label-text">Order Number</span>
+                        <span class="label-text">{{ __('website/order-tracking.order-number') }}</span>
                     </div>
 
-                    <input type="text" placeholder="e.g., ORDER-1234567890" class="input input-bordered w-full" required wire:model="orderNumber" />
+                    <input type="text" placeholder="{{ __('website/order-tracking.order-number-placeholder') }}" class="input input-bordered w-full" required wire:model="orderNumber" />
                 </label>
 
-                <button class="btn btn-primary ms-auto mt-6">Find My Shipment <i class="fa-solid fa-truck-fast"></i></button>
+                <button class="btn btn-primary ms-auto mt-6">{{ __('website/order-tracking.find-my-shipment') }} <i class="fa-solid fa-truck-fast"></i></button>
             </form>
         </div>
     </dialog>
@@ -29,19 +29,18 @@
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
 
-            <h2 class="text-lg font-bold">Your Shipment Progress</h2>
-
+            <h2 class="text-lg font-bold">{{ __('website/order-tracking.your-shipment-progress') }}</h2>
 
             <ul class="timeline timeline-vertical">
                 @foreach ($stages ?? [] as $key => $stage)
                 <li :key="$key">
                     @unless($key === 0)
-                    <!--  note: `px-0` to prevent the lines between the steps to be displayed as a circle inside of a dialog for some reason -->
+                    <!--  NOTE: `px-0` to prevent the lines between the steps to be displayed as a circle inside of a dialog for some reason -->
                     <hr @class([ '!px-0' , 'bg-primary'=> $stage['is_completed']]) />
                     @endunless
 
                     <div @class([ 'tooltip tooltip-top'=> (boolean) $stage['completed_at'], 'timeline-box' , 'timeline-start'=> $key % 2 === 0, 'timeline-end' => $key % 2 !== 0 ]) data-tip="{{ $stage['completed_at']?->diffForHumans() ?: '' }}">
-                        {{ $stage['status']->label()  }}
+                        {{ $stage['status']->label() }}
                     </div>
 
                     <div class="timeline-middle">
@@ -65,13 +64,8 @@
                 @endforeach
             </ul>
 
-
-
-
-
-
             <form wire:submit.prevent="clear()">
-                <button class="flex btn btn-primary ms-auto mt-6">Done <i class="fa-solid fa-circle-check"></i></button>
+                <button class="flex btn btn-primary ms-auto mt-6">{{ __('website/order-tracking.done') }} <i class="fa-solid fa-circle-check"></i></button>
             </form>
         </div>
     </dialog>

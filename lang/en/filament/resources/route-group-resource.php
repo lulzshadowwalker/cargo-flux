@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'route-groups' => 'Route Groups',
+    'route-group' => 'Route Group',
     'route-information' => 'Route Information',
     'route-information-description' => 'Define the pickup location and multiple delivery destinations for the route.',
     'pickup-state' => 'Pickup State',

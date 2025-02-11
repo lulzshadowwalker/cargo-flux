@@ -16,20 +16,29 @@ return [
         'ar' => 'العربية',
     ],
     'order-payment-method' => [
-        'direct' => 'مباشر',
-        'online' => 'عبر الإنترنت',
+        'direct' => 'دفع مباشر',
+        'online' => 'دفع عبر الإنترنت',
     ],
     'order-payment-status' => [
-        'pending-approval' => 'بانتظار الموافقة',
+        'pending-approval' => 'قيد الانتظار للموافقة',
         'approved' => 'موافق عليه',
         'rejected' => 'مرفوض',
+        'unpaid' => 'غير مدفوع',
     ],
     'order-status' => [
-        'pending-approval' => 'بانتظار الموافقة',
-        'pending-driver-assignment' => 'بانتظار تعيين سائق',
+        'pending-approval' => 'قيد الانتظار للموافقة',
+        'pending-driver-assignment' => 'قيد انتظار تخصيص السائق',
+        'driver-assigned' => 'تم تخصيص السائق',
         'scheduled' => 'مجدول',
+        'heading-to-pickup' => 'في طريقه إلى الاستلام',
+        'pickup-started' => 'بدأ الاستلام',
+        'pickup-completed' => 'تم استلام البضاعة',
+        'customs-processing-started' => 'بدأت المعالجة الجمركية',
+        'customs-processing-completed' => 'تمت المعالجة الجمركية',
+        'drop-off-started' => 'بدأ تسليم البضاعة',
+        'drop-off-completed' => 'تم تسليم البضاعة',
         'completed' => 'مكتمل',
-        'canceled' => 'ملغى',
+        'canceled' => 'ملغي',
     ],
     'token-type' => [
         'temporary' => 'مؤقت',
@@ -38,11 +47,24 @@ return [
     'support-ticket-status' => [
         'open' => 'مفتوح',
         'in-progress' => 'قيد التنفيذ',
-        'resolved' => 'محلول',
+        'resolved' => 'تم الحل',
     ],
     'user-type' => [
-        'customer' => 'العميل',
-        'driver' => 'السائق',
-        'admin' => 'المشرف',
-    ]
+        'customer' => 'عميل',
+        'driver' => 'سائق',
+        'admin' => 'مسؤول',
+    ],
+    'audience' => [
+        'all' => 'الكل',
+        'customers' => 'العملاء',
+        'drivers' => 'السائقين',
+    ],
+    'payment-gateway' => [
+        'my-fatoorah' => 'فاتورة',
+    ],
+    'payment-status' => [
+        'pending' => 'قيد الانتظار',
+        'paid' => 'مدفوع',
+        'failed' => 'فشل',
+    ],
 ];

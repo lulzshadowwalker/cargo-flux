@@ -23,6 +23,21 @@ class TruckCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/truck-category-resource.truck-categories');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/truck-category-resource.truck-categories');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/truck-category-resource.truck-category');
+    }
+
     public static function getGloballySearchableAttributes(): array
     {
         return [

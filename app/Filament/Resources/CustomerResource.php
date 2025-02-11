@@ -28,6 +28,21 @@ class CustomerResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/customer-resource.customers');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/customer-resource.customers');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/customer-resource.customer');
+    }
+
     public static function getgloballysearchableattributes(): array
     {
         return [

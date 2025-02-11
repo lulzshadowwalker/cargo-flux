@@ -18,15 +18,15 @@
             <ul
                 tabindex="0"
                 class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                <li><a>Item 1</a></li>
+                <li><a>{{ __('website/header.item1') }}</a></li>
                 <li>
-                    <a>Parent</a>
+                    <a>{{ __('website/header.parent') }}</a>
                     <ul class="p-2">
-                        <li><a>Submenu 1</a></li>
-                        <li><a>Submenu 2</a></li>
+                        <li><a>{{ __('website/header.submenu1') }}</a></li>
+                        <li><a>{{ __('website/header.submenu2') }}</a></li>
                     </ul>
                 </li>
-                <li><a>Item 3</a></li>
+                <li><a>{{ __('website/header.item3') }}</a></li>
             </ul>
         </div>
         <a class="btn btn-ghost text-xl">{{ config('app.name') }}</a>
@@ -36,19 +36,19 @@
         <ul class="menu menu-horizontal px-1">
             <li>
                 <details>
-                    <summary>Download</summary>
+                    <summary>{{ __('website/header.download') }}</summary>
                     <ul class="p-2">
-                        <li><a class="text-nowrap"><i class=" fa-brands fa-app-store"></i> Play store</a></li>
-                        <li><a><i class="fa-brands fa-google-play"></i> App store</a></li>
+                        <li><a class="text-nowrap"><i class="fa-brands fa-app-store"></i> {{ __('website/header.play-store') }}</a></li>
+                        <li><a><i class="fa-brands fa-google-play"></i> {{ __('website/header.app-store') }}</a></li>
                     </ul>
                 </details>
             </li>
             <li><livewire:website.order-tracking-button /></li>
-            <li><a>Contact us</a></li>
+            <li><a>{{ __('website/header.contact-us') }}</a></li>
         </ul>
     </div>
 
     <div class="navbar-end">
-        <a class="btn btn-primary">Become a partner</a>
+        <a class="btn btn-primary">{{ __('website/header.become-partner') }}</a>
     </div>
 </div>

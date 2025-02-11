@@ -28,11 +28,25 @@ class ReviewResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/review-resource.reviews');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/review-resource.reviews');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/review-resource.review');
+    }
+
     public static function getgloballysearchableattributes(): array
     {
         return ['comment'];
     }
-
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {

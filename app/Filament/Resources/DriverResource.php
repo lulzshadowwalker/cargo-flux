@@ -29,6 +29,21 @@ class DriverResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/driver-resource.drivers');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/driver-resource.drivers');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/driver-resource.driver');
+    }
+
     public static function getgloballysearchableattributes(): array
     {
         return [

@@ -26,6 +26,21 @@ class SupportTicketResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/support-ticket-resource.support-tickets');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/support-ticket-resource.support-tickets');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/support-ticket-resource.support-ticket');
+    }
+
     public static function getGloballySearchableAttributes(): array
     {
         return [

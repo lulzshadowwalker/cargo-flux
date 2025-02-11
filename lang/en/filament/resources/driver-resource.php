@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'drivers' => 'Drivers',
+    'driver' => 'Driver',
     'full-name' => 'Name',
     'phone' => 'Phone',
     'email' => 'Email',

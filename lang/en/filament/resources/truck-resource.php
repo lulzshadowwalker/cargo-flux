@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'trucks' => 'Trucks',
+    'truck' => 'Truck',
     'name' => 'Name',
     'tonnage' => 'Tonnage',
     'driver' => 'Driver',

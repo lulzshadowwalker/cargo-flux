@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'orders' => 'الطلبات',
+    'order' => 'الطلب',
+    'number' => 'العدد',
+    'amount' => 'المبلغ',
+    'status' => 'الحالة',
+    'customer' => 'العميل',
+    'driver' => 'السائق',
+    'currency' => 'العملة',
+    'payment-method' => 'طريقة الدفع',
+    'payment-status' => 'حالة الدفع',
+    'scheduled-at' => 'تم الجدولة في',
+    'pickup-location' => 'موقع الاستلام',
+    'delivery-location' => 'موقع التسليم',
+    'current-location' => 'الموقع الحالي',
+    'current-location-recorded-at' => 'تم تسجيل الموقع الحالي في',
+    'unscheduled' => 'غير مجدول',
+    'cargo' => 'البضائع',
+    'actor-type' => 'نوع الفاعل',
+    'actor' => 'الفاعل',
+    'system' => 'النظام',
+    'unknown' => 'غير معروف',
+    'order-information' => 'معلومات الطلب',
+    'order-information-description' => 'إدارة وتدقيق تفاصيل الطلب بعناية',
+];

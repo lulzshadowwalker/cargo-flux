@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'truck-categories' => 'Truck Categories',
+    'truck-category' => 'Truck Category',
     'details' => 'Details',
     'details-description' => 'Please provide the following details',
     'name-helper-text' => 'The name of the truck category',

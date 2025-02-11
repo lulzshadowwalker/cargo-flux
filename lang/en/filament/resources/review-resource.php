@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'reviews' => 'Reviews',
+    'review' => 'Review',
     'comment' => 'Comment',
     'rating' => 'Rating',
     'reviewer' => 'Reviewer',

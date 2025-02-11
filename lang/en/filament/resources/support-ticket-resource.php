@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'support-tickets' => 'Support Tickets',
+    'support-ticket' => 'Support Ticket',
     'subject' => 'Subject',
     'attached-name' => 'Attached Name',
     'attached-information' => 'Attached Information',

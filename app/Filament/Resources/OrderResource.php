@@ -35,6 +35,21 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/order-resource.orders');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/order-resource.orders');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/order-resource.order');
+    }
+
     public static function getgloballysearchableattributes(): array
     {
         return [

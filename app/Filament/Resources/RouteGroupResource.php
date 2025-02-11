@@ -24,6 +24,21 @@ class RouteGroupResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'pickupState.name';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/route-group-resource.route-groups');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/route-group-resource.route-groups');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/route-group-resource.route-group');
+    }
+
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
@@ -35,11 +50,6 @@ class RouteGroupResource extends Resource
     public static function getNavigationGroup(): ?string
     {
         return __('filament/navigation.operations');
-    }
-
-    public static function getLabel(): ?string
-    {
-        return 'Routes';
     }
 
     public static function form(Form $form): Form

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'truck-categories' => 'فئات الشاحنات',
+    'truck-category' => 'فئة الشاحنة',
+    'details' => 'التفاصيل',
+    'details-description' => 'يرجى تقديم التفاصيل التالية',
+    'name-helper-text' => 'اسم فئة الشاحنة',
+    'name-placeholder' => 'شاحنة صغيرة',
+    'tonnage-helper-text' => 'الوزن الإجمالي لفئة الشاحنة',
+    'tonnage-placeholder' => '5',
+    'length-helper-text' => 'طول فئة الشاحنة',
+    'length-placeholder' => '5',
+    'ton' => 'طن|أطنان',
+    'meter' => 'متر|أمتار',
+    'tonnage-disabled-helper-text' => 'هناك شاحنات مرتبطة بهذه الفئة بالفعل',
+    'length-disabled-helper-text' => 'هناك شاحنات مرتبطة بهذه الفئة بالفعل',
+    'name' => 'الاسم',
+    'tonnage' => 'الوزن الإجمالي',
+    'length' => 'الطول',
+    'trucks' => 'الشاحنات',
+    'orders' => 'الطلبات',
+    'created-at' => 'تاريخ الإنشاء',
+    'updated-at' => 'تاريخ التحديث',
+    'is-available' => 'متاح',
+    'is-available-tooltip' => 'فئة الشاحنة غير متاحة إذا لم تكن هناك شاحنات مرتبطة بها أو كانت جميع الشاحنات المرتبطة بها تحتوي على شحنات نشطة أو قادمة',
+];

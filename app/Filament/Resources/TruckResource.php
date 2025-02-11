@@ -24,6 +24,21 @@ class TruckResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament/resources/truck-resource.trucks');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('filament/resources/truck-resource.trucks');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('filament/resources/truck-resource.truck');
+    }
+
     protected static ?string $recordTitleAttribute = 'license_plate';
 
     public static function getGlobalSearchResultDetails(Model $record): array
