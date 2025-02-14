@@ -13,6 +13,7 @@ use App\Models\Currency;
 use App\Models\Order;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends ApiController
 {
@@ -45,8 +46,9 @@ class OrderController extends ApiController
         $order = Order::create($details->toArray())->refresh()->load('customer', 'truck', 'driver', 'reviews', 'truckCategory', 'tracking');
 
         foreach ($request->images() as $image) {
-            $order->addMedia($image)->toMediaCollection(Order::MEDIA_COLLECTION_IMAGES);
+            $order->addMedia($image)->preservingOriginal()->toMediaCollection(Order::MEDIA_COLLECTION_IMAGES);
         }
+
 
         return OrderResource::make($order);
     }

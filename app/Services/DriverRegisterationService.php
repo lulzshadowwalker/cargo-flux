@@ -39,9 +39,7 @@ class DriverRegisterationService implements RegisterationService
 
             $user->driver->truck->addMedia($request->truckLicense())->toMediaCollection(Truck::MEDIA_COLLECTION_LICENSE);
 
-            Log::info('Found ' . count($request->truckImages()) . ' truck images');
             foreach ($request->truckImages() as $image) {
-                Log::info('Adding truck image', ['image' => $image]);
                 $user->driver->truck->addMedia($image)->toMediaCollection(Truck::MEDIA_COLLECTION_IMAGES);
             }
 
