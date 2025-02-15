@@ -15,6 +15,6 @@ return [
     'truck-information-description' => 'مراجعة وإدارة معلومات الشاحنة.',
     'truck-documents' => 'وثائق الشاحنة',
     'truck-documents-description' => 'مراجعة وإدارة وثائق الشاحنة.',
-    'license' => 'الرخصة',
     'images' => 'الصور',
+    'license' => 'الرخصة',
 ];

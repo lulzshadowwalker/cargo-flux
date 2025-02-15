@@ -137,6 +137,17 @@ class OrderResource extends Resource
                                         $set('scheduled_at', null);
                                     })
                             ),
+                    ]),
+
+                Forms\Components\Section::make(__('filament/resources/order-resource.order-documents'))
+                    ->description(__('filament/resources/order-resource.order-documents-description'))
+                    ->aside()
+                    ->schema([
+                        Forms\Components\SpatieMedialibraryFileUpload::make('images')
+                            ->label(__('filament/resources/order-resource.images'))
+                            ->collection(Order::MEDIA_COLLECTION_IMAGES)
+                            ->disabled()
+                            ->multiple()
                     ])
             ]);
     }

@@ -26,4 +26,7 @@ return [
     'order-information-description' => 'إدارة وتدقيق تفاصيل الطلب بعناية',
     'created-at' => 'تم الإنشاء في',
     'updated-at' => 'تم التحديث في',
+    'order-documents' => 'وثائق الطلب',
+    'order-documents-description' => 'مراجعة وإدارة وثائق الطلب.',
+    'images' => 'الصور',
 ];

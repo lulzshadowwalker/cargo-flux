@@ -26,4 +26,7 @@ return [
     'order-information-description' => 'Carefully manage and audit order details',
     'created-at' => 'Created At',
     'updated-at' => 'Updated At',
+    'order-documents' => 'Order Documents',
+    'order-documents-description' => 'Review and manage order documents.',
+    'images' => 'Images',
 ];
