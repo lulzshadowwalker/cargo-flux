@@ -16,6 +16,7 @@ use App\Filament\Resources\OrderResource\RelationManagers\TruckRelationManager;
 use App\Models\Order;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -143,7 +144,7 @@ class OrderResource extends Resource
                     ->description(__('filament/resources/order-resource.order-documents-description'))
                     ->aside()
                     ->schema([
-                        Forms\Components\SpatieMedialibraryFileUpload::make('images')
+                        SpatieMediaLibraryFileUpload::make('images')
                             ->label(__('filament/resources/order-resource.images'))
                             ->collection(Order::MEDIA_COLLECTION_IMAGES)
                             ->disabled()
