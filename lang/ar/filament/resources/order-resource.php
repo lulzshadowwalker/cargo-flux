@@ -24,4 +24,6 @@ return [
     'unknown' => 'غير معروف',
     'order-information' => 'معلومات الطلب',
     'order-information-description' => 'إدارة وتدقيق تفاصيل الطلب بعناية',
+    'created-at' => 'تم الإنشاء في',
+    'updated-at' => 'تم التحديث في',
 ];

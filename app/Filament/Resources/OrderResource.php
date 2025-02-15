@@ -173,7 +173,7 @@ class OrderResource extends Resource
                     ->label(__('filament/resources/order-resource.driver'))
                     ->getStateUsing(fn($record) => $record->driver)
                     ->formatStateUsing(fn($state) => $state->fullName)
-                    ->description(fn($record) => $record->driver->phone)
+                    ->description(fn($record) => $record->driver?->phone)
                     ->searchable(
                         query: function (Builder $query, $search) {
                             $query->whereHas('driver.user', function (Builder $query) use ($search) {
@@ -230,11 +230,13 @@ class OrderResource extends Resource
                     ->description(fn($record) => $record->scheduled_at?->format('Y-m-d H:i:s') ?? ''),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('filament/resources/order-resource.created-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('filament/resources/order-resource.updated-at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -23,5 +23,7 @@ return [
     'system' => 'System',
     'unknown' => 'Unknown',
     'order-information' => 'Order Information',
-    'order-information-description' => 'Carefully manage and audit order details'
+    'order-information-description' => 'Carefully manage and audit order details',
+    'created-at' => 'Created At',
+    'updated-at' => 'Updated At',
 ];
