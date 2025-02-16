@@ -24,7 +24,7 @@ class AuthController extends ApiController
     {
         $user = $this->serviceFactory->make($request->mappedAttributes()['type'])->register($request);
 
-        $deviceToken = $request->mappedAttributes()['device_token'];
+        $deviceToken = $request->mappedAttributes()['device_token'] ?: null;
         if ($deviceToken) {
             $user->deviceTokens()->firstOrCreate(['token' => $deviceToken]);
         }
