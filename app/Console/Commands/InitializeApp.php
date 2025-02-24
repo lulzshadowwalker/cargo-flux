@@ -24,6 +24,9 @@ class InitializeApp extends Command
         Artisan::call('upsert:world');
         $this->info('Countries and cities upserted successfully.');
 
+        Artisan::call('upsert:gadm');
+        $this->info('GADM upserted successfully.');
+
         $this->info('⏺ Application initialized successfully.');
     }
 }
