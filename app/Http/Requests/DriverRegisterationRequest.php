@@ -45,7 +45,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.middleName.en' => ['required', 'string', 'max:255'],
             'data.attributes.lastName.en' => ['required', 'string', 'max:255'],
 
-            'data.attributes.dateOfBirth' => ['nullable', 'date'],
+            'data.attributes.dateOfBirth' => ['required', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             'data.attributes.avatar' => ['nullable', 'image'],
             'data.attributes.passport' => ['required', 'image'],

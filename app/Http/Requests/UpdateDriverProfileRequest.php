@@ -12,6 +12,7 @@ class UpdateDriverProfileRequest extends BaseFormRequest
         return $this->mapped([
             'data.attributes.email' => 'email',
             'data.attributes.avatar' => 'avatar',
+            'data.attributes.dateOfBirth' => 'date_of_birth',
         ], $extraAttributes);
     }
 

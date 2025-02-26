@@ -61,6 +61,7 @@ class ProfileControllerTest extends TestCase
                         'ar' => 'Doe',
                     ],
                     'email' => 'john@example.com',
+                    'dateOfBirth' => '1990-01-01',
                     'avatar' => $avatar,
                 ],
             ],
@@ -74,5 +75,6 @@ class ProfileControllerTest extends TestCase
         $this->assertEquals('john@example.com', $driver->user->email);
         $this->assertNotNull($driver->user->avatarFile);
         $this->assertEquals('avatar.jpg', $driver->user->avatarFile->file_name);
+        $this->assertEquals('1990-01-01', $driver->user->date_of_birth->format('Y-m-d'));
     }
 }
