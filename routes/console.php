@@ -10,8 +10,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('telescope:prune --hours=120')->daily();
-
 Schedule::command('notify:pending')->hourly();
 Schedule::command('notify:pending-direct-payment-orders')->hourly();
 Schedule::command('notify:pending-driver-registeration-requests')->hourly();
