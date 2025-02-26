@@ -20,7 +20,7 @@ class SupportTicketTest extends TestCase
 
     public function test_it_starts_with_open_status_if_status_is_not_specified(): void
     {
-        $ticket = SupportTicket::create(['subject' => 'Test subject', 'message' => 'Test message', 'phone' => '+1234567890', 'name' => 'John Doe',]);
+        $ticket = SupportTicket::create(['message' => 'Test message', 'phone' => '+1234567890', 'name' => 'John Doe',]);
 
         $this->assertTrue($ticket->isOpen);
         $this->assertFalse($ticket->isInProgress);
@@ -29,7 +29,7 @@ class SupportTicketTest extends TestCase
 
     public function test_status_can_be_specified(): void
     {
-        $ticket = SupportTicket::create(['subject' => 'Test subject', 'message' => 'Test message', 'phone' => '+1234567890', 'name' => 'John Doe', 'status' => 'IN_PROGRESS']);
+        $ticket = SupportTicket::create(['message' => 'Test message', 'phone' => '+1234567890', 'name' => 'John Doe', 'status' => 'IN_PROGRESS']);
 
         $this->assertFalse($ticket->isOpen);
         $this->assertTrue($ticket->isInProgress);

@@ -3,13 +3,9 @@
 namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Filament\Resources\SupportTicketResource;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TicketsRelationManager extends RelationManager
 {
@@ -22,6 +18,6 @@ class TicketsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return SupportTicketResource::table($table->recordTitleAttribute('subject'));
+        return SupportTicketResource::table($table->recordTitleAttribute('message'));
     }
 }

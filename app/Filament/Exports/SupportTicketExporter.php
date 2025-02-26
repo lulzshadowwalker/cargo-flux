@@ -20,9 +20,6 @@ class SupportTicketExporter extends Exporter
             ExportColumn::make('number')
                 ->label('Number'),
 
-            ExportColumn::make('subject')
-                ->label('Subject'),
-
             ExportColumn::make('message')
                 ->label('Message'),
 

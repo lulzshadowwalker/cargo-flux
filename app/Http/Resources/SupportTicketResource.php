@@ -13,7 +13,6 @@ class SupportTicketResource extends JsonResource
             'type' => 'support-ticket',
             'id' => $this->id,
             'attributes' => [
-                'subject' => $this->subject,
                 'message' => $this->message,
                 'phone' => $this->phone,
                 'name' => $this->name,

@@ -44,7 +44,6 @@ class SupportTicketResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return [
-            'subject',
             'message',
             'name',
             'phone',
@@ -54,7 +53,6 @@ class SupportTicketResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('filament/resources/support-ticket-resource.subject') => $record->subject,
             __('filament/resources/support-ticket-resource.attached-information') => $record->name . ' ' . $record->phone,
         ];
     }
@@ -88,13 +86,6 @@ class SupportTicketResource extends Resource
                             ->disabled()
                             ->formatStateUsing(fn($state) => Str::replace('TICKET-', '', $state)),
 
-                        Forms\Components\TextInput::make('subject')
-                            ->label(__('filament/resources/support-ticket-resource.subject'))
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpanFull()
-                            ->disabled(),
-
                         Forms\Components\Textarea::make('message')
                             ->label(__('filament/resources/support-ticket-resource.message'))
                             ->required()
@@ -126,13 +117,6 @@ class SupportTicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subject')
-                    ->label(__('filament/resources/support-ticket-resource.subject'))
-                    ->description(fn($record) => Str::limit($record->message, 50))
-                    ->searchable()
-                    ->sortable()
-                    ->limit(50),
-
                 Tables\Columns\TextColumn::make('attached_information')
                     ->label(__('filament/resources/support-ticket-resource.attached-information'))
                     ->getStateUsing(fn($record) => $record->name)

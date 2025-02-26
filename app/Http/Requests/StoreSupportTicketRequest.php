@@ -12,7 +12,6 @@ class StoreSupportTicketRequest extends BaseSupportTicketRequest
     public function rules(): array
     {
         $rules = [
-            'data.attributes.subject' => 'required|string',
             'data.attributes.message' => 'required|string',
             'data.attributes.phone' => 'sometimes|string',
             'data.attributes.name' => 'sometimes|string',

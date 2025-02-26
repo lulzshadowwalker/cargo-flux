@@ -12,7 +12,6 @@ return new class extends Migration
         Schema::create('support_tickets', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique();
-            $table->string('subject');
             $table->text('message');
             $table->enum('status', array_map(fn($status) => $status->value, SupportTicketStatus::cases()))->default(SupportTicketStatus::OPEN);
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();

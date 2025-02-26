@@ -3,7 +3,6 @@
 return [
     'support-tickets' => 'تذاكر الدعم',
     'support-ticket' => 'تذكرة الدعم',
-    'subject' => 'الموضوع',
     'attached-name' => 'الاسم المرفق',
     'attached-information' => 'المعلومات المرفقة',
     'number' => 'العدد',
