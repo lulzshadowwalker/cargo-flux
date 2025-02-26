@@ -18,6 +18,7 @@ class Truck extends Model implements HasMedia
         'license_plate',
         'driver_id',
         'truck_category_id',
+        'is_personal_property',
     ];
 
     protected function casts(): array
@@ -25,6 +26,7 @@ class Truck extends Model implements HasMedia
         return [
             'id' => 'integer',
             'driver_id' => 'integer',
+            'is_personal_property' => 'boolean',
         ];
     }
 
@@ -45,6 +47,7 @@ class Truck extends Model implements HasMedia
 
     const MEDIA_COLLECTION_LICENSE = "license";
     const MEDIA_COLLECTION_IMAGES = "images";
+    const MEDIA_COLLECTION_AUTHORIZATION_CLAUSE = "authorization-clause";
 
     public function registerMediaCollections(): void
     {
@@ -52,6 +55,9 @@ class Truck extends Model implements HasMedia
         $this->addMediaCollection(self::MEDIA_COLLECTION_IMAGES);
 
         $this->addMediaCollection(self::MEDIA_COLLECTION_LICENSE)
+            ->singleFile();
+
+        $this->addMediaCollection(self::MEDIA_COLLECTION_AUTHORIZATION_CLAUSE)
             ->singleFile();
     }
 
@@ -72,6 +78,26 @@ class Truck extends Model implements HasMedia
     {
         return Attribute::get(
             fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_LICENSE) ?: null
+        );
+    }
+
+    /**
+     * Get the truck's authorization clause URL.
+     */
+    public function authorizationClause(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMediaUrl(self::MEDIA_COLLECTION_AUTHORIZATION_CLAUSE) ?: null
+        );
+    }
+
+    /**
+     * Get the truck's authorization clause file.
+     */
+    public function authorizationClauseFile(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->getFirstMedia(self::MEDIA_COLLECTION_AUTHORIZATION_CLAUSE) ?: null
         );
     }
 

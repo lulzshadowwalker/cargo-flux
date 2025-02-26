@@ -41,12 +41,17 @@ class DriverRegisterationService implements RegisterationService
             $user->driver->truck()->create([
                 'license_plate' => $request->licensePlate(),
                 'truck_category_id' => $request->truckCategory(),
+                'is_personal_property' => $request->isTruckPersonalProperty(),
             ]);
 
             $user->driver->truck->addMedia($request->truckLicense())->toMediaCollection(Truck::MEDIA_COLLECTION_LICENSE);
 
             foreach ($request->truckImages() as $image) {
                 $user->driver->truck->addMedia($image)->toMediaCollection(Truck::MEDIA_COLLECTION_IMAGES);
+            }
+
+            if (! $request->isTruckPersonalProperty()) {
+                $user->driver->truck->addMedia($request->authorizationClause())->toMediaCollection(Truck::MEDIA_COLLECTION_AUTHORIZATION_CLAUSE);
             }
 
             return $user;

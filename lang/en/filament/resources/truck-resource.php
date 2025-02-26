@@ -17,4 +17,6 @@ return [
     'truck-documents-description' => 'Review and manage the documents of the truck.',
     'license' => 'License',
     'images' => 'Images',
+    'is-personal-property' => 'Is Personal Property',
+    'authorization-clause' => 'Authorization Clause',
 ];

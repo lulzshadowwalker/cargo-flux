@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('license_plate');
             $table->foreignId('driver_id');
             $table->foreignId('truck_category_id');
+            $table->boolean('is_personal_property');
             $table->timestamps();
         });
     }

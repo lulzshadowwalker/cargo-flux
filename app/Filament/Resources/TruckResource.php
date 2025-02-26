@@ -65,6 +65,10 @@ class TruckResource extends Resource
                             ->label(__('filament/resources/truck-resource.license-plate'))
                             ->required()
                             ->maxLength(255),
+
+                        Forms\Components\Toggle::make('is_personal_property')
+                            ->label(__('filament/resources/truck-resource.is-personal-property'))
+                            ->disabled(),
                     ]),
 
                 Forms\Components\Section::make(__('filament/resources/truck-resource.truck-documents'))
@@ -74,13 +78,20 @@ class TruckResource extends Resource
                         Forms\Components\SpatieMediaLibraryFileUpload::make('license')
                             ->label(__('filament/resources/truck-resource.license'))
                             ->disabled()
+                            ->previewable()
                             ->collection(Truck::MEDIA_COLLECTION_LICENSE),
 
                         Forms\Components\SpatieMedialibraryFileUpload::make('images')
                             ->label(__('filament/resources/truck-resource.images'))
                             ->collection(Truck::MEDIA_COLLECTION_IMAGES)
                             ->disabled()
-                            ->multiple()
+                            ->multiple(),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('authorization_clause')
+                            ->collection(Truck::MEDIA_COLLECTION_AUTHORIZATION_CLAUSE)
+                            ->label(__('filament/resources/truck-resource.authorization-clause'))
+                            ->disabled()
+                            ->previewable(),
                     ])
             ]);
     }
@@ -118,6 +129,11 @@ class TruckResource extends Resource
                     ->formatStateUsing(fn($state) => "{$state->name} ({$state->tonnage} " . __('filament/resources/truck-resource.tons') . ")")
                     ->alignCenter()
                     ->sortable(),
+
+                Tables\Columns\IconColumn::make('is_personal_property')
+                    ->label(__('filament/resources/truck-resource.is-personal-property'))
+                    ->alignCenter()
+                    ->boolean(),
 
                 Tables\Columns\TextColumn::make('orders')
                     ->label(__('filament/resources/truck-resource.orders'))

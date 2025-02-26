@@ -17,6 +17,7 @@ class TruckFactory extends Factory
             'license_plate' => $this->faker->word(),
             'driver_id' => Driver::factory(),
             'truck_category_id' => TruckCategory::factory(),
+            'is_personal_property' => $this->faker->boolean(),
         ];
     }
 }

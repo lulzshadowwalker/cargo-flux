@@ -17,4 +17,6 @@ return [
     'truck-documents-description' => 'مراجعة وإدارة وثائق الشاحنة.',
     'images' => 'الصور',
     'license' => 'الرخصة',
+    'is-personal-property' => 'ملكية شخصية',
+    'authorization-clause' => 'بند التفويض',
 ];

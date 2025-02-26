@@ -14,6 +14,7 @@ class TruckResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'licensePlate' => $this->license_plate,
+                'isPersonalProperty' => $this->is_personal_property,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],

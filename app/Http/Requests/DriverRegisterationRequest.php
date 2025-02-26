@@ -21,6 +21,8 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.license' => 'driver_license',
             'data.attributes.residenceAddress' => 'residence_address',
             'data.relationships.truck.data.attributes.license' => 'license',
+            'data.relationships.truck.data.attributes.isPersonalProperty' => 'is_personal_property',
+            'data.relationships.truck.data.attributes.authorizationClause' => 'authorization_clause',
             'data.attributes.truckLicense' => 'license',
             'data.attributes.truckImages' => 'images',
             'data.relationships.truck.data.attributes.licensePlate' => 'license_plate',
@@ -59,6 +61,8 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.truckImages.*' => ['required', 'image'],
             'data.relationships.truck.data.licensePlate' => ['required', 'string', 'max:255'],
             'data.relationships.truck.data.truckCategory' => ['required', 'integer', 'exists:truck_categories,id'],
+            'data.relationships.truck.data.isPersonalProperty' => ['required', 'boolean'],
+            'data.relationships.truck.data.authorizationClause' => ['required_if:data.relationships.truck.data.isPersonalProperty,false', 'image'],
         ];
     }
 
@@ -138,5 +142,15 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function secondaryPhone(): mixed
     {
         return $this->input('data.attributes.secondaryPhone');
+    }
+
+    public function isTruckPersonalProperty(): bool
+    {
+        return (bool) $this->input('data.relationships.truck.data.isPersonalProperty');
+    }
+
+    public function authorizationClause(): mixed
+    {
+        return $this->file('data.relationships.truck.data.authorizationClause');
     }
 }
