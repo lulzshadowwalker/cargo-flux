@@ -54,4 +54,6 @@ return [
     'avatar' => 'Avatar',
     'driver-documents' => 'Driver Documents',
     'driver-documents-description' => 'Review and manage driver documents',
+    'residence-address' => 'Residence Address',
+    'residence-address-placeholder' => 'enter residence address',
 ];

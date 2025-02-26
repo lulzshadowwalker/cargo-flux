@@ -32,6 +32,7 @@ class DriverProfileController extends ApiController // implements ProfileControl
             'first_name' => $request->firstName(),
             'last_name' => $request->lastName(),
             'middle_name' => $request->middleName(),
+            'residence_address' => $request->residenceAddress(),
         ]);
 
         return DriverResource::make(Auth::user()->driver);

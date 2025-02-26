@@ -82,49 +82,52 @@ class DriverResource extends Resource
                         Forms\Components\Group::make()
                             ->relationship('user')
                             ->schema([
-                                Forms\Components\SpatieMediaLibraryFileUpload::make('avatar')
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('user.avatar')
                                     ->collection(User::MEDIA_COLLECTION_AVATAR)
                                     ->label(__('filament/resources/driver-resource.avatar'))
                                     ->alignCenter()
                                     ->avatar(),
+                            ]),
 
-                                Forms\Components\TextInput::make('driver.first_name.ar')
-                                    ->label(__('filament/resources/driver-resource.first-name-arabic'))
-                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-arabic'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('first_name.ar')
+                            ->label(__('filament/resources/driver-resource.first-name-arabic'))
+                            ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-arabic'))
+                            ->maxLength(255)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('driver.middle_name.ar')
-                                    ->label(__('filament/resources/driver-resource.middle-name-arabic'))
-                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('middle_name.ar')
+                            ->label(__('filament/resources/driver-resource.middle-name-arabic'))
+                            ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
+                            ->maxLength(255)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('driver.last_name.ar')
-                                    ->label(__('filament/resources/driver-resource.last-name-arabic'))
-                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('last_name.ar')
+                            ->label(__('filament/resources/driver-resource.last-name-arabic'))
+                            ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
+                            ->maxLength(255)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('driver.first_name.en')
-                                    ->label(__('filament/resources/driver-resource.first-name-english'))
-                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-english'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('first_name.en')
+                            ->label(__('filament/resources/driver-resource.first-name-english'))
+                            ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-english'))
+                            ->maxLength(255)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('driver.middle_name.en')
-                                    ->label(__('filament/resources/driver-resource.middle-name-english'))
-                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('middle_name.en')
+                            ->label(__('filament/resources/driver-resource.middle-name-english'))
+                            ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
+                            ->maxLength(255)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('driver.last_name.en')
-                                    ->label(__('filament/resources/driver-resource.last-name-english'))
-                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
-                                    ->maxLength(255)
-                                    ->required(),
+                        Forms\Components\TextInput::make('last_name.en')
+                            ->label(__('filament/resources/driver-resource.last-name-english'))
+                            ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
+                            ->maxLength(255)
+                            ->required(),
 
-
+                        Forms\Components\Group::make()
+                            ->relationship('user')
+                            ->schema([
                                 Forms\Components\TextInput::make('phone')
                                     ->label(__('filament/resources/driver-resource.phone'))
                                     ->placeholder(__('filament/resources/driver-resource.phone-placeholder'))
@@ -137,12 +140,17 @@ class DriverResource extends Resource
                                     ->placeholder('email@example.com')
                                     ->maxLength(255)
                                     ->email(),
-
-                                Forms\Components\TextInput::make('iban')
-                                    ->label(__('filament/resources/driver-resource.iban'))
-                                    ->placeholder(__('filament/resources/driver-resource.iban-placeholder'))
-                                    ->maxLength(34),
                             ]),
+
+                        Forms\Components\TextInput::make('iban')
+                            ->label(__('filament/resources/driver-resource.iban'))
+                            ->placeholder(__('filament/resources/driver-resource.iban-placeholder'))
+                            ->maxLength(34),
+
+                        Forms\Components\TextInput::make('residence_address')
+                            ->label(__('filament/resources/driver-resource.residence-address'))
+                            ->placeholder(__('filament/resources/driver-resource.residence-address-placeholder'))
+                            ->maxLength(255),
                     ]),
 
                 Forms\Components\Section::make(__('filament/resources/driver-resource.driver-documents'))

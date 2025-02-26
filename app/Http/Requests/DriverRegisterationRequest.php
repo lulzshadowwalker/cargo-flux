@@ -19,6 +19,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.avatar' => 'avatar',
             'data.attributes.passport' => 'passport',
             'data.attributes.license' => 'driver_license',
+            'data.attributes.residenceAddress' => 'residence_address',
             'data.relationships.truck.data.attributes.license' => 'license',
             'data.attributes.truckLicense' => 'license',
             'data.attributes.truckImages' => 'images',
@@ -45,6 +46,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.middleName.en' => ['required', 'string', 'max:255'],
             'data.attributes.lastName.en' => ['required', 'string', 'max:255'],
 
+            'data.attributes.residenceAddress' => ['required', 'string'],
             'data.attributes.dateOfBirth' => ['required', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             'data.attributes.avatar' => ['nullable', 'image'],
@@ -124,5 +126,10 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function lastName(): mixed
     {
         return $this->input('data.attributes.lastName');
+    }
+
+    public function residenceAddress(): mixed
+    {
+        return $this->input('data.attributes.residenceAddress');
     }
 }

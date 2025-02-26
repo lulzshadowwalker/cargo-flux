@@ -157,6 +157,7 @@ class AuthControllerTest extends TestCase
                     'license' => $driverLicense,
                     'truckLicense' => $truckLicense,
                     'truckImages' => $truckImages,
+                    'residenceAddress' => $driver->residence_address,
                 ],
                 'relationships' => [
                     'deviceTokens' => [
@@ -189,7 +190,17 @@ class AuthControllerTest extends TestCase
         $this->assertDatabaseHas('drivers', [
             'user_id' => $user->id,
             'status' => DriverStatus::UNDER_REVIEW,
+            'residence_address' => $driver->residence_address,
         ]);
+
+        $model = $user->driver;
+        $this->assertEquals($driver->getTranslation('first_name', 'en'), $model->first_name);
+        $this->assertEquals($driver->getTranslation('middle_name', 'en'), $model->middle_name);
+        $this->assertEquals($driver->getTranslation('last_name', 'en'), $model->last_name);
+
+        $this->assertEquals($driver->getTranslation('first_name', 'ar'), $model->getTranslation('first_name', 'ar'));
+        $this->assertEquals($driver->getTranslation('middle_name', 'ar'), $model->getTranslation('middle_name', 'ar'));
+        $this->assertEquals($driver->getTranslation('last_name', 'ar'), $model->getTranslation('last_name', 'ar'));
 
         $this->assertDatabaseHas('trucks', [
             'driver_id' => $driver->id,

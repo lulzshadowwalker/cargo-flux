@@ -54,4 +54,6 @@ return [
     'avatar' => 'الصورة الشخصية',
     'driver-documents' => 'مستندات السائق',
     'driver-documents-description' => 'مراجعة وإدارة مستندات السائق',
+    'residence-address' => 'عنوان الإقامة',
+    'residence-address-placeholder' => 'أدخل عنوان الإقامة',
 ];

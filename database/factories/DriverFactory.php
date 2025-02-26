@@ -21,6 +21,7 @@ class DriverFactory extends BaseFactory
             'first_name' => $this->localized(fn(): string => $this->faker->firstName),
             'middle_name' => $this->localized(fn(): string  => $this->faker->firstName),
             'last_name' => $this->localized(fn(): string => $this->faker->lastName),
+            'residence_address' => $this->faker->address,
         ];
     }
 

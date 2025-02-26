@@ -33,6 +33,7 @@ class Driver extends Model implements HasMedia
         'status',
         'iban',
         'user_id',
+        'residence_address',
     ];
 
     protected function casts(): array

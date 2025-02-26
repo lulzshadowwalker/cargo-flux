@@ -31,6 +31,7 @@ class UpdateDriverProfileRequest extends BaseFormRequest
             'data.attributes.lastName.en' => 'sometimes|string',
             'data.attributes.middleName.ar' => 'sometimes|string',
             'data.attributes.middleName.en' => 'sometimes|string',
+            'data.attributes.residenceAddress' => 'sometimes|string',
             'data.attributes.email' => 'sometimes|email',
             'data.attributes.avatar' => 'nullable|image',
         ];
@@ -57,5 +58,10 @@ class UpdateDriverProfileRequest extends BaseFormRequest
     public function middleName(): array
     {
         return $this->input('data.attributes.middleName');
+    }
+
+    public function residenceAddress(): ?string
+    {
+        return $this->input('data.attributes.residenceAddress');
     }
 }
