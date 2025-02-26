@@ -22,7 +22,11 @@ class DriverRegisterationService implements RegisterationService
 
             $user = User::create($request->mappedAttributes(['type' => UserType::DRIVER])->toArray());
 
-            $user->driver()->create();
+            $user->driver()->create([
+                'first_name' => $request->firstName(),
+                'middle_name' => $request->middleName(),
+                'last_name' => $request->lastName(),
+            ]);
 
             if ($request->avatar()) {
                 $user->addMedia($request->avatar())->toMediaCollection(User::MEDIA_COLLECTION_AVATAR);

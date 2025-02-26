@@ -51,8 +51,15 @@ class ProfileControllerTest extends TestCase
         $this->patch(route('profile.index', ['lang' => Language::EN]), [
             'data' => [
                 'attributes' => [
-                    'firstName' => 'John',
-                    'lastName' => 'Doe',
+                    'firstName' => [
+                        'ar' => 'John',
+                    ],
+                    'middleName' => [
+                        'ar' => 'Middle',
+                    ],
+                    'lastName' => [
+                        'ar' => 'Doe',
+                    ],
                     'email' => 'john@example.com',
                     'avatar' => $avatar,
                 ],
@@ -61,7 +68,9 @@ class ProfileControllerTest extends TestCase
 
         $driver->refresh();
 
-        $this->assertEquals('John Doe', $driver->fullName);
+        $this->assertEquals('John', $driver->getTranslation('first_name', 'ar'));
+        $this->assertEquals('Middle', $driver->getTranslation('middle_name', 'ar'));
+        $this->assertEquals('Doe', $driver->getTranslation('last_name', 'ar'));
         $this->assertEquals('john@example.com', $driver->user->email);
         $this->assertNotNull($driver->user->avatarFile);
         $this->assertEquals('avatar.jpg', $driver->user->avatarFile->file_name);

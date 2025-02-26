@@ -16,6 +16,11 @@ class DriverObserver
         if ($driver->status === null) {
             $driver->status = DriverStatus::UNDER_REVIEW;
         }
+
+        $driver->user->update([
+            'first_name' => $driver->getTranslation('first_name', 'ar'),
+            'last_name' => $driver->getTranslation('last_name', 'ar'),
+        ]);
     }
 
     public function created(Driver $driver): void
@@ -32,5 +37,20 @@ class DriverObserver
             ])
             ->icon(DriverResource::getNavigationIcon())
             ->sendToDatabase($admins);
+    }
+
+    public function updating(Driver $driver): void
+    {
+        if ($driver->isDirty('first_name.ar')) {
+            $driver->user->update([
+                'first_name' => $driver->getTranslation('first_name', 'ar'),
+            ]);
+        }
+
+        if ($driver->isDirty('last_name.ar')) {
+            $driver->user->update([
+                'last_name' => $driver->getTranslation('last_name', 'ar'),
+            ]);
+        }
     }
 }

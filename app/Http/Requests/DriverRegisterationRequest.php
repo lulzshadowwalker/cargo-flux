@@ -10,8 +10,9 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
         return $this->mapped([
-            'data.attributes.firstName' => 'first_name',
-            'data.attributes.lastName' => 'last_name',
+            'data.attributes.firstName.ar' => 'first_name',
+            'data.attributes.middleName.ar' => 'middle_name',
+            'data.attributes.lastName.ar' => 'last_name',
             'data.attributes.dateOfBirth' => 'date_of_birth',
             'data.attributes.email' => 'email',
             'data.attributes.phone' => 'phone',
@@ -32,8 +33,18 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'data.attributes.firstName' => ['required', 'string', 'max:255'],
-            'data.attributes.lastName' => ['required', 'string', 'max:255'],
+            'data.attributes.firstName' => ['required', 'array'],
+            'data.attributes.middleName' => ['required', 'array'],
+            'data.attributes.lastName' => ['required', 'array'],
+
+            'data.attributes.firstName.ar' => ['required', 'string', 'max:255'],
+            'data.attributes.middleName.ar' => ['required', 'string', 'max:255'],
+            'data.attributes.lastName.ar' => ['required', 'string', 'max:255'],
+
+            'data.attributes.firstName.en' => ['required', 'string', 'max:255'],
+            'data.attributes.middleName.en' => ['required', 'string', 'max:255'],
+            'data.attributes.lastName.en' => ['required', 'string', 'max:255'],
+
             'data.attributes.dateOfBirth' => ['nullable', 'date'],
             'data.attributes.email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             'data.attributes.avatar' => ['nullable', 'image'],
@@ -98,5 +109,20 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function truckCategory(): int
     {
         return (int) $this->input('data.relationships.truck.data.truckCategory');
+    }
+
+    public function firstName(): mixed
+    {
+        return $this->input('data.attributes.firstName');
+    }
+
+    public function middleName(): mixed
+    {
+        return $this->input('data.attributes.middleName');
+    }
+
+    public function lastName(): mixed
+    {
+        return $this->input('data.attributes.lastName');
     }
 }

@@ -11,6 +11,9 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+            $table->json('first_name');
+            $table->json('middle_name');
+            $table->json('last_name');
             $table->enum('status', array_map(fn($status) => $status->value, DriverStatus::cases()));
             $table->string('iban')->nullable();
             $table->foreignId('user_id');

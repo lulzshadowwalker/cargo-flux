@@ -17,13 +17,19 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Translatable\HasTranslations;
 
 #[ObservedBy(DriverObserver::class)]
 class Driver extends Model implements HasMedia
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, Notifiable, InteractsWithMedia, HasTranslations;
+
+    public $translatable = ['first_name', 'middle_name', 'last_name'];
 
     protected $fillable = [
+        'first_name',
+        'middle_name',
+        'last_name',
         'status',
         'iban',
         'user_id',
@@ -66,9 +72,24 @@ class Driver extends Model implements HasMedia
         return $this->hasManyThrough(SupportTicket::class, User::class);
     }
 
+    /**
+     * Returns the localized name of the driver
+     * of two parts as stored in the user model.
+     */
     public function fullName(): Attribute
     {
-        return Attribute::get(fn(): string => $this->user->fullName);
+        return Attribute::get(fn(): string => $this->first_name . ' ' . $this->last_name);
+    }
+
+    /**
+     * Returns the localized full legal name of the driver
+     * of three parts as stated in the driver's passport.
+     */
+    public function fullLegalName(): Attribute
+    {
+        return Attribute::get(
+            fn(): string  => $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name
+        );
     }
 
     public function phone(): Attribute
@@ -134,7 +155,6 @@ class Driver extends Model implements HasMedia
 
         $this->addMediaCollection(self::MEDIA_COLLECTION_LICENSE)
             ->singleFile();
-
     }
 
     /**

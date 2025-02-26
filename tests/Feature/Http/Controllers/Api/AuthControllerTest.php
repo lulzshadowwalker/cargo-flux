@@ -7,6 +7,7 @@ use App\Enums\Language;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\DeviceToken;
+use App\Models\Driver;
 use App\Models\TruckCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -107,6 +108,7 @@ class AuthControllerTest extends TestCase
 
         $deviceToken = 'abc';
         $user = User::factory()->make(['type' => UserType::DRIVER]);
+        $driver = Driver::factory()->make();
         $avatar = File::image('avatar.jpg', 200, 200);
         $passport = File::image('passport.jpg', 200, 200);
         $driverLicense = File::image('driver-license.jpg', 200, 200);
@@ -134,8 +136,18 @@ class AuthControllerTest extends TestCase
         $this->postJson(route('auth.register', ['lang' => Language::EN]), [
             'data' => [
                 'attributes' => [
-                    'firstName' => $user->first_name,
-                    'lastName' => $user->last_name,
+                    'firstName' => [
+                        'en' => $driver->getTranslation('first_name', 'en'),
+                        'ar' => $driver->getTranslation('first_name', 'ar'),
+                    ],
+                    'middleName' => [
+                        'en' => $driver->getTranslation('middle_name', 'en'),
+                        'ar' => $driver->getTranslation('middle_name', 'ar'),
+                    ],
+                    'lastName' => [
+                        'en' => $driver->getTranslation('last_name', 'en'),
+                        'ar' => $driver->getTranslation('last_name', 'ar'),
+                    ],
                     'phone' => $user->phone,
                     'dateOfBirth' => $user->date_of_birth,
                     'email' => $user->email,
@@ -163,8 +175,8 @@ class AuthControllerTest extends TestCase
         ], ['Authorization' => "Bearer $token"])->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
+            'first_name' => $driver->getTranslation('first_name', 'ar'),
+            'last_name' => $driver->getTranslation('last_name', 'ar'),
             'date_of_birth' => $user->date_of_birth,
             'phone' => $user->phone,
             'email' => $user->email,

@@ -47,6 +47,7 @@ class DriverResource extends Resource
     public static function getgloballysearchableattributes(): array
     {
         return [
+            //  TODO: user driver's model first, middle and last names
             'user.first_name',
             'user.last_name',
             'user.phone',
@@ -87,17 +88,42 @@ class DriverResource extends Resource
                                     ->alignCenter()
                                     ->avatar(),
 
-                                Forms\Components\TextInput::make('first_name')
-                                    ->label(__('filament/resources/driver-resource.first-name'))
-                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder'))
+                                Forms\Components\TextInput::make('driver.first_name.ar')
+                                    ->label(__('filament/resources/driver-resource.first-name-arabic'))
+                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-arabic'))
                                     ->maxLength(255)
                                     ->required(),
 
-                                Forms\Components\TextInput::make('last_name')
-                                    ->label(__('filament/resources/driver-resource.last-name'))
-                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder'))
+                                Forms\Components\TextInput::make('driver.middle_name.ar')
+                                    ->label(__('filament/resources/driver-resource.middle-name-arabic'))
+                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
                                     ->maxLength(255)
                                     ->required(),
+
+                                Forms\Components\TextInput::make('driver.last_name.ar')
+                                    ->label(__('filament/resources/driver-resource.last-name-arabic'))
+                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-arabic'))
+                                    ->maxLength(255)
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('driver.first_name.en')
+                                    ->label(__('filament/resources/driver-resource.first-name-english'))
+                                    ->placeholder(__('filament/resources/driver-resource.first-name-placeholder-english'))
+                                    ->maxLength(255)
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('driver.middle_name.en')
+                                    ->label(__('filament/resources/driver-resource.middle-name-english'))
+                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
+                                    ->maxLength(255)
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('driver.last_name.en')
+                                    ->label(__('filament/resources/driver-resource.last-name-english'))
+                                    ->placeholder(__('filament/resources/driver-resource.last-name-placeholder-english'))
+                                    ->maxLength(255)
+                                    ->required(),
+
 
                                 Forms\Components\TextInput::make('phone')
                                     ->label(__('filament/resources/driver-resource.phone'))

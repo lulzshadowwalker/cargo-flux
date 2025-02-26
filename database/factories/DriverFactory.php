@@ -5,11 +5,10 @@ namespace Database\Factories;
 use App\Enums\DriverStatus;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Driver;
 use App\Models\User;
 
-class DriverFactory extends Factory
+class DriverFactory extends BaseFactory
 {
     protected $model = Driver::class;
 
@@ -19,6 +18,9 @@ class DriverFactory extends Factory
             'status' => DriverStatus::APPROVED,
             'iban' => $this->faker->word(),
             'user_id' => User::factory()->create(['type' => UserType::DRIVER]),
+            'first_name' => $this->localized(fn(): string => $this->faker->firstName),
+            'middle_name' => $this->localized(fn(): string  => $this->faker->firstName),
+            'last_name' => $this->localized(fn(): string => $this->faker->lastName),
         ];
     }
 

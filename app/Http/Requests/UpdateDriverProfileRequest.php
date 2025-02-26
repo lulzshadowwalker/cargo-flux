@@ -10,8 +10,6 @@ class UpdateDriverProfileRequest extends BaseFormRequest
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
         return $this->mapped([
-            'data.attributes.firstName' => 'first_name',
-            'data.attributes.lastName' => 'last_name',
             'data.attributes.email' => 'email',
             'data.attributes.avatar' => 'avatar',
         ], $extraAttributes);
@@ -23,8 +21,15 @@ class UpdateDriverProfileRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'data.attributes.firstName' => 'sometimes|string',
-            'data.attributes.lastName' => 'sometimes|string',
+            'data.attributes.firstName' => 'sometimes|array',
+            'data.attributes.lastName' => 'sometimes|array',
+            'data.attributes.middleName' => 'sometimes|array',
+            'data.attributes.firstName.ar' => 'sometimes|string',
+            'data.attributes.firstName.en' => 'sometimes|string',
+            'data.attributes.lastName.ar' => 'sometimes|string',
+            'data.attributes.lastName.en' => 'sometimes|string',
+            'data.attributes.middleName.ar' => 'sometimes|string',
+            'data.attributes.middleName.en' => 'sometimes|string',
             'data.attributes.email' => 'sometimes|email',
             'data.attributes.avatar' => 'nullable|image',
         ];
@@ -36,5 +41,20 @@ class UpdateDriverProfileRequest extends BaseFormRequest
     public function avatar(): ?UploadedFile
     {
         return $this->file('data.attributes.avatar');
+    }
+
+    public function firstName(): array
+    {
+        return $this->input('data.attributes.firstName');
+    }
+
+    public function lastName(): array
+    {
+        return $this->input('data.attributes.lastName');
+    }
+
+    public function middleName(): array
+    {
+        return $this->input('data.attributes.middleName');
     }
 }
