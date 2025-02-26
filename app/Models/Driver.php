@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
+use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
@@ -34,6 +35,7 @@ class Driver extends Model implements HasMedia
         'iban',
         'user_id',
         'residence_address',
+        'secondary_phone',
     ];
 
     protected function casts(): array
@@ -42,6 +44,7 @@ class Driver extends Model implements HasMedia
             'id' => 'integer',
             'user_id' => 'integer',
             'status' => DriverStatus::class,
+            'secondary_phone' => E164PhoneNumberCast::class,
         ];
     }
 

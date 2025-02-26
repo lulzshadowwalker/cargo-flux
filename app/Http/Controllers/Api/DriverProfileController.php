@@ -28,12 +28,13 @@ class DriverProfileController extends ApiController // implements ProfileControl
             Auth::user()->addMedia($avatar)->toMediaCollection('avatar');
         }
 
-        Auth::user()->driver->update([
+        Auth::user()->driver->update(array_filter([
             'first_name' => $request->firstName(),
             'last_name' => $request->lastName(),
             'middle_name' => $request->middleName(),
             'residence_address' => $request->residenceAddress(),
-        ]);
+            'secondary_phone' => $request->secondaryPhone(),
+        ], fn($value) => $value !== null));
 
         return DriverResource::make(Auth::user()->driver);
     }

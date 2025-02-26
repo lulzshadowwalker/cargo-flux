@@ -149,6 +149,7 @@ class AuthControllerTest extends TestCase
                         'ar' => $driver->getTranslation('last_name', 'ar'),
                     ],
                     'phone' => $user->phone,
+                    'secondaryPhone' => '+201234567890',
                     'dateOfBirth' => $user->date_of_birth,
                     'email' => $user->email,
                     'type' => 'DRIVER',
@@ -191,6 +192,7 @@ class AuthControllerTest extends TestCase
             'user_id' => $user->id,
             'status' => DriverStatus::UNDER_REVIEW,
             'residence_address' => $driver->residence_address,
+            'secondary_phone' => '+201234567890',
         ]);
 
         $model = $user->driver;

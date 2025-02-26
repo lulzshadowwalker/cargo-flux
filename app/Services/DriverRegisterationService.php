@@ -27,6 +27,7 @@ class DriverRegisterationService implements RegisterationService
                 'middle_name' => $request->middleName(),
                 'last_name' => $request->lastName(),
                 'residence_address' => $request->residenceAddress(),
+                'secondary_phone' => $request->secondaryPhone(),
             ]);
 
             if ($request->avatar()) {

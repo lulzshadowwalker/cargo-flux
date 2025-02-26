@@ -132,9 +132,18 @@ class DriverResource extends Resource
                                     ->label(__('filament/resources/driver-resource.phone'))
                                     ->placeholder(__('filament/resources/driver-resource.phone-placeholder'))
                                     ->maxLength(20)
-                                    ->disabled()
                                     ->required(),
+                            ]),
 
+                        Forms\Components\TextInput::make('secondary_phone')
+                            ->label(__('filament/resources/driver-resource.secondary-phone'))
+                            ->placeholder(__('filament/resources/driver-resource.secondary-phone-placeholder'))
+                            ->maxLength(20)
+                            ->required(),
+
+                        Forms\Components\Group::make()
+                            ->relationship('user')
+                            ->schema([
                                 Forms\Components\TextInput::make('email')
                                     ->label(__('filament/resources/driver-resource.email'))
                                     ->placeholder('email@example.com')

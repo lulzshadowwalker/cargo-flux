@@ -15,6 +15,7 @@ return new class extends Migration
             $table->json('middle_name');
             $table->json('last_name');
             $table->string('residence_address');
+            $table->string('secondary_phone', 20)->unique();
             $table->enum('status', array_map(fn($status) => $status->value, DriverStatus::cases()));
             $table->string('iban')->nullable();
             $table->foreignId('user_id');
