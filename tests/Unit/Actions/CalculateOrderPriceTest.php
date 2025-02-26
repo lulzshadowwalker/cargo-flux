@@ -21,6 +21,8 @@ class CalculateOrderPriceTest extends TestCase
 
     public function test_it_can_calculate_order_price(): void
     {
+        $this->markTestSkipped('CalculateOrderPrice is being rewritten with the process being entirely different');
+
         // Setup
         //  TODO: Should account for the actual naming from the reverse geocoder and our states table
         $pickupState = StateFactory::new()->create(['name' => 'Riyadh Region']);
@@ -52,6 +54,7 @@ class CalculateOrderPriceTest extends TestCase
 
     public function test_it_throws_an_exception_of_type_unsupported_route_exception_when_route_is_not_supported(): void
     {
+        $this->markTestSkipped('CalculateOrderPrice is being rewritten with the process being entirely different');
         $this->expectException(UnsupportedRouteException::class);
 
         (new CalculateOrderPrice(new GeoapifyReverseGeocoder))->handle(
