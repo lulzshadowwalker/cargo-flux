@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Outerweb\FilamentTranslatableFields\Filament\Plugins\FilamentTranslatableFieldsPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
+use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -131,6 +132,7 @@ class DashboardPanelProvider extends PanelProvider
                 ActivitylogPlugin::make()
                     ->navigationGroup(fn() => __('filament/navigation.monitor')),
                 FilamentShieldPlugin::make(),
+                GlobalSearchModalPlugin::make(),
             ]);
     }
 }
