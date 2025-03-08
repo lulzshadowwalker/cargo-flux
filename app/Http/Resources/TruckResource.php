@@ -17,7 +17,7 @@ class TruckResource extends JsonResource
                 'isPersonalProperty' => $this->is_personal_property,
                 'license' => SpatieImageResource::make($this->licenseFile),
                 'images' => SpatieImageResource::collection($this->images),
-                'authorizationClause' => SpatieImageResource::make($this->authorizationClause),
+                'authorizationClause' => SpatieImageResource::make($this->authorizationClauseFile),
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
