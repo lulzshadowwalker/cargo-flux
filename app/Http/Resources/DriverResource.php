@@ -18,6 +18,18 @@ class DriverResource extends JsonResource
                 'lastName' => $this->last_name,
                 'fullName' => $this->fullName,
                 'fullLegalName' => $this->fullLegalName,
+                'firstName' => [
+                    'en' => $this->getTranslation('first_name', 'en'),
+                    'ar' => $this->getTranslation('first_name', 'ar'),
+                ],
+                'middleName' => [
+                    'en' => $this->getTranslation('middle_name', 'en'),
+                    'ar' => $this->getTranslation('middle_name', 'ar'),
+                ],
+                'lastName' => [
+                    'en' => $this->getTranslation('last_name', 'en'),
+                    'ar' => $this->getTranslation('last_name', 'ar'),
+                ],
                 'email' => $this->user->email,
                 'phone' => $this->user->phone,
                 'secondaryPhone' => $this->secondary_phone,
@@ -31,7 +43,9 @@ class DriverResource extends JsonResource
             ],
             'links' => (object) [],
             'relationships' => (object) [],
-            'includes' => (object) [],
+            'includes' => (object) [
+                'truck' => TruckResource::make($this->truck),
+            ],
             'meta' => (object) [],
         ];
     }
