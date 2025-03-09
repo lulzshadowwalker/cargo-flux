@@ -44,7 +44,7 @@ class DriverResource extends JsonResource
             'links' => (object) [],
             'relationships' => (object) [],
             'includes' => (object) [
-                'truck' => TruckResource::make($this->truck),
+                'truck' => $this->mergeWhen($this->truck, TruckResource::make($this->truck)),
             ],
             'meta' => (object) [],
         ];

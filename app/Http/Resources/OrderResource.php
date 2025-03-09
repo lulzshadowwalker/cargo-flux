@@ -23,22 +23,9 @@ class OrderResource extends JsonResource
                 'isScheduled' => isset($this->scheduled_at),
                 'scheduledAt' => $this->scheduled_at,
                 'cargo' => $this->cargo,
-                'currentLocation' => [
-                    'latitude' => $this->currentLocation?->latitude,
-                    'longitude' => $this->currentLocation?->longitude,
-                    'recordedAt' => $this->current_location_recorded_at,
-                    'name' => Place::whereContains('boundaries', $this->currentLocation->toBoundaryPoint())->first()?->name,
-                ],
-                'pickupLocation' => [
-                    'latitude' => $this->pickupLocation->latitude,
-                    'longitude' => $this->pickupLocation->longitude,
-                    'name' => Place::whereContains('boundaries', $this->pickupLocation->toBoundaryPoint())->first()?->name,
-                ],
-                'deliveryLocation' => [
-                    'latitude' => $this->deliveryLocation->latitude,
-                    'longitude' => $this->deliveryLocation->longitude,
-                    'name' => Place::whereContains('boundaries', $this->deliveryLocation->toBoundaryPoint())->first()?->name,
-                ],
+                'currentLocation' => LocationResource::make([])->location($this->currentLocation)->recordedAt($this->current_location_recorded_at),
+                'pickupLocation' => LocationResource::make([])->location($this->pickupLocation),
+                'deliveryLocation' => LocationResource::make([])->location($this->deliveryLocation),
                 'price' => [
                     'amount' => $this->price->getAmount(),
                     'currency' => $this->price->getCurrency()->getCurrencyCode(),
