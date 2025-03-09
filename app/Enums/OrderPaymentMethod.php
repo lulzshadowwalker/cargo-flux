@@ -3,7 +3,6 @@
 namespace App\Enums;
 
 use Closure;
-use Filament\Support\Colors\Color;
 
 enum OrderPaymentMethod: string
 {
@@ -26,12 +25,17 @@ enum OrderPaymentMethod: string
         };
     }
 
-    public function color(): string|array|bool|Closure|null
+    public function getColor(): string | array | null
     {
         return match ($this) {
             self::DIRECT => 'primary',
             self::ONLINE => 'info',
         };
+    }
+
+    public function color(): string|array|bool|Closure|null
+    {
+        return $this->getColor();
     }
 
     public static function labels(): array

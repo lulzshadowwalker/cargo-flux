@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Nationality;
 use App\Filament\Exports\TruckExporter;
 use App\Filament\Resources\TruckResource\Pages;
 use App\Filament\Resources\TruckResource\RelationManagers\CategoryRelationManager;
@@ -65,6 +66,11 @@ class TruckResource extends Resource
                             ->label(__('filament/resources/truck-resource.license-plate'))
                             ->required()
                             ->maxLength(255),
+
+                        Forms\Components\Select::make('nationality')
+                            ->label(__('filament/resources/truck-resource.nationality'))
+                            ->options(Nationality::class)
+                            ->required(),
 
                         Forms\Components\Toggle::make('is_personal_property')
                             ->label(__('filament/resources/truck-resource.is-personal-property'))
@@ -138,6 +144,13 @@ class TruckResource extends Resource
                 Tables\Columns\TextColumn::make('orders')
                     ->label(__('filament/resources/truck-resource.orders'))
                     ->getStateUsing(fn($record) => $record->orders->count())
+                    ->badge()
+                    ->alignCenter()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('nationality')
+                    ->label(__('filament/resources/truck-resource.nationality'))
+                    ->formatStateUsing(fn($state) => $state->label())
                     ->badge()
                     ->alignCenter()
                     ->sortable(),

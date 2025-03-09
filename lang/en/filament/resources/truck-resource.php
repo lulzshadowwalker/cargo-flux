@@ -19,4 +19,5 @@ return [
     'images' => 'Images',
     'is-personal-property' => 'Is Personal Property',
     'authorization-clause' => 'Authorization Clause',
+    'nationality' => 'Nationality',
 ];

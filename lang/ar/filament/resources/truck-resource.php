@@ -19,4 +19,5 @@ return [
     'license' => 'الرخصة',
     'is-personal-property' => 'ملكية شخصية',
     'authorization-clause' => 'بند التفويض',
+    'nationality' => 'الجنسية',
 ];
