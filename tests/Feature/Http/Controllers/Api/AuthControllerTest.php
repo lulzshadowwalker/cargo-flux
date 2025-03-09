@@ -174,6 +174,7 @@ class AuthControllerTest extends TestCase
                             'truckCategory' => $truckCategory->id,
                             'isPersonalProperty' => false,
                             'authorizationClause' => $authorizationClause,
+                            'nationality' => 'JO',
                         ],
                     ],
                 ]
@@ -212,6 +213,8 @@ class AuthControllerTest extends TestCase
             'driver_id' => $driver->id,
             'license_plate' => 'ABC123',
             'truck_category_id' => $truckCategory->id,
+            'is_personal_property' => false,
+            'nationality' => 'JO',
         ]);
 
         $this->assertDatabaseHas('device_tokens', [

@@ -67,4 +67,8 @@ return [
         'paid' => 'Paid',
         'failed' => 'Failed',
     ],
+    'nationality' => [
+        'jo' => 'Jordanian',
+        'sa' => 'Saudi',
+    ],
 ];

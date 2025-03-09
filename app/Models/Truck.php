@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Nationality;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class Truck extends Model implements HasMedia
         'driver_id',
         'truck_category_id',
         'is_personal_property',
+        'nationality',
     ];
 
     protected function casts(): array
@@ -27,6 +29,7 @@ class Truck extends Model implements HasMedia
             'id' => 'integer',
             'driver_id' => 'integer',
             'is_personal_property' => 'boolean',
+            'nationality' => Nationality::class,
         ];
     }
 

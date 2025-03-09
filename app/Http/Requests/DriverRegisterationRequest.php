@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Nationality;
 use Illuminate\Support\Collection;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Rule;
 
 class DriverRegisterationRequest extends BaseFormRequest
 {
@@ -27,6 +29,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.truckImages' => 'images',
             'data.relationships.truck.data.attributes.licensePlate' => 'license_plate',
             'data.relationships.truck.data.attributes.truckCategory' => 'truck_category_id',
+            'data.relationships.truck.data.attributes.nationality' => 'nationality',
         ], $extraAttributes);
     }
 
@@ -63,6 +66,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.relationships.truck.data.truckCategory' => ['required', 'integer', 'exists:truck_categories,id'],
             'data.relationships.truck.data.isPersonalProperty' => ['required', 'boolean'],
             'data.relationships.truck.data.authorizationClause' => ['required_if:data.relationships.truck.data.isPersonalProperty,false', 'image'],
+            'data.relationships.truck.data.nationality' => ['required', Rule::enum(Nationality::class)],
         ];
     }
 
@@ -152,5 +156,10 @@ class DriverRegisterationRequest extends BaseFormRequest
     public function authorizationClause(): mixed
     {
         return $this->file('data.relationships.truck.data.authorizationClause');
+    }
+
+    public function nationality(): Nationality
+    {
+        return Nationality::from($this->input('data.relationships.truck.data.nationality'));
     }
 }

@@ -42,6 +42,7 @@ class DriverRegisterationService implements RegisterationService
                 'license_plate' => $request->licensePlate(),
                 'truck_category_id' => $request->truckCategory(),
                 'is_personal_property' => $request->isTruckPersonalProperty(),
+                'nationality' => $request->nationality(),
             ]);
 
             $user->driver->truck->addMedia($request->truckLicense())->toMediaCollection(Truck::MEDIA_COLLECTION_LICENSE);
