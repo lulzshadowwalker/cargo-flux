@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CurrencySeeder::class);
         $this->call(WorldSeeder::class);
+        $this->call(PlaceSeeder::class);
 
         $customer = Customer::factory()
             ->for(
