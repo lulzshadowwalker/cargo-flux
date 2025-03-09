@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,14 +27,17 @@ class OrderResource extends JsonResource
                     'latitude' => $this->currentLocation?->latitude,
                     'longitude' => $this->currentLocation?->longitude,
                     'recordedAt' => $this->current_location_recorded_at,
+                    'name' => Place::whereContains('boundaries', $this->currentLocation->toBoundaryPoint())->first()?->name,
                 ],
                 'pickupLocation' => [
                     'latitude' => $this->pickupLocation->latitude,
                     'longitude' => $this->pickupLocation->longitude,
+                    'name' => Place::whereContains('boundaries', $this->pickupLocation->toBoundaryPoint())->first()?->name,
                 ],
                 'deliveryLocation' => [
                     'latitude' => $this->deliveryLocation->latitude,
                     'longitude' => $this->deliveryLocation->longitude,
+                    'name' => Place::whereContains('boundaries', $this->deliveryLocation->toBoundaryPoint())->first()?->name,
                 ],
                 'price' => [
                     'amount' => $this->price->getAmount(),
