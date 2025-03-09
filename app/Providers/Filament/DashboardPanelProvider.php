@@ -75,10 +75,10 @@ class DashboardPanelProvider extends PanelProvider
                     ->label(fn(): string => __('filament/navigation.telescope'))
                     ->badge(fn(): string => '●')
                     ->badgeTooltip(fn(): string => __('filament/navigation.telescope-tooltip'))
-                    ->url(fn(): string => route('telescope'), shouldOpenInNewTab: true)
+                    ->url(fn(): string => app()->environment('local') ? route('telescope') : '#', shouldOpenInNewTab: true)
                     ->icon('heroicon-o-chart-bar-square')
                     ->group(fn(): string => __('filament/navigation.monitor'))
-                    ->visible(fn(): bool => !app()->environment('testing') && Auth::user()->isAdmin),
+                    ->visible(fn(): bool => !app()->environment('testing') && app()->environment('local') && Auth::user()->isAdmin),
 
                 NavigationItem::make('pulse')
                     ->label(fn(): string => __('filament/navigation.pulse'))
