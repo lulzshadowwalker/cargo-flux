@@ -32,7 +32,7 @@ class UpdateDriverProfileRequest extends BaseFormRequest
             'data.attributes.middleName.ar' => 'sometimes|string',
             'data.attributes.middleName.en' => 'sometimes|string',
             'data.attributes.residenceAddress' => 'sometimes|string',
-            'data.attributes.secondaryPhone' => 'sometimes|phone|unique:users,phone|unique:drivers,secondary_phone',
+            'data.attributes.secondaryPhone' => 'sometimes|phone',
             'data.attributes.email' => 'sometimes|email',
             'data.attributes.avatar' => 'nullable|image',
         ];
