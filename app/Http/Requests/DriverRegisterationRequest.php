@@ -51,7 +51,7 @@ class DriverRegisterationRequest extends BaseFormRequest
             'data.attributes.middleName.en' => ['required', 'string', 'max:255'],
             'data.attributes.lastName.en' => ['required', 'string', 'max:255'],
 
-            'data.attributes.secondaryPhone' => 'required|phone|unique:users,phone|unique:drivers,secondary_phone',
+            'data.attributes.secondaryPhone' => 'required|phone',
 
             'data.attributes.residenceAddress' => ['required', 'string'],
             'data.attributes.dateOfBirth' => ['required', 'date'],
