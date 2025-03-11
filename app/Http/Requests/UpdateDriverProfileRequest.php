@@ -16,6 +16,32 @@ class UpdateDriverProfileRequest extends BaseFormRequest
         ], $extraAttributes);
     }
 
+    protected function prepareForValidation(): void
+    {
+        $data = $this->all();
+
+        $phoneKeys = [
+            'data.attributes.phone',
+            'data.attributes.secondaryPhone',
+        ];
+
+        foreach ($phoneKeys as $key) {
+            $phone = data_get($data, $key);
+
+            if (is_string($phone)) {
+                if (str_starts_with($phone, '00')) {
+                    $phone = '+' . substr($phone, 2);
+                } elseif (!str_starts_with($phone, '+')) {
+                    $phone = '+' . $phone;
+                }
+
+                data_set($data, $key, $phone);
+            }
+        }
+
+        $this->replace($data);
+    }
+
     /**
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */

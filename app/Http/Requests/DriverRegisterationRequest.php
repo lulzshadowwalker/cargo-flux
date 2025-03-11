@@ -9,6 +9,32 @@ use Illuminate\Validation\Rule;
 
 class DriverRegisterationRequest extends BaseFormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $data = $this->all();
+
+        $phoneKeys = [
+            'data.attributes.phone',
+            'data.attributes.secondaryPhone',
+        ];
+
+        foreach ($phoneKeys as $key) {
+            $phone = data_get($data, $key);
+
+            if (is_string($phone)) {
+                if (str_starts_with($phone, '00')) {
+                    $phone = '+' . substr($phone, 2);
+                } elseif (!str_starts_with($phone, '+')) {
+                    $phone = '+' . $phone;
+                }
+
+                data_set($data, $key, $phone);
+            }
+        }
+
+        $this->replace($data);
+    }
+
     public function mappedAttributes(array $extraAttributes = []): Collection
     {
         return $this->mapped([
@@ -38,6 +64,9 @@ class DriverRegisterationRequest extends BaseFormRequest
      */
     public function rules(): array
     {
+        //  NOTE: This is not being called automatically because I believe we are manually constructing this request object in the service class
+        $this->prepareForValidation();
+
         return [
             'data.attributes.firstName' => ['required', 'array'],
             'data.attributes.middleName' => ['required', 'array'],

@@ -63,7 +63,8 @@ class ProfileControllerTest extends TestCase
                     'email' => 'john@example.com',
                     'dateOfBirth' => '1990-01-01',
                     'residenceAddress' => 'Neverland',
-                    'secondaryPhone' => '+201234567890',
+                    //  NOTE: It should accept numbers without a + prefix or a double leading zeros:
+                    'secondaryPhone' => '00201234567890',
                     'avatar' => $avatar,
                 ],
             ],

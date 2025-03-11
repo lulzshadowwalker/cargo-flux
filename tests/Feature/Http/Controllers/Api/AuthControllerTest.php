@@ -151,7 +151,8 @@ class AuthControllerTest extends TestCase
                         'ar' => $driver->getTranslation('last_name', 'ar'),
                     ],
                     'phone' => $user->phone,
-                    'secondaryPhone' => '+201234567890',
+                    //  NOTE: It should accept numbers without a + prefix or a double leading zeros:
+                    'secondaryPhone' => '00201234567890',
                     'dateOfBirth' => $user->date_of_birth,
                     'email' => $user->email,
                     'type' => 'DRIVER',
