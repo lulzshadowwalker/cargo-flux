@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Collection;
 use Illuminate\Http\UploadedFile;
+use InvalidArgumentException;
 
 class UpdateDriverProfileRequest extends BaseFormRequest
 {
@@ -28,15 +29,17 @@ class UpdateDriverProfileRequest extends BaseFormRequest
         foreach ($phoneKeys as $key) {
             $phone = data_get($data, $key);
 
-            if (is_string($phone)) {
-                if (str_starts_with($phone, '00')) {
-                    $phone = '+' . substr($phone, 2);
-                } elseif (!str_starts_with($phone, '+')) {
-                    $phone = '+' . $phone;
-                }
-
-                data_set($data, $key, $phone);
+            if (! is_string($phone)) {
+                throw new InvalidArgumentException("The phone number must be a string. Got: " . gettype($phone));
             }
+
+            if (str_starts_with($phone, '00')) {
+                $phone = '+' . substr($phone, 2);
+            } elseif (!str_starts_with($phone, '+')) {
+                $phone = '+' . $phone;
+            }
+
+            data_set($data, $key, $phone);
         }
 
         $this->replace($data);

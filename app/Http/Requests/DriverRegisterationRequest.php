@@ -6,6 +6,7 @@ use App\Enums\Nationality;
 use Illuminate\Support\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
+use InvalidArgumentException;
 
 class DriverRegisterationRequest extends BaseFormRequest
 {
@@ -21,15 +22,17 @@ class DriverRegisterationRequest extends BaseFormRequest
         foreach ($phoneKeys as $key) {
             $phone = data_get($data, $key);
 
-            if (is_string($phone)) {
-                if (str_starts_with($phone, '00')) {
-                    $phone = '+' . substr($phone, 2);
-                } elseif (!str_starts_with($phone, '+')) {
-                    $phone = '+' . $phone;
-                }
-
-                data_set($data, $key, $phone);
+            if (!is_string($phone)) {
+                throw new InvalidArgumentException("The phone number must be a string. Got: " . gettype($phone));
             }
+
+            if (str_starts_with($phone, '00')) {
+                $phone = '+' . substr($phone, 2);
+            } elseif (!str_starts_with($phone, '+')) {
+                $phone = '+' . $phone;
+            }
+
+            data_set($data, $key, $phone);
         }
 
         $this->replace($data);
