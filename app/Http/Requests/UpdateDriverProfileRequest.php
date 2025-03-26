@@ -21,10 +21,7 @@ class UpdateDriverProfileRequest extends BaseFormRequest
     {
         $data = $this->all();
 
-        $phoneKeys = [
-            'data.attributes.phone',
-            'data.attributes.secondaryPhone',
-        ];
+        $phoneKeys = [ 'data.attributes.secondaryPhone' ];
 
         foreach ($phoneKeys as $key) {
             $phone = data_get($data, $key);
