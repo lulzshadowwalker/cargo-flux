@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\TruckCategoryController;
 use App\Http\Controllers\Api\UserPreferenceController;
 use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\ReferralController;
+use App\Http\Controllers\Api\WalletController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/otp/send', [OtpController::class, 'send'])->name('otp.send');
@@ -31,6 +32,7 @@ Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/faqs/{faq}', [FaqController::class, 'show'])->name('faq.show');
 
 Route::get('/me', [ProfileController::class, 'index'])->middleware('auth:sanctum')->name('profile.index');
+Route::get('/me/wallets/rewards', [WalletController::class, 'rewards'])->middleware('auth:sanctum')->name('profile.wallets.rewards');
 Route::patch('/me', [ProfileController::class, 'update'])->middleware('auth:sanctum')->name('profile.update');
 
 Route::get('/me/preferences', [UserPreferenceController::class, 'index'])->middleware('auth:sanctum')->name('profile.preferences.index');
