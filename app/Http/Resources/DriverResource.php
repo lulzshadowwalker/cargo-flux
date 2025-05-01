@@ -40,6 +40,7 @@ class DriverResource extends JsonResource
                 'avatar' => SpatieImageResource::make($this->user->avatarFile),
                 'passport' => SpatieImageResource::make($this->passportFile),
                 'license' => SpatieImageResource::make($this->licenseFile),
+                'referralCode' => $this->user->referral_code,
             ],
             'links' => (object) [],
             'relationships' => (object) [],

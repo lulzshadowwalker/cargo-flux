@@ -235,4 +235,21 @@ class User extends Authenticatable implements
     {
         return $this->deviceTokens->pluck("token")->toArray();
     }
+
+    /**
+     * Get a collection of the the referrals made by the user.
+     * e.g. the friends that has signed up using the user's referral code.
+     */
+    public function referralsMade()
+    {
+        return $this->hasMany(Referral::class, 'referrer_id');
+    }
+
+    /**
+     * Get the the user that referred the user to the platform.
+     */
+    public function referral()
+    {
+        return $this->hasOne(Referral::class, 'referred_id');
+    }
 }

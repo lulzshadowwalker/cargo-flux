@@ -22,6 +22,7 @@ class CustomerResource extends JsonResource
                 'dateOfBirth' => $this->user->date_of_birth,
                 'avatar' => SpatieImageResource::make($this->avatarFile),
                 'status' => $this->user->status,
+                'referralCode' => $this->user->referral_code,
             ],
             'links' => (object) [],
             'relationships' => (object) [],

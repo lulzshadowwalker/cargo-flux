@@ -10,7 +10,7 @@ class {{ class }} extends ApiController
     {
         //
     }
-    
+
     public function store(Request $request)
     {
         //
