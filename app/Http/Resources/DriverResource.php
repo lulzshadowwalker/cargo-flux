@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DriverResource extends JsonResource
-{
+class DriverResource extends JsonResource {
     public function toArray(Request $request): array
     {
         return [
@@ -46,6 +46,7 @@ class DriverResource extends JsonResource
             'relationships' => (object) [],
             'includes' => (object) [
                 'truck' => $this->mergeWhen($this->truck, TruckResource::make($this->truck)),
+                'rewardsWallet' => WalletResource::make($this->user->getWallet(User::WALLET_REWARDS)),
             ],
             'meta' => (object) [],
         ];

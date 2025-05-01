@@ -19,6 +19,7 @@ class ReferralControllerTest extends TestCase
 
         $this->actingAs($referred);
 
+        $this->assertEquals(0, $referred->getWallet(User::WALLET_REWARDS)->balance);
         $this->post(route('referrals.store', ['lang' => Language::EN]), [
             'data' => [
                 'attributes' => [
@@ -36,6 +37,8 @@ class ReferralControllerTest extends TestCase
             'referrer_id' => $referrer->id,
             'referred_id' => $referred->id,
         ]);
+
+        $this->assertEquals(100, $referred->getWallet(User::WALLET_REWARDS)->balance);
     }
 
     public function test_it_returns_http_not_found_when_referral_code_is_invalid()

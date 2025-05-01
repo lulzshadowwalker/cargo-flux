@@ -20,5 +20,10 @@ class UserObserver
     {
         // TODO: Add unit test
         $user->preferences()->create();
+
+        $user->createWallet([
+            'name' => 'Rewards',
+            'slug' => User::WALLET_REWARDS,
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,7 +27,9 @@ class CustomerResource extends JsonResource
             ],
             'links' => (object) [],
             'relationships' => (object) [],
-            'includes' => (object) [],
+            'includes' => (object) [
+                'rewardsWallet' => WalletResource::make($this->user->getWallet(User::WALLET_REWARDS)),
+            ],
             'meta' => (object) [],
         ];
     }

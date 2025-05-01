@@ -26,6 +26,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
+use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Traits\HasWallets;
+use Bavix\Wallet\Interfaces\Wallet;
 
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements
@@ -33,7 +36,8 @@ class User extends Authenticatable implements
     HasName,
     FilamentUser,
     HasMedia,
-    HasLocalePreference
+    HasLocalePreference,
+    Wallet
 {
     use HasApiTokens,
         HasFactory,
@@ -41,7 +45,11 @@ class User extends Authenticatable implements
         HasRoles,
         HasPanelShield,
         Notifiable,
-        InteractsWithMedia;
+        InteractsWithMedia,
+        HasWallet,
+        HasWallets;
+
+    const WALLET_REWARDS = 'rewards';
 
     protected $fillable = [
         "first_name",
