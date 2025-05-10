@@ -9,15 +9,19 @@ class WalletResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        if (!$this?->id) {
+            return [];
+        }
+
         return [
-            'type' => 'wallet',
-            'id' => (string) $this->id,
-            'attributes' => [
-                'balance' => (string) $this->balance,
+            "type" => "wallet",
+            "id" => (string) $this->id,
+            "attributes" => [
+                "balance" => (string) $this->balance,
             ],
-            'links' => (object) [],
-            'relationships' => (object) [],
-            'includes' => (object) [],
+            "links" => (object) [],
+            "relationships" => (object) [],
+            "includes" => (object) [],
         ];
     }
 }
