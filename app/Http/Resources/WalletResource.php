@@ -9,7 +9,7 @@ class WalletResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        if (!$this?->id) {
+        if (!$this?->id ?? null) {
             return [];
         }
 
